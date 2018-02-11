@@ -34,7 +34,7 @@ We will also be implementing metrics that evaluate model performance:
 In the R ecosystem, forward and backward selection are implemented in both the [olsrr](https://cran.r-project.org/web/packages/olsrr/)
 and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides
 [`ols_step_forward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward) and
-[]`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward) for
+[`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward) for
 forward and backward stepwise selection, respectively. Both of these are p-value-based methods of feature selection.
 The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html),
 which is complete with three modes: forward, backward or both. The selection procedure is based on the
