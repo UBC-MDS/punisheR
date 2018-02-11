@@ -6,9 +6,9 @@ In order to measure model quality during the selection procedures, we will also 
 the Akaike and Bayesian Information Criterion (see below), both of which *punish* complex models -- hence this package's
 name.
 
-As examined below, we recognize that these tools already exist in R. This is acceptable to us 
-because impetus for this project is primarily pedagogical, intended to improve our understanding 
-of model selection techniques and collaborative software development. 
+As examined below, we recognize that well-designed versions of these tools already exist in R.
+This is acceptable to us because impetus for this project is primarily pedagogical, intended to
+improve our understanding of model selection techniques and collaborative software development. 
 
 ## Contributors: 
 
