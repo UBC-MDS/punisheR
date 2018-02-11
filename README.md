@@ -10,10 +10,6 @@ As examined below, we recognize that well-designed versions of these tools alrea
 This is acceptable to us because impetus for this project is primarily pedagogical, intended to
 improve our understanding of model selection techniques and collaborative software development.
 
-As examined below, we recognize that well-designed versions of these tools already exist in R.
-This is acceptable to us because impetus for this project is primarily pedagogical, intended to
-improve our understanding of model selection techniques and collaborative software development. 
-
 ## Contributors: 
 
 Avinash, Tariq, Jill
@@ -30,8 +26,6 @@ We will also be implementing metrics that evaluate model performance:
 
 - `aic()`: computes the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 - `bic()`: computes the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) 
-
-## How does this Packages Fit into the Existing R and Python Ecosystems?
 
 ## How the packages fit into the existing R and Python ecosystems ?
 
