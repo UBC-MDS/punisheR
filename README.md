@@ -1,7 +1,14 @@
 # PunisheR
 
-The PunisheR package will implement techniques for feature and model selection. Namely, it will contain tools for forward and backward selection, as well as tools for computing AIC and BIC (see below). 
+PunisheR is a package for feature and model selection in R. Specifically, this package will implement tools for 
+forward and backward model selection (see [here](https://en.wikipedia.org/wiki/Stepwise_regression)). 
+In order to measure model quality during the selection procedures, we will also be implement
+the Akaike and Bayesian Information Criterion (see below), both of which *punish* complex models -- hence this package's
+name.
 
+As examined below, we recognize that these tools already exist in R. This is acceptable to us 
+because impetus for this project is primarily pedagogical, intended to improve our understanding 
+of model selection techniques and collaborative software development. 
 
 ## Contributors: 
 
