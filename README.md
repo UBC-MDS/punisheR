@@ -20,7 +20,7 @@ Avinash, Tariq, Jill
 We will be implementing two stepwise feature selection techniques:
 
 - `forward_selection()`: a feature selection method in which you start with a null model and iteratively add useful features 
-- `backward_selection()`: a feature method in which you start with a full model and iteratively remove the least useful feature at each step
+- `backward_selection()`: a feature selection method in which you start with a full model and iteratively remove the least useful feature at each step
 
 We will also be implementing metrics that evaluate model performance: 
 
