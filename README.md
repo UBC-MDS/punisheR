@@ -1,5 +1,26 @@
 # PunisheR
 
+The PunisheR package will implement techniques for feature and model selection. Namely, it will contain tools for forward and backward selection, as well as tools for computing AIC and BIC (see below). 
+
+
+## Contributors: 
+
+Avinash, Tariq, Jill
+
+
+## Functions included:
+
+We will be implementing two stepwise feature selection techniques:
+
+- `forward_selection()`: a feature selection method in which you start with a null model and iteratively add useful features 
+- `backward_selection()`: a feature method in which you start with a full model and iteratively remove the least useful feature at each step
+
+We will also be implementing metrics that evaluate model performance: 
+
+- `aic()`: computes the Akaike information criterion [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
+- `bic()`: computes the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) 
+
+
 ## How the packages fit into the existing R and Python ecosystems ?
 
 In Python ecosystem, forward selection has been implemented in scikit learn by the 
