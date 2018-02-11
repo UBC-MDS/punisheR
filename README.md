@@ -20,7 +20,6 @@ We will also be implementing metrics that evaluate model performance:
 - `aic()`: computes the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 - `bic()`: computes the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) 
 
-
 ## How the packages fit into the existing R and Python ecosystems ?
 
 In Python ecosystem, forward selection has been implemented in scikit learn by the 
