@@ -29,14 +29,6 @@ We will also be implementing metrics that evaluate model performance:
 
 ## How does this Packages Fit into the Existing R and Python Ecosystems?
 
-In the Python ecosystem, forward selection has been implemented in scikit-learn in the 
-[f_regression](http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.f_regression.html) function.
-As stated in the documentation, *this function uses a linear model for testing the individual effect of each of many regressors*.
-Similarly, backward selection is also implemented in scikit-learn in the `RFE()` class.
-`RFE()` uses an external estimator that assigns weights to features and it prunes the number of features by
-recursively considering smaller and smaller sets of features until the desired number of features to select is eventually 
-reached (see: [RFE](http://scikit-learn.org/stable/modules/generated/sklearn.feature_selection.RFE.html)).
-
 In the R ecosystem, forward and backward selection are implemented in both the [olsrr](https://cran.r-project.org/web/packages/olsrr/)
 and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides
 [`ols_step_forward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward) and 
