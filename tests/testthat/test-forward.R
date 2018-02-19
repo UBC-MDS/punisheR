@@ -1,5 +1,7 @@
 context("forward.R")
 
-test_that("multiplication works", {
-    expect_equal(2 * 2, 4)
+test_that("output is vector", {
+    output <- forward()
+    expect_is(output, "numeric")
+    expect_true(is.vector(output))
 })
