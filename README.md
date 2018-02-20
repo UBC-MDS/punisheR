@@ -27,7 +27,7 @@ We will also be implementing metrics that evaluate model performance:
 - `aic()`: computes the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 - `bic()`: computes the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) 
 
-## How the packages fit into the existing R and Python ecosystems ?
+## How does the package fit into the existing R ecosystem?
 
 In the R ecosystem, forward and backward selection are implemented in both the [olsrr](https://cran.r-project.org/web/packages/olsrr/)
 and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides
@@ -37,3 +37,7 @@ forward and backward stepwise selection, respectively. Both of these are p-value
 The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html),
 which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an
 information criterion (AIC), as we intend ours to be.
+
+## How to run unit tests
+
+We are using `testthat` for unit testing in punishR. To run all tests in **RStudiio**, press `Cmd/Ctrl` + `Shift` + `T` . 
