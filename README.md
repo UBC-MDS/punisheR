@@ -27,6 +27,8 @@ We will also be implementing metrics that evaluate model performance:
 - `aic()`: computes the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 - `bic()`: computes the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) 
 
+These two criteria will be used to measure the relative quality of models within `forward_selection()` and `backward_selection()`. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The penalty term is larger in BIC than in AIC. The lower the AIC and BIC score, the better the model.
+
 ## How does the package fit into the existing R ecosystem?
 
 In the R ecosystem, forward and backward selection are implemented in both the [olsrr](https://cran.r-project.org/web/packages/olsrr/)
