@@ -14,3 +14,7 @@ test_that("aic is correct", {
     expect_equal(aic(model_1, 1), value_1)
     expect_equal(aic(model_2, 1), value_2)
 })
+
+test_that("lambda value is an optional argument", {
+    expect_equal(aic(model), value)
+})
