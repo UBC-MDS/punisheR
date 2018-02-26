@@ -9,3 +9,8 @@ test_that("error message occurs when input is not correct format", {
     expect_error(aic("string"), "wrong format for input")
     expect_error(aic(), "need to pass in X_train and y_train as arguments")
 })
+
+test_that("aic is correct", {
+    expect_equal(aic(model_1, 1), value_1)
+    expect_equal(aic(model_2, 1), value_2)
+})
