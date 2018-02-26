@@ -1,13 +1,14 @@
 context("bic.R")
 
 test_that("output is a float", {
-    output <- bic(X_train, y_train)
+    output <- bic(model, 1)
     expect_is(output, "numeric")
 })
 
 test_that("error message occurs when input is not correct format", {
-    expect_error(bic("string"), "wrong format for input")
-    expect_error(bic(), "need to pass in X_train and y_train as arguments")
+    expect_error(bic(2,1), "wrong format for model input")
+    expect_error(bic(model,"lambda"), "wrong format for lambda input")
+    expect_error(bic(), "need to pass in model and lambda as arguments")
 })
 
 test_that("bic is correct", {
