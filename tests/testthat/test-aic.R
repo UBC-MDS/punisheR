@@ -1,7 +1,7 @@
 context("aic.R")
 
 test_that("output is a float", {
-    output <- aic(X_train, y_train)
+    output <- aic(model, 1)
     expect_is(output, "numeric")
 })
 
