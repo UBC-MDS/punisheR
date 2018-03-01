@@ -1,13 +1,14 @@
 context("aic.R")
 
 test_that("check if output is a float", {
+    model <- lm(dist~speed, data = cars)
     output <- aic(model)
     expect_is(output, "numeric")
 })
 
 test_that("error message is thrown when input is not in correct format", {
     expect_error(aic(2), "Wrong format for model input")
-    expect_error(aic(), "Need to pass in model and lambda as arguments")
+    expect_error(aic(), "Need to pass in model as an argument")
 })
 
 test_that("check if aic value returned is correct", {
