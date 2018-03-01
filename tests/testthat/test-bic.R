@@ -6,8 +6,8 @@ test_that("output is a float", {
 })
 
 test_that("error message occurs when input is not correct format", {
-    expect_error(bic(2), "Wrong format for model input")
-    expect_error(bic(), "Need to pass in model as an argument")
+    expect_error(bic(2), "Unexpected type for argument model")
+    expect_error(bic(), "No arguments passed into the function")
 })
 
 test_that("check if the bic value returned is correct", {
