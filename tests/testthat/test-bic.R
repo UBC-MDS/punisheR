@@ -1,7 +1,8 @@
 context("bic.R")
 
 test_that("output is a float", {
-    output <- bic(model)
+    model <- lm(formula = dist~speed, data = cars)
+    output <- bic(object = model)
     expect_is(output, "numeric")
 })
 
