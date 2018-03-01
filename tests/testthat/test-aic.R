@@ -7,8 +7,8 @@ test_that("check if output is a float", {
 })
 
 test_that("error message is thrown when input is not in correct format", {
-    expect_error(aic(2), "Wrong format for model input")
-    expect_error(aic(), "Need to pass in model as an argument")
+    expect_error(aic(2), "Unexpected type for argument model")
+    expect_error(aic(), "No arguments passed into the function")
 })
 
 test_that("check if aic value returned is correct", {
