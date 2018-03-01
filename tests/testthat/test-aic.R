@@ -11,7 +11,7 @@ test_that("error message is thrown when input is not in correct format", {
     expect_error(aic(), "No arguments passed into the function")
 })
 
-test_that("check if aic value returned is correct", {
+test_that("check if the bic value returned is correct", {
     
     model_1 <- lm(formula = Petal.Length~Sepal.Length, data = iris)
     expected_value1 <- AIC(object = model_1)
