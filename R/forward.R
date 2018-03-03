@@ -23,7 +23,6 @@ forward <- function(model, X_train, y_train, X_val, y_val,
     #         * 'bic': use Bayesian Information Criterion.
     #     min_change : int or float, optional
     #         The smallest change to be considered significant.
-    #         `n_features` must be None for `min_change` to operate.
     #     max_features : int
     #         the max. number of features to allow.
     #     verbose : bool
