@@ -1,5 +1,8 @@
 # PunisheR
 
+[![Build Status](https://travis-ci.org/UBC-MDS/punisheR.svg?branch=master)](https://travis-ci.org/UBC-MDS/punisheR)
+
+
 PunisheR is a package for feature and model selection in R. Specifically, this package will implement tools for
 forward and backward model selection (see [here](https://en.wikipedia.org/wiki/Stepwise_regression)).
 In order to measure model quality during the selection procedures, we will also be implement
