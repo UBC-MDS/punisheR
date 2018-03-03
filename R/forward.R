@@ -1,28 +1,38 @@
 # Forward Selection
 
 #' @export
-forward <- function(model){
-    # Perform forward selection on a R model.
+forward <- function(model, X_train, y_train, X_val, y_val,
+                    min_change=0.5, max_features, criterion,
+                    verbose=TRUE){
+    # Forward Selection Algorithm.
     #
-    #    Args:
-    #       model: an R model
-    #       X_train: a 2D matrix of (observations, features).
-    #       y_train: a 1D matrix of target classes for X_train.
-    #       X_val: a 2D matrix of (observations, features).
-    #       y_val: a 1D matrix of target classes for X_validate.
-    #       verbose: if TRUE, print additional information as selection occurs.
-    #                Defaults to TRUE
-    #       epsilon: smallest average change in the model's score to be considered meaningful
-    #                over the past `epsilon_history` iterations of the algorithm.
-    #       epsilon_history: number of past values to consider when comparing `epsilon`.
-    #       max_features: the max. number of features to allow.
-    #       criterion: model selection criterion.
-    #           * 'aic': use Akaike Information Criterion.
-    #           * 'bic': use Bayesian Information Criterion.
-    #           * NULL: use a default.
+    # Args:
+    #     model : model
+    #         Base R Model.
+    #     X_train matrix
+    #         a 2D matrix of (observations, features).
+    #     y_train : matrix
+    #         a 1D array of target classes for X_train.
+    #     X_val : matrix
+    #         a 2D matrix of (observations, features).
+    #     y_val : matrix
+    #         a 1D array of target classes for X_validate.
+    #     criterion : char
+    #         model selection criterion.
+    #         * 'aic': use Akaike Information Criterion.
+    #         * 'bic': use Bayesian Information Criterion.
+    #     min_change : int or float, optional
+    #         The smallest change to be considered significant.
+    #         `n_features` must be None for `min_change` to operate.
+    #     max_features : int
+    #         the max. number of features to allow.
+    #     verbose : bool
+    #         if True, print additional information as selection occurs.
+    #         Defaults to True.
     #
     # Returns:
-    #   S (vector): column indices of `X_train` (and `X_val`) that denote the chosen features.
-    #
+    #     S : list
+    #       The column indices of `X_train` (and `X_val`)
+    #       that denote the chosen features.
     return(NULL)
 }
