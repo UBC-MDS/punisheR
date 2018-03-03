@@ -7,8 +7,8 @@ y_val <- rnorm(10)
 
 test_that("output is a vector", {
     output <- forward(X_train, y_train, X_val, y_val)
-    expect_is(output, "numeric")
-    expect_true(is.vector(output))
+    expect_is(output, "list")
+    expect_true(is.list(output))
 })
 
 test_that("error message occurs when input is not correct format", {
@@ -40,10 +40,10 @@ test_that("error message occurs when input is not correct format", {
 })
 
 test_that("forward() selects the best features", {
-    output <- function(model, X_train, y_train, X_val, y_val,
+    output <- forward(model, X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change, criterion,
                      verbose=TRUE)
-    expect_output(output, (1,4))
+    expect_output(output, list(1,4))
     expect_length(output, 2)
 })
 
