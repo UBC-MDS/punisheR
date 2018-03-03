@@ -11,6 +11,9 @@ model <- lm(formula = Petal.Length~Sepal.Length, data = iris)
 # -----------------------------------------------------------------------------
 
 test_that("test_metric_model_parm", {
+    # Test that the `model` params in `aic()` and `bic()`
+    # will raise a TypeError when passed something other
+    # than a Base R model.
     expect_error(aic(2), "`model` not a Base-R Model.")
     expect_error(aic("invalid input here"), "`model` not a Base-R Model.")
 })
@@ -24,6 +27,8 @@ test_that("test_metric_model_parm", {
 
 
 test_that("test_metric_output", {
+    # Test that both metrics (`aic()` and `bic()`)
+    # return numerics
     for (metric in c(aic, bic)){
         expect_is(metric(model), "numeric")
     }
@@ -34,6 +39,8 @@ test_that("test_metric_output", {
 # -----------------------------------------------------------------------------
 
 test_that("test_metric_output_value", {
+    # Test that the actual AIC and BIC values computed by
+    # our functions match that computed by Base R.
     expect_equal(aic(model), AIC(model))
     expect_equal(bic(model), BIC(model))
 })
