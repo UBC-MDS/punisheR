@@ -1,4 +1,6 @@
-# BIC
+# Criterion
+
+
 
 
 #' @export
