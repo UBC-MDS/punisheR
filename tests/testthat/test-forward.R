@@ -41,7 +41,7 @@ test_that("error message occurs when input is not correct format", {
 
 test_that("forward() selects the best features", {
     output <- forward(model, X_train, y_train, X_val, y_val,
-                     n_features=0.5, min_change, criterion='aic',
+                     n_features=2, min_change=0.5, criterion='aic',
                      verbose=TRUE)
     expect_output(output, list(1,4))
     expect_length(output, 2)
