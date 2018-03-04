@@ -13,25 +13,25 @@ test_that("output is a vector", {
 
 test_that("error message occurs when input is not correct format", {
     expect_error(forward(1234, X_train, y_train, X_val, y_val,
-                    min_change=0.5, max_features, criterion,
+                    min_change=0.5, max_features, criterion='aic',
                     verbose=TRUE), "`model` not a Base-R Model.")
     expect_error(forward(model, 1234, y_train, X_val, y_val,
-                    min_change=0.5, max_features, criterion,
+                    min_change=0.5, max_features, criterion='aic',
                     verbose=TRUE), "`X_train` matrix is not a 2D matrix.")
     expect_error(forward(model, X_train, 1234, X_val, y_val,
-                    min_change=0.5, max_features, criterion,
-                    verbose=TRUE), "`y_train` is not a 1D array.")
+                    min_change=0.5, max_features, criterion='aic',
+                    verbose=TRUE), "`y_train` is not a 1D vector.")
     expect_error(forward(model, X_train, y_train, 1234, y_val,
-                    min_change=0.5, max_features, criterion,
+                    min_change=0.5, max_features, criterion='aic',
                     verbose=TRUE), "`X_val` is not a 2D matrix.")
     expect_error(forward(model, X_train, y_train, X_val, 1234,
-                    min_change=0.5, max_features, criterion,
-                    verbose=TRUE), "`y_val` is not a 1D array.")
+                    min_change=0.5, max_features, criterion='aic',
+                    verbose=TRUE), "`y_val` is not a 1D vector.")
     expect_error(forward(model, X_train, y_train, X_val, y_val,
-                    min_change=0.5, "abc", criterion,
+                    min_change=0.5, "abc", criterion='aic',
                     verbose=TRUE), "`max_features` is not of type `int`")
     expect_error(forward(model, X_train, y_train, X_val, y_val,
-                    min_change=0.5, -2, criterion,
+                    min_change=0.5, -2, criterion='aic',
                     verbose=TRUE), "`max_features` should be a positive `int`")
     expect_error(forward(model, X_train, y_train, X_val, y_val,
                     min_change=0.5, max_features, "abc",
@@ -41,7 +41,7 @@ test_that("error message occurs when input is not correct format", {
 
 test_that("forward() selects the best features", {
     output <- forward(model, X_train, y_train, X_val, y_val,
-                     n_features=0.5, min_change, criterion,
+                     n_features=0.5, min_change, criterion='aic',
                      verbose=TRUE)
     expect_output(output, list(1,4))
     expect_length(output, 2)
