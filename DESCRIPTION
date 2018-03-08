@@ -10,5 +10,8 @@ URL: https://github.com/UBC-MDS/punisheR
 BugReports: https://github.com/UBC-MDS/punisheR/issues
 Encoding: UTF-8
 LazyData: true
-Suggests: 
-    testthat
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
