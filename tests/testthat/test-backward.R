@@ -1,51 +1,83 @@
 context("backward.R")
 
+# -----------------------------------------------------------------------------
+# Setup
+# -----------------------------------------------------------------------------
+
 X_train <- data.frame(x1=rnorm(10), x2=rep(0,10), x3=rnorm(10), x4=rep(0, 10))
 y_train <- rnorm(10)
 X_val <- data.frame(x1=rnorm(10), x2=rep(0,10), x3=rnorm(10), x4=rep(0, 10))
 y_val <- rnorm(10)
 
-test_that("output is a vector", {
-    output <- backward(X_train, y_train, X_val, y_val)
-    expect_is(output, "list")
-    expect_true(is.list(output))
-})
+# -----------------------------------------------------------------------------
+# `model` Param
+# -----------------------------------------------------------------------------
 
-test_that("error message occurs when input is not correct format", {
+test_that("model input is a Base-R model", {
+    # Test that the `model` param in `backward()`
+    # will raise a TypeError when passed something other
+    # than a Base R model.
     expect_error(backward(1234, X_train, y_train, X_val, y_val,
                     min_change=0.5, n_features, criterion='aic',
                     verbose=TRUE), "`model` not a Base-R Model.")
-    expect_error(backward(model, 1234, y_train, X_val, y_val,
-                    min_change=0.5, n_features, criterion='aic',
-                    verbose=TRUE), "`X_train` matrix is not a 2D matrix.")
-    expect_error(backward(model, X_train, 1234, X_val, y_val,
-                    min_change=0.5, n_features=2, criterion='aic',
-                    verbose=TRUE), "`y_train` is not a 1D vector.")
-    expect_error(backward(model, X_train, y_train, 1234, y_val,
-                    min_change=0.5, n_features=2, criterion='aic',
-                    verbose=TRUE), "`X_val` is not a 2D matrix.")
-    expect_error(backward(model, X_train, y_train, X_val, 1234,
-                    min_change=0.5, n_features=2, criterion='aic',
-                    verbose=TRUE), "`y_val` is not a 1D vector.")
-    expect_error(backward(model, X_train, y_train, X_val, y_val,
-                    min_change=0.5, n_features="abc", criterion='aic',
-                    verbose=TRUE), "`n_features` is not of type `int`")
-    expect_error(backward(model, X_train, y_train, X_val, y_val,
-                    min_change=0.5, n_features=-2, criterion='aic',
-                    verbose=TRUE), "`n_features` should be a positive `int`")
-    expect_error(backward(model, X_train, y_train, X_val, y_val,
-                    min_change=0.5, n_features=2, "abc",
-                    verbose=TRUE), "unexpected `criterion`")
-    expect_error(backward(), "No defaults specified for model, `X_train`, `y_train`, `X_val`, `y_val`, `n_features`")
 })
 
+# -----------------------------------------------------------------------------
+# Data Params
+# -----------------------------------------------------------------------------
+
+
+test_that("model data is in the correct format", {
+    # Test that the data params in `backward()` will raise
+    # a TypeError when passed something other than a
+    # 2D matrix (features) or 1D vector (response variable) where
+    # X is 'features' and Y is the response variable
+    expect_error(backward(model, 1234, y_train, X_val, y_val,
+                          min_change=0.5, n_features, criterion='aic',
+                          verbose=TRUE), "`X_train` matrix is not a 2D matrix.")
+    expect_error(backward(model, X_train, 1234, X_val, y_val,
+                          min_change=0.5, n_features=2, criterion='aic',
+                          verbose=TRUE), "`y_train` is not a 1D vector.")
+    expect_error(backward(model, X_train, y_train, 1234, y_val,
+                          min_change=0.5, n_features=2, criterion='aic',
+                          verbose=TRUE), "`X_val` is not a 2D matrix.")
+    expect_error(backward(model, X_train, y_train, X_val, 1234,
+                          min_change=0.5, n_features=2, criterion='aic',
+                          verbose=TRUE), "`y_val` is not a 1D vector.")
+})
+
+test_that("n_features must be a positive integer", {
+    # Test that the data params in `backward()`
+    # will raise a TypeError when passed something other
+    # than a 2D matrix (data) or 1D vector (response variable)
+    expect_error(backward(model, X_train, y_train, X_val, y_val,
+                          min_change=0.5, n_features="abc", criterion='aic',
+                          verbose=TRUE), "`n_features` is not of type `int`")
+    expect_error(backward(model, X_train, y_train, X_val, y_val,
+                          min_change=0.5, n_features=-2, criterion='aic',
+                          verbose=TRUE), "`n_features` should be a positive `int`")
+})
+
+
+test_that("criterion param must be either aic or bic", {
+    # Test that the `criterion` param will raise a TypeError
+    # when passed something other than 'aic' or 'bic'
+    expect_error(backward(model, X_train, y_train, X_val, y_val,
+                    min_change=0.5, n_features=2, criterion="abc",
+                    verbose=TRUE), "unexpected `criterion`")
+})
+
+# -----------------------------------------------------------------------------
+# Output format and value
+# -----------------------------------------------------------------------------
+
 test_that("backward() selects the best features", {
+    # Test that `backward()` will output a vector with the 'best' features
     output <- backward(model, X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='aic',
                      verbose=TRUE)
     expect_output(output, list(1,4))
     expect_length(output, 2)
 })
-
 
 
