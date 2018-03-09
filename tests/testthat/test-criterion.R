@@ -15,8 +15,8 @@ test_that("test_metric_model_parm", {
     # will raise a TypeError when passed something other
     # than a Base R model.
     for (metric in c(aic, bic)){
-    expect_error(metric(2), "`model` not a Base-R Model.")
-    expect_error(metric("invalid input here"), "`model` not a Base-R Model.")
+        expect_error(metric(2), "`model` not a Base-R Model.")
+        expect_error(metric("invalid input here"), "`model` not a Base-R Model.")
     }
 })
 
