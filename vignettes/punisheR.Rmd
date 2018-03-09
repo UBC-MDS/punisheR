@@ -10,6 +10,9 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
+
+knitr::opts_chunk$set(eval = FALSE)
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -24,9 +27,9 @@ PunisheR is a package for feature and model selection in R. Specifically, this p
 
 The package contains two stepwise feature selection techniques:
 
-- `forward_selection()`: [Forward selection](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches), which involves starting with no variables in the model, testing the addition of each variable using a chosen model fit criterion, adding the variable (if any) whose inclusion gives the most statistically significant improvement of the fit, and repeating this process until none improves the model to a statistically significant extent.
+- `forward()`: [Forward selection](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches), which involves starting with no variables in the model, testing the addition of each variable using a chosen model fit criterion, adding the variable (if any) whose inclusion gives the most statistically significant improvement of the fit, and repeating this process until none improves the model to a statistically significant extent.
 
-- `backward_selection()`: [Backward selection/elimination](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches), which involves starting with all candidate variables, testing the deletion of each variable using a chosen model fit criterion, deleting the variable (if any) whose loss gives the most statistically insignificant deterioration of the model fit, and repeating this process until no further variables can be deleted without a statistically significant loss of fit.
+- `backward()`: [Backward selection/elimination](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches), which involves starting with all candidate variables, testing the deletion of each variable using a chosen model fit criterion, deleting the variable (if any) whose loss gives the most statistically insignificant deterioration of the model fit, and repeating this process until no further variables can be deleted without a statistically significant loss of fit.
 
 The package contains two metrics that evaluate model performance: 
 
@@ -46,5 +49,47 @@ and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The 
 forward and backward stepwise selection, respectively. Both of these are p-value-based methods of feature selection. The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html),
 which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an
 information criterion (AIC), as we intend ours to be.
+
+```{r}
+X_train <- data.frame(x1=rnorm(10), x2=rep(0,10), x3=rnorm(10), x4=rep(0, 10))
+y_train <- rnorm(10)
+X_val <- data.frame(x1=rnorm(10), x2=rep(0,10), x3=rnorm(10), x4=rep(0, 10))
+y_val <- rnorm(10)
+```
+
+
+
+```{r}
+forward(lm, X_train, y_train, X_val, y_val,
+                     n_features=2, min_change=0.5, criterion='aic',
+                     verbose=TRUE)
+```
+
+```{r}
+forward(lm, X_train, y_train, X_val, y_val,
+                     n_features=2, min_change=0.5, criterion='bic',
+                     verbose=TRUE)
+```
+
+```{r}
+backward(lm, X_train, y_train, X_val, y_val,
+                     n_features=2, min_change=0.5, criterion='aic',
+                     verbose=TRUE)
+```
+
+```{r}
+backward(lm, X_train, y_train, X_val, y_val,
+                     n_features=2, min_change=0.5, criterion='bic',
+                     verbose=TRUE)
+```
+
+```{r}
+aic(lm(y_train~X_train))
+```
+
+
+```{r}
+bic(lm(y_train~X_train))
+```
 
 
