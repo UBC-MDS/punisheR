@@ -19,7 +19,7 @@ library(broom)
 
     model_data <- augment(model)
     n <- nrow(model_data)
-    d <- ncol(model_data) - 7
+    k <- ncol(model_data) - 8
     rss = sum(data['.resid']^2)
     llf = -(n/2)*log(2*pi) - (n/2)*log(rss/n) - n/2
     return(c(n, k, llf))
@@ -59,15 +59,15 @@ aic <- function(model){
     n <- coeff[1]
     k <- coeff[2]
     llf <- coeff[3]
-    aic <- -2*log(llf)+2*k
+    aic <- -2*llf + 2*k
 
     if (n/k < 40){
         return(aic + 2*k*(k+1)/(n-k-1))
-    }
-    else
+    } else
     {
         return(aic)
     }
+
 }
 
 
@@ -99,7 +99,7 @@ bic <- function(model){
     n <- coeff[1]
     k <- coeff[2]
     llf <- coeff[3]
-    bic <- -2*log(llf)+log(n)*k
+    bic <- -2*llf + log(n)*k
 
     return(bic)
 }
