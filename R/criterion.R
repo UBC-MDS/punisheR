@@ -4,17 +4,18 @@
 library(broom)
 
 .get_coeffs <- function(model){
+
     # Args:
-    # model : model object
-    #         A Base-R Model
+    #   model : model object
+    #          A Base-R Model
     #
     # Returns:
-    # n : double
-    #     Number of samples
-    # k : double
-    #     Number of features
-    # llf : double
-    #     Maximized value of log likelihood function
+    #   n : double
+    #       Number of samples
+    #   k : double
+    #       Number of features
+    #   llf : double
+    #       Maximized value of log likelihood function
 
     model_data <- augment(model)
     n <- nrow(model_data)
@@ -27,13 +28,24 @@ library(broom)
 
 #' @export
 aic <- function(model){
+
     # Compute the Akaike Information Criterion (AIC)
     #
+    # AIC's objective is to prevent model overfitting by adding a penalty
+    # term which penalizes more compelx models. Its formal definition is:
+    #     -2ln(L)+2*k
+    # where L is the maximized value of the likelihood function.
+    # A smaller AIC value suggests that the model is a better fit for the data.
+    #
     # Args:
-    #   model (R model object): ...
+    #    model : model object
+    #           A Base-R Model
     #
     # Returns:
-    #   numeric: ...
+    #   aic : double
+    #         AIC value if sample size is sufficient.
+    #         If n/k < 40 where n is the number of observations and k is the number of features,
+    #         AIC gets reduced to adjust for small sample size.
     #
     # References:
     #   * https://en.wikipedia.org/wiki/Akaike_information_criterion
@@ -60,13 +72,21 @@ aic <- function(model){
 
 
 bic <- function(model){
+
     # Compute the Bayesian Information Criterion (BIC)
+    # BIC's objective is to prevent model over-fitting by adding a penalty
+    # term which penalizes more complex models. Its formal definition is:
+    # -2ln(L)+ln(n)k
+    # where L is the maximized value of the likelihood function.
+    # A smaller BIC value suggests that the model is a better fit for the data.
     #
     # Args:
-    #   model (R model object): ...
+    #   model : model object
+    #         A Base-R Model
     #
     # Returns:
-    #   numeric: ...
+    #   bic : double
+    #         Bayesian Information Criterion value.
     #
     # References:
     #   * https://en.wikipedia.org/wiki/Bayesian_information_criterion
