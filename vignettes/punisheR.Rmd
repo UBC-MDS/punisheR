@@ -1,6 +1,6 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "punisheR"
+author: "Jill Cates, Tariq Hassan, Avinash Prabhakaran"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -16,50 +16,35 @@ knitr::opts_chunk$set(
 )
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+# Introduction
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+PunisheR is a package for feature and model selection in R. Specifically, this package will implement tools for forward and backward model selection. In order to measure model quality during the selection procedures, we have also implemented the Akaike Information Criterion(AIC) and Bayesian Information Criterion(BIC).
 
-## Vignette Info
+## Functions included
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+The package contains two stepwise feature selection techniques:
 
-## Styles
+- `forward_selection()`: [Forward selection](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches), which involves starting with no variables in the model, testing the addition of each variable using a chosen model fit criterion, adding the variable (if any) whose inclusion gives the most statistically significant improvement of the fit, and repeating this process until none improves the model to a statistically significant extent.
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+- `backward_selection()`: [Backward selection/elimination](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches), which involves starting with all candidate variables, testing the deletion of each variable using a chosen model fit criterion, deleting the variable (if any) whose loss gives the most statistically insignificant deterioration of the model fit, and repeating this process until no further variables can be deleted without a statistically significant loss of fit.
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+The package contains two metrics that evaluate model performance: 
 
-## Figures
+- `aic()`: The [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) is an estimator of the relative quality of statistical models for a given set of data.
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+- `bic()`: The [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) (BIC) or Schwarz criterion is a criterion for model selection among a finite set of models. It is based, in part, on the [likelihood function](https://en.wikipedia.org/wiki/Likelihood_function) and it is closely related to the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC).
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
-```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+These two criteria will be used to measure the relative quality of models within `forward_selection()` and `backward_selection()`. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The penalty term is larger in BIC than in AIC. The lower the AIC and BIC score, the better the model.
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+## How does punisheR fit into the existing R ecosystem?
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+In the R ecosystem, forward and backward selection are implemented in both the [olsrr](https://cran.r-project.org/web/packages/olsrr/)
+and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides
+[`ols_step_forward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward) and
+[`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward) for
+forward and backward stepwise selection, respectively. Both of these are p-value-based methods of feature selection. The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html),
+which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an
+information criterion (AIC), as we intend ours to be.
 
-## More Examples
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
