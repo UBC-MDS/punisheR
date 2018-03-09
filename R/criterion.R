@@ -1,8 +1,5 @@
 # Criterion
 
-
-library(broom)
-
 .get_coeffs <- function(model){
 
     # Args:
@@ -17,10 +14,9 @@ library(broom)
     #   llf : double
     #       Maximized value of log likelihood function
 
-    model_data <- augment(model)
-    n <- nrow(model_data)
-    k <- ncol(model_data) - 8
-    rss = sum(data['.resid']^2)
+    n <- length(model$residuals)
+    k <- model2$rank - 1
+    rss = sum(model$residuals^2)
     llf = -(n/2)*log(2*pi) - (n/2)*log(rss/n) - n/2
     return(c(n, k, llf))
 }
