@@ -1,6 +1,28 @@
 # Criterion
 
 
+library(broom)
+
+.get_coeffs <- function(model){
+    # Args:
+    # model : model object
+    #         A Base-R Model
+    #
+    # Returns:
+    # n : double
+    #     Number of samples
+    # k : double
+    #     Number of features
+    # llf : double
+    #     Maximized value of log likelihood function
+
+    model_data <- augment(model)
+    n <- nrow(model_data)
+    d <- ncol(model_data) - 7
+    rss = sum(data['.resid']^2)
+    llf = -(n/2)*log(2*pi) - (n/2)*log(rss/n) - n/2
+    return(c(n, k, llf))
+}
 
 
 #' @export
@@ -16,7 +38,24 @@ aic <- function(model){
     # References:
     #   * https://en.wikipedia.org/wiki/Akaike_information_criterion
     #
-    return(NULL)
+
+    if(!is.object(model)){
+        stop("`model` not a Base-R Model.")
+    }
+
+    coeff <- .get_coeffs(model)
+    n <- coeff[1]
+    k <- coeff[2]
+    llf <- coeff[3]
+    aic <- -2*log(llf)+2*k
+
+    if (n/k < 40){
+        return(aic + 2*k*(k+1)/(n-k-1))
+    }
+    else
+    {
+        return(aic)
+    }
 }
 
 
@@ -32,5 +71,15 @@ bic <- function(model){
     # References:
     #   * https://en.wikipedia.org/wiki/Bayesian_information_criterion
     #
-    return(NULL)
+    if(!is.object(model)){
+        stop("`model` not a Base-R Model.")
+    }
+
+    coeff <- .get_coeffs(model)
+    n <- coeff[1]
+    k <- coeff[2]
+    llf <- coeff[3]
+    bic <- -2*log(llf)+log(n)*k
+
+    return(bic)
 }
