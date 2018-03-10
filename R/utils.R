@@ -46,7 +46,7 @@ fitter <- function(X, y){
     # Returns:
     #   A fitted `lm()` model.
     #
-    df <- as.data.frame(X)
+    df <- data.frame(X)
     df$y <- y
 
     # Define formula

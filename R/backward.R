@@ -46,7 +46,7 @@ source("R/utils.R")
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,
                      criterion='r-squared', verbose=TRUE){
-    input_checks(n_features, min_change=min_change, criterion=criterion)
+    input_checks(n_features=n_features, min_change=min_change, criterion=criterion)
     S = 1:ncol(X_train)  # start with all features
 
     if (!is.null(n_features)){
@@ -55,7 +55,7 @@ backward <- function(X_train, y_train, X_val, y_val,
         )
     }
 
-    last_iter_score = fit_and_score(
+    last_iter_score <- fit_and_score(
         S=S, feature=NULL, algorithm='backward', X_train=X_train,
         y_train=y_train, X_val=X_val, y_val=y_val, criterion=criterion
     )
