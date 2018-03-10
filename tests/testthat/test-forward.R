@@ -48,4 +48,18 @@ test_that("forward() selects the best features", {
 })
 
 
+# Rough way to test forward()'s output.
+# This will have to be turned into a
+# formal `testthat` test.
+#
+# Note: I don't think you can import
+# the data with source during testing
+# (perhaps you can?).
+#
+# source("R/forward.R")
+# source("tests/testthat/data_for_tests.R")
+# forward_result <- forward(
+#     X_train=X_train, y_train=y_train,
+#     X_val=X_val, y_val=y_val, verbose=FALSE)
+# TRUE_BEST_FEATURE %in% forward_result
 

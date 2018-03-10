@@ -80,4 +80,15 @@ test_that("backward() selects the best features", {
     expect_length(output, 2)
 })
 
+# Rough way to test backwards()'s output.
+# This will have to be turned into a
+# formal `testthat` test.
+#
+# source("R/backward.R")
+# source("tests/testthat/data_for_tests.R")
+# backward_result <- backward(
+#     X_train=X_train, y_train=y_train,
+#     X_val=X_val, y_val=y_val, n_features=1,
+#     min_change=NULL, verbose=FALSE)
+# TRUE_BEST_FEATURE %in% backward_result
 
