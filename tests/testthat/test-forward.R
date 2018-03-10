@@ -11,18 +11,6 @@ y_train <- data[[2]]
 X_val <- data[[3]]
 y_val <- data[[4]]
 
-# -----------------------------------------------------------------------------
-# `model` Param
-# -----------------------------------------------------------------------------
-
-test_that("model input is a Base-R model", {
-  # Test that the `model` param in `forward()`
-  # will raise a TypeError when passed something other
-  # than a Base R model.
-  expect_error(forward(1234, X_train, y_train, X_val, y_val,
-                        min_change=0.5, n_features, criterion='aic',
-                        verbose=TRUE), "`model` not a Base-R Model.")
-})
 
 # -----------------------------------------------------------------------------
 # Data Params
