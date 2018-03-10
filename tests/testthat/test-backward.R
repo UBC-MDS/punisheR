@@ -15,7 +15,7 @@ y_val <- data[[4]]
 # `model` Param
 # -----------------------------------------------------------------------------
 
-test_that("it works", {
+test_that("smoke test", {
     output <- backward(X_train, y_train, X_val, y_val,
                        n_features=0.5, min_change=NULL, criterion='r-squared',
                        verbose=TRUE)
@@ -26,7 +26,7 @@ test_that("model input is a Base-R model", {
     # Test that the `model` param in `backward()`
     # will raise a TypeError when passed something other
     # than a Base R model.
-    expect_error(backward(1234, X_train, y_train, X_val, y_val,
+    expect_error(backward(X_train=1234, y_train, X_val, y_val,
                     n_features=0.3, criterion='aic',
                     verbose=TRUE), "`model` not a Base-R Model.")
 })
