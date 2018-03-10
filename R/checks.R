@@ -45,3 +45,15 @@ input_checks <- function(n_features, min_change, criterion){
         }
     }
 }
+
+data_checks <- function(X, y) {
+    stop_msg <- paste0(deparse(substitute(X)), " must be a 2D matrix")
+    if(!is.matrix(X)) {
+        stop(stop_msg)
+    }
+
+    stop_msg <- paste0(deparse(substitute(y)), " must be a 1D vector")
+    if(!is.vector(y)) {
+        stop(msg)
+    }
+}

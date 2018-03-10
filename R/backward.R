@@ -49,6 +49,9 @@ backward <- function(X_train, y_train, X_val, y_val,
     input_checks(n_features=n_features, min_change=min_change, criterion=criterion)
     S = 1:ncol(X_train)  # start with all features
 
+    data_checks(X_train, y_train)
+    data_checks(X_val, y_val)
+
     if (!is.null(n_features)){
         n_features <- parse_n_features(
             n_features=n_features, total=length(S)

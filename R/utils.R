@@ -46,16 +46,14 @@ fitter <- function(X, y){
     # Returns:
     #   A fitted `lm()` model.
     #
-    df <- data.frame(X)
-    df$y <- y
-
+    df <- cbind(as.data.frame(X),as.data.frame(y))
     # Define formula
     preds <- colnames(df)[1:length(colnames(df)) - 1]
     rhs <- paste(preds, collapse = " + ")
-    formula <- paste0("y ~ ", rhs)
+    formula <- paste0(deparse(substitute(y)), " ~ ", rhs)
 
     # Fit and return model
-    m <- lm(formula, data=df)
+    m <- lm(as.formula(formula), data=df)
     return(m)
 }
 

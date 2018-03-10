@@ -31,7 +31,7 @@ test_that("model data is in the correct format", {
     # 2D matrix (features) or 1D vector (response variable) where
     # X is 'features' and Y is the response variable
     expect_error(backward(X_train=1234, y_train, X_val, y_val,
-                          criterion='squared',
+                          criterion='r-squared',
                           verbose=TRUE), "`X_train` matrix is not a 2D matrix.")
     expect_error(backward(X_train, y_train=1234, X_val, y_val,
                           n_features=0.5, criterion='r-squared',
