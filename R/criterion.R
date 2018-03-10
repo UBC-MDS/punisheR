@@ -15,7 +15,7 @@
     #       Maximized value of log likelihood function
 
     n <- length(model$residuals)
-    k <- model2$rank - 1
+    k <- model$rank + 1
     rss = sum(model$residuals^2)
     llf = -(n/2)*log(2*pi) - (n/2)*log(rss/n) - n/2
     return(c(n, k, llf))
@@ -63,7 +63,6 @@ aic <- function(model){
     {
         return(aic)
     }
-
 }
 
 
