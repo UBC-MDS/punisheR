@@ -95,6 +95,7 @@ forward <- function(X_train, y_train, X_val, y_val,
         n_features <- parse_n_features(
             n_features=n_features, total=length(S)
         )
+        min_change <- NULL
     }
 
     for (i in 1:total_number_of_features){  # assume worst case

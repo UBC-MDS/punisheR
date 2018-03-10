@@ -58,6 +58,12 @@ test_that("n_features must be a positive integer", {
                         verbose=TRUE), "`n_features` must be greater than zero.")
 })
 
+test_that("n_features and min_change cannot be active at the same time", {
+    expect_error(forward(X_train, y_train, X_val, y_val,
+                          n_features=0.5, min_change=0.2,criterion='r-squared',
+                          verbose=TRUE), "At least one of `n_features` and `min_change` must be NULL")
+})
+
 
 # -----------------------------------------------------------------------------
 # Output format and value
