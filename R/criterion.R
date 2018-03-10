@@ -1,10 +1,10 @@
 #' R-squared
-#' @description Coefficient of Determination 
-#' 
+#' @description Coefficient of Determination
+#'
 #' @param fit_model A fitted model
-#' 
+#'
 #' @param X Feature data
-#' 
+#'
 #' @param y True labels (response)
 #'
 #' @references http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
@@ -18,45 +18,91 @@ r_squared <- function(fit_model, X, y){
     return(1 - (num / denom))
 }
 
+
+
+.get_coeffs <- function(model){
+
+    # Args:
+    #   model : model object
+    #          A Base-R Model
+    #
+    # Returns:
+    #   n : double
+    #       Number of samples
+    #   k : double
+    #       Number of features
+    #   llf : double
+    #       Maximized value of log likelihood function
+
+    n <- length(model$residuals)
+    k <- model$rank + 1
+    rss = sum(model$residuals^2)
+    llf = -(n/2)*log(2*pi) - (n/2)*log(rss/n) - n/2
+    return(c(n, k, llf))
+}
+
+
+
+
 #' Akaike Information Criterion (AIC)
-#' 
+#'
 #' @description The Akaike Information Criterion's objective is to prevent model
-#'  overfitting by adding a penalty term which penalizes more compelx models. 
+#'  overfitting by adding a penalty term which penalizes more compelx models.
 #'  Its formal definition is:
 #'  \deqn{-2*ln(L)+2*k}
-#'  where L is the maximized value of the likelihood function. 
+#'  where L is the maximized value of the likelihood function.
 #'  A smaller AIC value suggests that the model is a better fit for the data.
-#'  
+#'
 #' @param model R model object
-#' 
-#' @return  AIC value gets returned as float if sample size is sufficient. 
-#' If n/k < 40 where n is the number of observations and k is the number of features, 
-#' AICc gets returned to adjust for small sample size.
-#' 
+#'
+#' @return  AIC value gets returned as a float.
+#'
 #' @references
 #' https://en.wikipedia.org/wiki/Akaike_information_criterion
 #' @export
 aic <- function(model){
 
-    return(NULL)
+    if(!is.object(model)){
+        stop("`model` not a Base-R Model.")
+    }
+
+    coeff <- .get_coeffs(model)
+    n <- coeff[1]
+    k <- coeff[2]
+    llf <- coeff[3]
+    aic <- -2*llf + 2*k
+
+    return(aic)
+
 }
 
 
 #' Bayesian Information Criterion
-#' 
+#'
 #' @description The Bayesian Information Criterion's objective is to prevent model
-#'  overfitting by adding a penalty term which penalizes more compelx models. 
+#'  overfitting by adding a penalty term which penalizes more compelx models.
 #'  Its formal definition is:
 #'  \deqn{ -2*ln(L)+ln(n)*k}
-#'  where L is the maximized value of the likelihood function. 
+#'  where L is the maximized value of the likelihood function.
 #'  A smaller BIC value suggests that the model is a better fit for the data.
-#'  
-#' @param  model Base R model  
+#'
+#' @param  model Base R model
 #'
 #' @return BIC value gets returned as a flaot.
-#' 
+#'
 #' @references https://en.wikipedia.org/wiki/Bayesian_information_criterion
 #' @export
 bic <- function(model){
-    return(NULL)
-}
+
+    return(NULL)    if(!is.object(model)){
+        stop("`model` not a Base-R Model.")
+    }
+
+    coeff <- .get_coeffs(model)
+    n <- coeff[1]
+    k <- coeff[2]
+    llf <- coeff[3]
+    bic <- -2*llf + log(n)*k
+
+    return(bic)
+    }
