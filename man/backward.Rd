@@ -42,7 +42,7 @@ A vector
 This is an implementation of the backward selection algorithm
 in which you start with a full model and iteratively remove the
 least useful feature at each step. This function is built for the specific case
-of feature selection in linear regression models.
+of backward selection in linear regression models.
 }
 \examples{
 model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)

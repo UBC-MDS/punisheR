@@ -27,6 +27,9 @@ input_checks <- function(n_features, min_change, criterion){
     } else if (!(criterion %in% c('r-squared', 'aic', 'bic'))){
         stop(criterion_stop_msg)
     }
+    if(!is.numeric(n_features) & !is.null(n_features)) {
+        stop("`n_features` must be numeric")
+    }
     if (!is.null(n_features) & !is.null(min_change)){
         stop("At least one of `n_features` and `min_change` must be NULL")
     }
