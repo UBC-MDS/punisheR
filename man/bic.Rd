@@ -22,3 +22,6 @@ bic value (float)
 This is an implementation of the backward selection algorithm
 that can be used to select best features in model.
 }
+\references{
+https://en.wikipedia.org/wiki/Bayesian_information_criterion
+}

@@ -40,8 +40,8 @@
 #' 
 #' @export
 
-source("R/checks.R")
-source("R/utils.R")
+source("checks.R")
+source("utils.R")
 
 forward_break_criteria <- function(S, current_best_j, n_features,
                                    total_number_of_features){

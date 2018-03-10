@@ -38,48 +38,14 @@
 #' model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
 #' bakcward(model, X_train, y_train, min_change=0.3, criterion='aic')
 
-source("R/checks.R")
-source("R/utils.R")
+source("checks.R")
+source("utils.R")
 
 
 #' @export
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,
                      criterion='r-squared', verbose=TRUE){
-    # Backward Selection Algorithm for Base R's `lm()` function
-    # (linear regression).
-    #
-    # Args:
-    #     X_train : matrix
-    #         a 2D matrix of (observations, features).
-    #     y_train : matrix
-    #         a 1D array of target classes for X_train.
-    #     X_val : matrix
-    #         a 2D matrix of (observations, features).
-    #     y_val : matrix
-    #         a 1D array of target classes for X_validate.
-    #     criterion : char
-    #         model selection criterion.
-    #         * 'r-squared': use R-Squared as the criterion.
-    #         * 'aic': use Akaike Information as the Criterion.
-    #         * 'bic': use Bayesian Information as the Criterion.
-    #     n_features : numeric
-    #         The number of features to select.
-    #         Floats will be regarded as proportions of the total
-    #         that must lie on (0, 1).
-    #         `min_change` must be None for `n_features` to operate.
-    #     min_change : numeric
-    #         The smallest change to be considered significant.
-    #         `n_features` must be None for `min_change` to operate.
-    #     verbose : bool
-    #         if True, print additional information as selection occurs.
-    #         Defaults to True.
-    #
-    # Returns:
-    #     S : vector
-    #       The column indices of `X_train` (and `X_val`)
-    #       that denote the chosen features.
-    #
     input_checks(n_features, min_change=min_change, criterion=criterion)
     S = 1:ncol(X_train)  # start with all features
 

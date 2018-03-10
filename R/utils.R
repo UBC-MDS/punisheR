@@ -1,5 +1,5 @@
 # Utils
-source("R/criterion.R")
+source("criterion.R")
 
 
 parse_n_features <- function(n_features, total){
