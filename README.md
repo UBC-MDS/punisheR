@@ -13,10 +13,11 @@ As examined below, we recognize that well-designed versions of these tools alrea
 This is acceptable to us because impetus for this project is primarily pedagogical, intended to
 improve our understanding of model selection techniques and collaborative software development.
 
-## Contributors: 
+## Installation
 
-Avinash, Tariq, Jill
-
+```
+devtools::install_github("UBC-MDS/punisheR")
+```
 
 ## Functions included:
 
@@ -46,3 +47,7 @@ information criterion (AIC), as we intend ours to be.
 ## How to run unit tests
 
 We are using `testthat` for unit testing in punishR. To run all tests in **RStudiio**, press `Cmd/Ctrl` + `Shift` + `T` . 
+
+## Contributors: 
+
+Avinash, Tariq, Jill
