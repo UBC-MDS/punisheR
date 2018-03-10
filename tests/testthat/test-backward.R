@@ -32,16 +32,16 @@ test_that("model data is in the correct format", {
     # X is 'features' and Y is the response variable
     expect_error(backward(X_train=1234, y_train, X_val, y_val,
                           criterion='r-squared',
-                          verbose=TRUE), "`X_train` matrix is not a 2D matrix.")
+                          verbose=TRUE), "X_train must be a 2D matrix")
     expect_error(backward(X_train, y_train=1234, X_val, y_val,
                           n_features=0.5, criterion='r-squared',
-                          verbose=TRUE), "`y_train` is not a 1D vector.")
+                          verbose=TRUE), "y_train must be a 1D vector")
     expect_error(backward(X_train, y_train, X_val=1234, y_val,
                           n_features=0.5, criterion='r-squared',
-                          verbose=TRUE), "`X_val` is not a 2D matrix.")
+                          verbose=TRUE), "X_val must be a 2D matrix")
     expect_error(backward(X_train, y_train, X_val, y_val=1234,
                           n_features=0.5, criterion='r-squared',
-                          verbose=TRUE), "`y_val` is not a 1D vector.")
+                          verbose=TRUE), "y_val must be a 1D vector")
 })
 
 test_that("n_features must be a positive integer", {
@@ -50,7 +50,7 @@ test_that("n_features must be a positive integer", {
     # than a 2D matrix (data) or 1D vector (response variable)
     expect_error(backward(X_train, y_train, X_val, y_val,
                           n_features="abc", criterion='r-squared',
-                          verbose=TRUE), "`n_features` is not of type `int`")
+                          verbose=TRUE), "`n_features` must be numeric")
     expect_error(backward(X_train, y_train, X_val, y_val,
                           n_features=-2, criterion='r-squared',
                           verbose=TRUE), "`n_features` should be a positive `int`")
