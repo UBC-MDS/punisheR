@@ -57,12 +57,7 @@ aic <- function(model){
     llf <- coeff[3]
     aic <- -2*llf + 2*k
 
-    if (n/k < 40){
-        return(aic + 2*k*(k+1)/(n-k-1))
-    } else
-    {
-        return(aic)
-    }
+    return(aic)
 }
 
 
