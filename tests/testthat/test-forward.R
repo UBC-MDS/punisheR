@@ -66,7 +66,7 @@ test_that("n_features must be a positive integer", {
 test_that("forward() selects the best features", {
   # Test that `forward()` will output a vector with the 'best' features
   output <- forward(X_train, y_train, X_val, y_val,
-                     n_features=2, min_change=0.5, criterion='aic',
+                     n_features=0.5, min_change=NULL, criterion='aic',
                      verbose=TRUE)
   expect_output(output, list(1,4))
   expect_length(output, 2)
