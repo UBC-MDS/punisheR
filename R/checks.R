@@ -50,7 +50,7 @@ input_data_checks <- function(X, y) {
 
     X_string <- deparse(substitute(X))
     y_string <- deparse(substitute(y))
-    stop_msg <- paste0(X_train, " must be a 2D matrix")
+    stop_msg <- paste0(X_string, " must be a 2D matrix")
     if(!is.matrix(X)) {
         stop(stop_msg)
     }
@@ -61,8 +61,8 @@ input_data_checks <- function(X, y) {
     }
 
     shape_msg <- paste0(X_string, " and ", y_string, " must have the same number of observations")
-    if(is.vector(y) & is.matrix(x)) {
-        if(length(y)!=dim(X_train)[1]) {
+    if(is.vector(y) & is.matrix(X)) {
+        if(length(y)!=dim(X)[1]) {
             stop(shape_msg)
         }
     }

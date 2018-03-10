@@ -26,10 +26,12 @@ test_that("smoke test", {
 
 
 test_that("training data is in the correct format", {
-    # Test that the data params in `backward()` will raise
+    # Test that the training data params in `backward()` will raise
     # a TypeError when passed something other than a
     # 2D matrix (features) or 1D vector (response variable) where
-    # X is 'features' and Y is the response variable
+    # X is 'features' and Y is the response variable. Also test that
+    # `bakcward()` will raise an error when X_train and y_train do not
+    # have the same number of observations
     expect_error(backward(X_train=1234, y_train, X_val, y_val,
                           criterion='r-squared',
                           verbose=TRUE), "X_train must be a 2D matrix")
@@ -42,6 +44,7 @@ test_that("training data is in the correct format", {
 })
 
 test_that("validation data is in the correct format", {
+    # Identical tests as above but for validation data.
     expect_error(backward(X_train, y_train, X_val=1234, y_val,
                           n_features=0.5, criterion='r-squared',
                           verbose=TRUE), "X_val must be a 2D matrix")
