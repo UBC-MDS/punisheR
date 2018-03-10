@@ -1,7 +1,5 @@
-# Forward Selection
-source("R/checks.R")
-source("R/utils.R")
-
+source("checks.R")
+source("utils.R")
 
 forward_break_criteria <- function(S, current_best_j, n_features,
                                    total_number_of_features){
@@ -41,41 +39,51 @@ forward_break_criteria <- function(S, current_best_j, n_features,
 }
 
 
+#' Forward Selection Algorithm.
+#' 
+#' @description
+#' This is an implementation of the forward selection algorithm
+#' that can be used to select best features in model. 
+#' 
+#' @param  model Base R model  
+#'
+#' @param X_train Training data
+#' 
+#'  A 2D matrix of (observations, features)
+#'  
+#' @param y_train Target class for training data
+#' 
+#'  A 1D array of target classes for X_train 
+#'  
+#' @param X_val Validation data
+#'
+#'  A 2D matrix of (observations, features)
+#'  
+#' @param y_val Target class for validation data
+#' 
+#'  A 1D array of target classes for X_val
+#' 
+#' @param criterion Model selection criterion
+#'  A criterion to measure relative model quality. 
+#'  'aic': use Akaike Information Criterion
+#'  'bic': use Bayesian Information Criterion
+#' @param min_change Smallest change in criterion score to be considered significant.
+#'   
+#' @param max_features Maximum number of features to allow.
+#' 
+#' @param verbose 
+#'  if True, print additional information as selection occurs  
+#' @return A vector
+#' @export
+#' @examples 
+#' model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
+#' forward(model, X_train, y_train, min_change=0.3, criterion='aic')
+#' 
 #' @export
 forward <- function(X_train, y_train, X_val, y_val,
                     min_change=0.5, n_features=NULL,
                     criterion='r-squared', verbose=TRUE){
-    # Forward Selection Algorithm for Base R's `lm()` function
-    # (linear regression).
-    #
-    # Args:
-    #     X_train : matrix
-    #         a 2D matrix of (observations, features).
-    #     y_train : matrix
-    #         a 1D array of target classes for X_train.
-    #     X_val : matrix
-    #         a 2D matrix of (observations, features).
-    #     y_val : matrix
-    #         a 1D array of target classes for X_validate.
-    #     criterion : char
-    #         model selection criterion.
-    #         * 'r-squared': use R-Squared as the criterion.
-    #         * 'aic': use Akaike Information Criterion.
-    #         * 'bic': use Bayesian Information Criterion.
-    #     min_change : numeric, optional
-    #         The smallest change to be considered significant.
-    #         `n_features` must be None for `min_change` to operate.
-    #     n_features : numeric
-    #         the max. number of features to allow.
-    #     verbose : bool
-    #         if True, print additional information as selection occurs.
-    #         Defaults to True.
-    #
-    # Returns:
-    #     S : vector
-    #       The column indices of `X_train` (and `X_val`)
-    #       that denote the chosen features.
-    #
+
     input_checks(n_features, min_change=min_change, criterion=criterion)
     total_number_of_features <- ncol(X_train)
     S <- c()

@@ -2,13 +2,17 @@ Package: punishR
 Type: Package
 Title: Feature Selection Using AIC and BIC
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Authors@R: c(
+    person("Tariq", "Hassan", "@TariqAHassan", role="aut"),
+    person("Jill, "Cates", "@topspinj", role="aut"),
+    person("Avinash", "Prabhakaran", "@avinashkz", role="aut")
+    )
 Description: 'punisheR' is a package that provides you with the tools to perform forward and backward selection using AIC and BIC. 
-License: What license is it under?
+License: BSD 3-Clause
 URL: https://github.com/UBC-MDS/punisheR
 BugReports: https://github.com/UBC-MDS/punisheR/issues
 Encoding: UTF-8
 LazyData: true
 Suggests: 
     testthat
+RoxygenNote: 6.0.1
