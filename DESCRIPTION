@@ -4,7 +4,7 @@ Title: Feature Selection Using AIC and BIC
 Version: 0.1.0
 Authors@R: c(
     person("Tariq", "Hassan", "@TariqAHassan", role="aut"),
-    person("Jill, "Cates", "@topspinj", role="aut"),
+    person("Jill", "Cates", "@topspinj", role="aut"),
     person("Avinash", "Prabhakaran", "@avinashkz", role="aut")
     )
 Description: 'punisheR' is a package that provides you with the tools to perform forward and backward selection using AIC and BIC. 
