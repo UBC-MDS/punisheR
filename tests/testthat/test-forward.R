@@ -6,10 +6,10 @@ context("forward.R")
 
 source('data_for_tests.R')
 data <- test_data(99)
-X_train <- data[1]
-y_train <- data[2]
-X_val <- data[3]
-y_val <- data[4]
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
 
 # -----------------------------------------------------------------------------
 # `model` Param

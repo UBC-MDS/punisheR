@@ -6,21 +6,28 @@ context("backward.R")
 
 source('data_for_tests.R')
 data <- test_data(99)
-X_train <- data[1]
-y_train <- data[2]
-X_val <- data[3]
-y_val <- data[4]
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
 
 # -----------------------------------------------------------------------------
 # `model` Param
 # -----------------------------------------------------------------------------
+
+test_that("it works", {
+    output <- backward(X_train, y_train, X_val, y_val,
+                       n_features=0.5, min_change=NULL, criterion='r-squared',
+                       verbose=TRUE)
+    expect_true(length(output) > 0)
+})
 
 test_that("model input is a Base-R model", {
     # Test that the `model` param in `backward()`
     # will raise a TypeError when passed something other
     # than a Base R model.
     expect_error(backward(1234, X_train, y_train, X_val, y_val,
-                    min_change=0.5, n_features, criterion='aic',
+                    n_features=0.3, criterion='aic',
                     verbose=TRUE), "`model` not a Base-R Model.")
 })
 
@@ -35,7 +42,7 @@ test_that("model data is in the correct format", {
     # 2D matrix (features) or 1D vector (response variable) where
     # X is 'features' and Y is the response variable
     expect_error(backward(1234, y_train, X_val, y_val,
-                          min_change=0.5, n_features, criterion='aic',
+                          criterion='aic',
                           verbose=TRUE), "`X_train` matrix is not a 2D matrix.")
     expect_error(backward(X_train, 1234, X_val, y_val,
                           min_change=0.5, n_features=2, criterion='aic',

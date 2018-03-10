@@ -6,9 +6,9 @@ source("R/utils.R")
 #'
 #' @description
 #' This is an implementation of the backward selection algorithm
-#' that can be used to select best features in model.
+#' that can be used to select best features in a model.
 #'
-#' @param  model Base R model
+#' @param model Base R model
 #'
 #' @param X_train Training data
 #'
@@ -32,7 +32,7 @@ source("R/utils.R")
 #'  'bic': use Bayesian Information Criterion
 #' @param min_change Smallest change in criterion score to be considered significant.
 #'
-#' @param max_features Maximum number of features to allow.
+#' @param n_features Maximum number of features to allow.
 #'
 #' @param verbose
 #'  if True, print additional information as selection occurs

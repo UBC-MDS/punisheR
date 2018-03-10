@@ -27,7 +27,7 @@ forward(X_train, y_train, X_val, y_val, min_change = 0.5, n_features = NULL,
 \item{min_change}{Smallest change in criterion score to be considered significant.}
 
 \item{criterion}{Model selection criterion
-A criterion to measure relative model quality. 
+A criterion to measure relative model quality.
 'aic': use Akaike Information Criterion
 'bic': use Bayesian Information Criterion}
 
