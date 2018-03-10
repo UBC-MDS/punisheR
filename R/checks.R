@@ -21,7 +21,7 @@ input_checks <- function(n_features, min_change, criterion){
     #         * 'aic': use Akaike Information Criterion.
     #         * 'bic': use Bayesian Information Criterion.
     #
-    criterion_stop_msg <- "`criterion` must be on of: 'r-squared', 'aic', 'bic'."
+    criterion_stop_msg <- "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
     if (is.null(criterion)){
         stop(criterion_stop_msg)
     } else if (!(criterion %in% c('r-squared', 'aic', 'bic'))){

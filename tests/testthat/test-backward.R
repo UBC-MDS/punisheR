@@ -53,7 +53,7 @@ test_that("n_features must be a positive integer", {
                           verbose=TRUE), "`n_features` must be numeric")
     expect_error(backward(X_train, y_train, X_val, y_val,
                           n_features=-2, criterion='r-squared',
-                          verbose=TRUE), "`n_features` should be a positive `int`")
+                          verbose=TRUE), "`n_features` must be greater than zero")
 })
 
 
@@ -62,7 +62,7 @@ test_that("criterion param must be either aic or bic", {
     # when passed something other than 'aic' or 'bic'
     expect_error(backward(X_train, y_train, X_val, y_val,
                     n_features=0.5, criterion="abc",
-                    verbose=TRUE), "unexpected `criterion`")
+                    verbose=TRUE), "`criterion` must be on of: 'r-squared', 'aic', 'bic'")
 })
 
 # -----------------------------------------------------------------------------
