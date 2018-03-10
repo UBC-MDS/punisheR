@@ -60,25 +60,25 @@ y_val <- rnorm(10)
 
 
 ```{r}
-forward(lm, X_train, y_train, X_val, y_val,
+forward(X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='aic',
                      verbose=TRUE)
 ```
 
 ```{r}
-forward(lm, X_train, y_train, X_val, y_val,
+forward(X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='bic',
                      verbose=TRUE)
 ```
 
 ```{r}
-backward(lm, X_train, y_train, X_val, y_val,
+backward(X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='aic',
                      verbose=TRUE)
 ```
 
 ```{r}
-backward(lm, X_train, y_train, X_val, y_val,
+backward(X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='bic',
                      verbose=TRUE)
 ```
