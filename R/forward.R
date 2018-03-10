@@ -42,10 +42,10 @@ forward_break_criteria <- function(S, current_best_j, n_features,
 #' Forward Selection Algorithm.
 #'
 #' @description
-#' This is an implementation of the forward selection algorithm
-#' that can be used to select best features in model.
-#'
-#' @param  model Base R model
+#' This is an implementation of the forward selection algorithm in which you
+#' start with a null model and iteratively add the most useful features.
+#' This function is built for the specific case of forward selection in
+#' linear regression models.
 #'
 #' @param X_train Training data
 #'

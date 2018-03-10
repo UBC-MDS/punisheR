@@ -33,16 +33,16 @@ A criterion to measure relative model quality.
 
 \item{verbose}{if True, print additional information as selection occurs}
 
-\item{model}{Base R model}
-
 \item{max_features}{Maximum number of features to allow.}
 }
 \value{
 A vector
 }
 \description{
-This is an implementation of the forward selection algorithm
-that can be used to select best features in model.
+This is an implementation of the forward selection algorithm in which you
+start with a null model and iteratively add the most useful features.
+This function is built for the specific case of feature selection in
+linear regression models.
 }
 \examples{
 model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)

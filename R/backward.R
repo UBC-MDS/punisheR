@@ -6,9 +6,10 @@ source("R/utils.R")
 #'
 #' @description
 #' This is an implementation of the backward selection algorithm
-#' that can be used to select best features in a model.
+#' in which you start with a full model and iteratively remove the
+#' least useful feature at each step. This function is built for the specific case
+#' of backward selection in linear regression models.
 #'
-#' @param model Base R model
 #'
 #' @param X_train Training data
 #'
