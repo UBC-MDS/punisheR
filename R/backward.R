@@ -6,9 +6,10 @@ source("R/utils.R")
 #'
 #' @description
 #' This is an implementation of the backward selection algorithm
-#' that can be used to select best features in model.
+#' in which you start with a full model and iteratively remove the
+#' least useful feature at each step. This function is built for the specific case
+#' of backward selection in linear regression models.
 #'
-#' @param  model Base R model
 #'
 #' @param X_train Training data
 #'
@@ -32,7 +33,7 @@ source("R/utils.R")
 #'  'bic': use Bayesian Information Criterion
 #' @param min_change Smallest change in criterion score to be considered significant.
 #'
-#' @param max_features Maximum number of features to allow.
+#' @param n_features Maximum number of features to allow.
 #'
 #' @param verbose
 #'  if True, print additional information as selection occurs
@@ -45,7 +46,10 @@ source("R/utils.R")
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,
                      criterion='r-squared', verbose=TRUE){
-    input_checks(n_features, min_change=min_change, criterion=criterion)
+
+    input_data_checks(X_train, y_train)
+    input_data_checks(X_val, y_val)
+    input_checks(n_features=n_features, min_change=min_change, criterion=criterion)
     S = 1:ncol(X_train)  # start with all features
 
     if (!is.null(n_features)){
@@ -54,7 +58,7 @@ backward <- function(X_train, y_train, X_val, y_val,
         )
     }
 
-    last_iter_score = fit_and_score(
+    last_iter_score <- fit_and_score(
         S=S, feature=NULL, algorithm='backward', X_train=X_train,
         y_train=y_train, X_val=X_val, y_val=y_val, criterion=criterion
     )

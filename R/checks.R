@@ -21,7 +21,7 @@ input_checks <- function(n_features, min_change, criterion){
     #         * 'aic': use Akaike Information Criterion.
     #         * 'bic': use Bayesian Information Criterion.
     #
-    criterion_stop_msg <- "`criterion` must be on of: 'r-squared', 'aic', 'bic'."
+    criterion_stop_msg <- "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
     if (is.null(criterion)){
         stop(criterion_stop_msg)
     } else if (!(criterion %in% c('r-squared', 'aic', 'bic'))){
@@ -44,4 +44,21 @@ input_checks <- function(n_features, min_change, criterion){
             stop("`n_features` must be greater than zero.")
         }
     }
+}
+
+input_data_checks <- function(X, y) {
+
+    X_string <- deparse(substitute(X))
+    y_string <- deparse(substitute(y))
+    stop_msg <- paste0(X_string, " must be a 2D matrix")
+    if(!is.matrix(X)) {
+        stop(stop_msg)
+    } else if(!(is.vector(y) & is.numeric(y))) {
+        stop_msg <- paste0(y_string, " must be a 1D vector")
+        stop(stop_msg)
+    } else if(length(y)!=dim(X)[1]) {
+        shape_msg <- paste0(X_string, " and ", y_string, " must have the same number of observations")
+        stop(shape_msg)
+    }
+
 }

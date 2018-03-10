@@ -27,13 +27,11 @@ forward(X_train, y_train, X_val, y_val, min_change = 0.5, n_features = NULL,
 \item{min_change}{Smallest change in criterion score to be considered significant.}
 
 \item{criterion}{Model selection criterion
-A criterion to measure relative model quality. 
+A criterion to measure relative model quality.
 'aic': use Akaike Information Criterion
 'bic': use Bayesian Information Criterion}
 
 \item{verbose}{if True, print additional information as selection occurs}
-
-\item{model}{Base R model}
 
 \item{max_features}{Maximum number of features to allow.}
 }
@@ -41,8 +39,10 @@ A criterion to measure relative model quality.
 A vector
 }
 \description{
-This is an implementation of the forward selection algorithm
-that can be used to select best features in model.
+This is an implementation of the forward selection algorithm in which you
+start with a null model and iteratively add the most useful features.
+This function is built for the specific case of feature selection in
+linear regression models.
 }
 \examples{
 model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)

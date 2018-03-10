@@ -6,23 +6,11 @@ context("forward.R")
 
 source('data_for_tests.R')
 data <- test_data(99)
-X_train <- data[1]
-y_train <- data[2]
-X_val <- data[3]
-y_val <- data[4]
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
 
-# -----------------------------------------------------------------------------
-# `model` Param
-# -----------------------------------------------------------------------------
-
-test_that("model input is a Base-R model", {
-  # Test that the `model` param in `forward()`
-  # will raise a TypeError when passed something other
-  # than a Base R model.
-  expect_error(forward(1234, X_train, y_train, X_val, y_val,
-                        min_change=0.5, n_features, criterion='aic',
-                        verbose=TRUE), "`model` not a Base-R Model.")
-})
 
 # -----------------------------------------------------------------------------
 # Data Params
@@ -35,16 +23,16 @@ test_that("model data is in the correct format", {
   # X is 'features' and Y is the response variable
   expect_error(forward(1234, y_train, X_val, y_val,
                         min_change=0.5, n_features, criterion='aic',
-                        verbose=TRUE), "`X_train` matrix is not a 2D matrix.")
+                        verbose=TRUE), "X_train matrix must a 2D matrix.")
   expect_error(forward(X_train, 1234, X_val, y_val,
                         min_change=0.5, n_features=2, criterion='aic',
-                        verbose=TRUE), "`y_train` is not a 1D vector.")
+                        verbose=TRUE), "y_train must be a 1D vector.")
   expect_error(forward(X_train, y_train, 1234, y_val,
                         min_change=0.5, n_features=2, criterion='aic',
-                        verbose=TRUE), "`X_val` is not a 2D matrix.")
+                        verbose=TRUE), "X_val must be a 2D matrix.")
   expect_error(forward(X_train, y_train, X_val, 1234,
                         min_change=0.5, n_features=2, criterion='aic',
-                        verbose=TRUE), "`y_val` is not a 1D vector.")
+                        verbose=TRUE), "y_val must be a 1D vector.")
 })
 
 

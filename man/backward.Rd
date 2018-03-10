@@ -24,25 +24,25 @@ backward(X_train, y_train, X_val, y_val, n_features = 0.5,
 
  A 1D array of target classes for X_val}
 
+\item{n_features}{Maximum number of features to allow.}
+
 \item{min_change}{Smallest change in criterion score to be considered significant.}
 
 \item{criterion}{Model selection criterion
-A criterion to measure relative model quality. 
+A criterion to measure relative model quality.
 'aic': use Akaike Information Criterion
 'bic': use Bayesian Information Criterion}
 
 \item{verbose}{if True, print additional information as selection occurs}
-
-\item{model}{Base R model}
-
-\item{max_features}{Maximum number of features to allow.}
 }
 \value{
 A vector
 }
 \description{
 This is an implementation of the backward selection algorithm
-that can be used to select best features in model.
+in which you start with a full model and iteratively remove the
+least useful feature at each step. This function is built for the specific case
+of feature selection in linear regression models.
 }
 \examples{
 model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
