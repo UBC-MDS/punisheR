@@ -83,7 +83,8 @@ forward_break_criteria <- function(S, current_best_j, n_features,
 forward <- function(X_train, y_train, X_val, y_val,
                     min_change=0.5, n_features=NULL,
                     criterion='r-squared', verbose=TRUE){
-
+    input_data_checks(X_train, y_train)
+    input_data_checks(X_val, y_val)
     input_checks(n_features, min_change=min_change, criterion=criterion)
     total_number_of_features <- ncol(X_train)
     S <- c()

@@ -40,7 +40,7 @@ test_that("training data is in the correct format", {
                           verbose=TRUE), "y_train must be a 1D vector")
     expect_error(backward(X_train, y_train=1234, X_val, y_val,
                           n_features=0.5, criterion='r-squared',
-                          verbose=TRUE), "X_val and y_val must have the same number of observations")
+                          verbose=TRUE), "X_train and y_train must have the same number of observations")
 })
 
 test_that("validation data is in the correct format", {
