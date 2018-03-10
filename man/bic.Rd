@@ -8,19 +8,17 @@ bic(model)
 }
 \arguments{
 \item{model}{Base R model}
-
-\item{X_train}{Training data
-
- A 2D matrix of (observations, features)}
-
-\item{y_train}{Target class for training data}
 }
 \value{
-bic value (float)
+BIC value gets returned as a flaot.
 }
 \description{
-This is an implementation of the backward selection algorithm
-that can be used to select best features in model.
+The Bayesian Information Criterion's objective is to prevent model
+ overfitting by adding a penalty term which penalizes more compelx models. 
+ Its formal definition is:
+ \deqn{ -2*ln(L)+ln(n)*k}
+ where L is the maximized value of the likelihood function. 
+ A smaller BIC value suggests that the model is a better fit for the data.
 }
 \references{
 https://en.wikipedia.org/wiki/Bayesian_information_criterion

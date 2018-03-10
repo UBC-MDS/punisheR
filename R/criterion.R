@@ -1,10 +1,13 @@
 #' R-squared
-#' @description Computes R-squared value for a fitted model. 
+#' @description Coefficient of Determination 
+#' 
 #' @param fit_model A fitted model
+#' 
 #' @param X Feature data
+#' 
 #' @param y True labels (response)
 #'
-#' @references    http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
+#' @references http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
 #' @export
 r_squared <- function(fit_model, X, y){
     df <- as.data.frame(X)
@@ -16,8 +19,20 @@ r_squared <- function(fit_model, X, y){
 }
 
 #' Akaike Information Criterion (AIC)
+#' 
+#' @description The Akaike Information Criterion's objective is to prevent model
+#'  overfitting by adding a penalty term which penalizes more compelx models. 
+#'  Its formal definition is:
+#'  \deqn{-2*ln(L)+2*k}
+#'  where L is the maximized value of the likelihood function. 
+#'  A smaller AIC value suggests that the model is a better fit for the data.
+#'  
 #' @param model R model object
-#' @return aic value 
+#' 
+#' @return  AIC value gets returned as float if sample size is sufficient. 
+#' If n/k < 40 where n is the number of observations and k is the number of features, 
+#' AICc gets returned to adjust for small sample size.
+#' 
 #' @references
 #' https://en.wikipedia.org/wiki/Akaike_information_criterion
 #' @export
@@ -29,19 +44,16 @@ aic <- function(model){
 
 #' Bayesian Information Criterion
 #' 
-#' @description
-#' This is an implementation of the backward selection algorithm
-#' that can be used to select best features in model. 
-#' 
+#' @description The Bayesian Information Criterion's objective is to prevent model
+#'  overfitting by adding a penalty term which penalizes more compelx models. 
+#'  Its formal definition is:
+#'  \deqn{ -2*ln(L)+ln(n)*k}
+#'  where L is the maximized value of the likelihood function. 
+#'  A smaller BIC value suggests that the model is a better fit for the data.
+#'  
 #' @param  model Base R model  
 #'
-#' @param X_train Training data
-#' 
-#'  A 2D matrix of (observations, features)
-#'  
-#' @param y_train Target class for training data
-#' 
-#' @return bic value (float)
+#' @return BIC value gets returned as a flaot.
 #' 
 #' @references https://en.wikipedia.org/wiki/Bayesian_information_criterion
 #' @export

@@ -1,3 +1,7 @@
+source("checks.R")
+source("utils.R")
+
+
 #' Backward Selection Algorithm.
 #' 
 #' @description
@@ -37,11 +41,6 @@
 #' @examples 
 #' model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
 #' bakcward(model, X_train, y_train, min_change=0.3, criterion='aic')
-
-source("checks.R")
-source("utils.R")
-
-
 #' @export
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,

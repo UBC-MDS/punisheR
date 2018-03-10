@@ -14,7 +14,7 @@ r_squared(fit_model, X, y)
 \item{y}{True labels (response)}
 }
 \description{
-Computes R-squared value for a fitted model.
+Coefficient of Determination
 }
 \references{
 http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
