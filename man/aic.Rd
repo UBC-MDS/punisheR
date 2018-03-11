@@ -10,16 +10,14 @@ aic(model)
 \item{model}{R model object}
 }
 \value{
-AIC value gets returned as float if sample size is sufficient. 
-If n/k < 40 where n is the number of observations and k is the number of features, 
-AICc gets returned to adjust for small sample size.
+AIC value gets returned as a float.
 }
 \description{
 The Akaike Information Criterion's objective is to prevent model
- overfitting by adding a penalty term which penalizes more compelx models. 
+ overfitting by adding a penalty term which penalizes more compelx models.
  Its formal definition is:
  \deqn{-2*ln(L)+2*k}
- where L is the maximized value of the likelihood function. 
+ where L is the maximized value of the likelihood function.
  A smaller AIC value suggests that the model is a better fit for the data.
 }
 \references{
