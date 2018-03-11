@@ -8,7 +8,7 @@ Authors@R: c(
     person("Avinash", "Prabhakaran", , email="avinash.prabhakaran@alumni.ubc.ca", role=c("aut", "cre"))
     )
 Description: 'punisheR' is a package that provides you with the tools to perform forward and backward selection using AIC and BIC. 
-License: BSD 3-Clause
+License: BSD_3_clause
 URL: https://github.com/UBC-MDS/punisheR
 BugReports: https://github.com/UBC-MDS/punisheR/issues
 Encoding: UTF-8

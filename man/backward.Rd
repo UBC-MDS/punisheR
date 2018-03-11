@@ -24,7 +24,7 @@ backward(X_train, y_train, X_val, y_val, n_features = 0.5,
 
  A 1D array of target classes for X_val}
 
-\item{n_features}{Maximum number of features to allow.}
+\item{n_features}{Number of features to allow.}
 
 \item{min_change}{Smallest change in criterion score to be considered significant.}
 
@@ -46,5 +46,5 @@ of backward selection in linear regression models.
 }
 \examples{
 model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
-bakcward(model, X_train, y_train, min_change=0.3, criterion='aic')
+bakcward(X_train, y_train, X_val, y_val, min_change=0.3, criterion='aic')
 }

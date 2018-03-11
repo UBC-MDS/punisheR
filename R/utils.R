@@ -53,7 +53,7 @@ fitter <- function(X, y){
     formula <- paste0(deparse(substitute(y)), " ~ ", rhs)
 
     # Fit and return model
-    m <- lm(as.formula(formula), data=df)
+    m <- stats::lm(as.formula(formula), data=df)
     return(m)
 }
 

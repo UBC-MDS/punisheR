@@ -33,7 +33,7 @@ source("R/utils.R")
 #'  'bic': use Bayesian Information Criterion
 #' @param min_change Smallest change in criterion score to be considered significant.
 #'
-#' @param n_features Maximum number of features to allow.
+#' @param n_features Number of features to allow.
 #'
 #' @param verbose
 #'  if True, print additional information as selection occurs
@@ -41,7 +41,7 @@ source("R/utils.R")
 #' @export
 #' @examples
 #' model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
-#' bakcward(model, X_train, y_train, min_change=0.3, criterion='aic')
+#' bakcward(X_train, y_train, X_val, y_val, min_change=0.3, criterion='aic')
 #' @export
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,

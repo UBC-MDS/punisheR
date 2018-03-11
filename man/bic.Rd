@@ -14,10 +14,10 @@ BIC value gets returned as a flaot.
 }
 \description{
 The Bayesian Information Criterion's objective is to prevent model
- overfitting by adding a penalty term which penalizes more compelx models. 
+ overfitting by adding a penalty term which penalizes more compelx models.
  Its formal definition is:
  \deqn{ -2*ln(L)+ln(n)*k}
- where L is the maximized value of the likelihood function. 
+ where L is the maximized value of the likelihood function.
  A smaller BIC value suggests that the model is a better fit for the data.
 }
 \references{

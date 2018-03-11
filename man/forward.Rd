@@ -26,14 +26,14 @@ forward(X_train, y_train, X_val, y_val, min_change = 0.5, n_features = NULL,
 
 \item{min_change}{Smallest change in criterion score to be considered significant.}
 
+\item{n_features}{Number of features to allow.}
+
 \item{criterion}{Model selection criterion
 A criterion to measure relative model quality.
 'aic': use Akaike Information Criterion
 'bic': use Bayesian Information Criterion}
 
 \item{verbose}{if True, print additional information as selection occurs}
-
-\item{max_features}{Maximum number of features to allow.}
 }
 \value{
 A vector
@@ -45,7 +45,6 @@ This function is built for the specific case of forward selection in
 linear regression models.
 }
 \examples{
-model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
-forward(model, X_train, y_train, min_change=0.3, criterion='aic')
+forward(X_train, y_train, X_val, y_val, n_features=0.5, criterion='aic', verbose=TRUE)
 
 }
