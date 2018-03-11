@@ -11,7 +11,7 @@ vignette: >
 
 ```{r setup, include = FALSE}
 
-knitr::opts_chunk$set(eval = FALSE)
+#knitr::opts_chunk$set(eval = FALSE)
 
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -27,18 +27,19 @@ PunisheR is a package for feature and model selection in R. Specifically, this p
 
 The package contains two stepwise feature selection techniques:
 
-- `forward()`: [Forward selection](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches), which involves starting with no variables in the model, testing the addition of each variable using a chosen model fit criterion, adding the variable (if any) whose inclusion gives the most statistically significant improvement of the fit, and repeating this process until none improves the model to a statistically significant extent.
+- `forward()`: [Forward selection](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches) is starting with one variable and scoring each additional variable using a model fit criterion. The process of adding variables are repeated untill there is no statistically significant improvement in the model.
 
-- `backward()`: [Backward selection/elimination](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches), which involves starting with all candidate variables, testing the deletion of each variable using a chosen model fit criterion, deleting the variable (if any) whose loss gives the most statistically insignificant deterioration of the model fit, and repeating this process until no further variables can be deleted without a statistically significant loss of fit.
+- `backward()`: [Backward selection/elimination](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches) is starting with all the variables and scoring deletion of each variable using a model fit criterion. The process of deleting variables are repeated untill there is no statistically significant improvement in the model.
+
+Sources: https://en.wikipedia.org/wiki/Stepwise_regression
 
 The package contains two metrics that evaluate model performance: 
 
-- `aic()`: The [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) is an estimator of the relative quality of statistical models for a given set of data.
+- `aic()`: The [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) is an estimator of the relative quality of statistical models.
 
-- `bic()`: The [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) (BIC) or Schwarz criterion is a criterion for model selection among a finite set of models. It is based, in part, on the [likelihood function](https://en.wikipedia.org/wiki/Likelihood_function) and it is closely related to the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC).
+- `bic()`: The [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) (BIC) is a criterion for model and the penalties associated with BIC is larger than AIC.
 
-
-These two criteria will be used to measure the relative quality of models within `forward()` and `backward()`. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The penalty term is larger in BIC than in AIC. The lower the AIC and BIC score, the better the model.
+These two criteria will be used to measure the relative quality of models within `forward()` and `backward()`. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The lower the AIC and BIC score, the better the model.
 
 ## How does punisheR fit into the existing R ecosystem?
 
@@ -50,46 +51,85 @@ forward and backward stepwise selection, respectively. Both of these are p-value
 which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an
 information criterion (AIC), as we intend ours to be.
 
+
 ```{r}
-X_train <- data.frame(x1=rnorm(10), x2=rep(0,10), x3=rnorm(10), x4=rep(0, 10))
-y_train <- rnorm(10)
-X_val <- data.frame(x1=rnorm(10), x2=rep(0,10), x3=rnorm(10), x4=rep(0, 10))
-y_val <- rnorm(10)
+library(knitr)
+library(punishR)
 ```
 
 
+```{r, echo=FALSE}
+test_data <- function(seed_value) {
+  set.seed(seed_value)
+  features = 20
+  obs = 500
+  middle_feature = features / 2
 
-```{r}
-forward(X_train, y_train, X_val, y_val,
-                     n_features=2, min_change=0.5, criterion='aic',
-                     verbose=TRUE)
+  X <- matrix(0L, nrow=obs, ncol=features)
+  y <- 1:obs
+  X[, middle_feature] <- y + runif(n=obs, min=0, max=50)
+
+  # 75% Training, 25% test (i.e., obs / 4).
+  training <- sample(rep(c(TRUE, TRUE, TRUE, FALSE), obs / 4))
+
+  # Training Data ---
+  X_train <- X[training,]
+  y_train <- y[training]
+
+  # Validation Data ---
+  X_val <- X[!training,]
+  y_val <- y[!training]
+
+  TRUE_BEST_FEATURE <- middle_feature
+
+  return(list(X_train, y_train, X_val, y_val))
+}
+
 ```
 
 ```{r}
-forward(X_train, y_train, X_val, y_val,
-                     n_features=2, min_change=0.5, criterion='bic',
-                     verbose=TRUE)
+#Loading the demo data
+data <- test_data(99)
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
+
+#Training data set
+kable(as.data.frame(X_train[1:5,])) 
 ```
 
-```{r}
+#### Forward Selection
+
+```{r, warning=FALSE}
+
+forward(X_train, y_train, X_val, y_val, min_change=0.5,
+                    n_features=NULL, criterion='r-squared', verbose=FALSE)
+
+```
+When implementing forward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
+
+#### Backward Selection
+
+```{r, warning=FALSE}
+
 backward(X_train, y_train, X_val, y_val,
-                     n_features=2, min_change=0.5, criterion='aic',
-                     verbose=TRUE)
+                     n_features=1, min_change=NULL, criterion='r-squared',
+                     verbose=FALSE)
+
 ```
+
+When implementing backward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
+
+#### AIC & BIC
 
 ```{r}
-backward(X_train, y_train, X_val, y_val,
-                     n_features=2, min_change=0.5, criterion='bic',
-                     verbose=TRUE)
+
+model <- lm(y_train~X_train)
+
+aic(model)
+
+bic(model)
 ```
 
-```{r}
-aic(lm(y_train~X_train))
-```
-
-
-```{r}
-bic(lm(y_train~X_train))
-```
-
-
+When scoring the two the model using AIC and BIC, we can see that the penalty when using `bic` is greater than the penalty obtained using `aic`.
