@@ -11,7 +11,7 @@
 #' @export
 r_squared <- function(fit_model, X, y){
     df <- as.data.frame(X)
-    y_pred <- predict(fit_model, df)
+    y_pred <- suppressWarnings(predict(fit_model, df))
     y_true_mean <- mean(y)
     num <- sum((y - y_pred)^2)
     denom <- sum((y - y_true_mean)^2)
@@ -94,7 +94,7 @@ aic <- function(model){
 #' @export
 bic <- function(model){
 
-    return(NULL)    if(!is.object(model)){
+    if(!is.object(model)){
         stop("`model` not a Base-R Model.")
     }
 
