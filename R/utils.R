@@ -34,7 +34,7 @@ parse_n_features <- function(n_features, total){
 }
 
 
-fitter <- function(X, y){
+fitter <- function(X0, y0){
     # Fit a linear regression model.
     #
     # Args:
@@ -46,14 +46,12 @@ fitter <- function(X, y){
     # Returns:
     #   A fitted `lm()` model.
     #
+    X<-X0
+    y<-y0
     df <- cbind(as.data.frame(X),as.data.frame(y))
-    # Define formula
-    preds <- colnames(df)[1:length(colnames(df)) - 1]
-    rhs <- paste(preds, collapse = " + ")
-    formula <- paste0(deparse(substitute(y)), " ~ ", rhs)
 
     # Fit and return model
-    m <- lm(as.formula(formula), data=df)
+    m <- stats::lm(y ~., data=df)
     return(m)
 }
 

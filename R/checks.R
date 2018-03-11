@@ -51,16 +51,14 @@ input_checks <- function(n_features, min_change, criterion){
 
 input_data_checks <- function(X, y) {
 
-    X_string <- deparse(substitute(X))
-    y_string <- deparse(substitute(y))
-    stop_msg <- paste0(X_string, " must be a 2D matrix")
+    stop_msg <- "X must be a 2D matrix"
     if(!is.matrix(X)) {
         stop(stop_msg)
     } else if(!(is.vector(y) & is.numeric(y))) {
-        stop_msg <- paste0(y_string, " must be a 1D vector")
+        stop_msg <- "y must be a 1D vector"
         stop(stop_msg)
     } else if(length(y)!=dim(X)[1]) {
-        shape_msg <- paste0(X_string, " and ", y_string, " must have the same number of observations")
+        shape_msg <- "X and y must have the same number of observations"
         stop(shape_msg)
     }
 

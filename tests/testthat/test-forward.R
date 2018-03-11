@@ -23,25 +23,25 @@ test_that("model data is in the correct format", {
   # X is 'features' and Y is the response variable
   expect_error(forward(1234, y_train, X_val, y_val,
                         min_change=0.5, criterion='aic',
-                        verbose=TRUE), "X_train must be a 2D matrix")
+                        verbose=TRUE), "X must be a 2D matrix")
   expect_error(forward(X_train, y_train='1234', X_val, y_val,
                         min_change=0.5, criterion='aic',
-                        verbose=TRUE), "y_train must be a 1D vector")
+                        verbose=TRUE), "y must be a 1D vector")
   expect_error(forward(X_train, y_train=1234, X_val, y_val,
                        min_change=0.5, criterion='aic',
-                       verbose=TRUE), "X_train and y_train must have the same number of observations")
+                       verbose=TRUE), "X and y must have the same number of observations")
 })
 
 test_that("validation data is in the correct format", {
     expect_error(forward(X_train, y_train, X_val=1234, y_val,
                          min_change=0.5, criterion='aic',
-                         verbose=TRUE), "X_val must be a 2D matrix")
+                         verbose=TRUE), "X must be a 2D matrix")
     expect_error(forward(X_train, y_train, X_val, y_val=1234,
                          min_change=0.5, criterion='aic',
-                         verbose=TRUE), "X_val and y_val must have the same number of observations")
+                         verbose=TRUE), "X and y must have the same number of observations")
     expect_error(forward(X_train, y_train, X_val, y_val='1234',
                          min_change=0.5, criterion='aic',
-                         verbose=TRUE), "y_val must be a 1D vector")
+                         verbose=TRUE), "y must be a 1D vector")
 })
 
 
