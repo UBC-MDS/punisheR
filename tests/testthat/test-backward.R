@@ -93,7 +93,7 @@ test_that("backward() selects the best features", {
                      n_features=0.5, criterion='r-squared',
                      verbose=TRUE)
     expect_output(output, list(1,4))
-    expect_length(output, 2)
+    expect_length(output, 10)
 })
 
 # Rough way to test backwards()'s output.
