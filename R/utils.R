@@ -108,14 +108,13 @@ fit_and_score <- function(S, feature, algorithm, X_train,
         X_val_to_use <- as.matrix(X_val_to_use)
     }
 
-    # ToDo: add AIC and BIC options.
     fit <- fitter(X=X_train_to_use, y=y_train)
     if (criterion == 'r-squared'){
         score <- r_squared(fit_model=fit, X=X_val_to_use, y=y_val)
     } else if (criterion == 'aic'){
-        stop("Not Yet Implemented.")
+        score <- aic(model=fit)
     } else if (criterion == 'bic'){
-        stop("Not Yet Implemented.")
+        score <- bic(model=fit)
     }
     return(score)
 }

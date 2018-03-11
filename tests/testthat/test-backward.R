@@ -90,10 +90,10 @@ test_that("criterion param must be either aic or bic", {
 test_that("backward() selects the best features", {
     # Test that `backward()` will output a vector with the 'best' features
     output <- backward(X_train, y_train, X_val, y_val,
-                     n_features=0.5, criterion='r-squared',
+                     n_features=1, criterion='r-squared',
                      verbose=TRUE)
-    expect_output(output, list(1,4))
-    expect_length(output, 2)
+    expect_equal(output, c(10))
+    expect_length(output, 1)
 })
 
 # Rough way to test backwards()'s output.
