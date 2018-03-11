@@ -40,8 +40,8 @@ source("R/utils.R")
 #' @return A vector
 #' @export
 #' @examples
-#' model = lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
-#' bakcward(X_train, y_train, X_val, y_val, min_change=0.3, criterion='aic')
+#' model <- lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
+#' backward(X_train, y_train, X_val, y_val, min_change=0.3, criterion='aic')
 #' @export
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,
@@ -56,6 +56,7 @@ backward <- function(X_train, y_train, X_val, y_val,
         n_features <- parse_n_features(
             n_features=n_features, total=length(S)
         )
+        min_change <- NULL
     }
 
     last_iter_score <- fit_and_score(

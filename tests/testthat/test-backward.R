@@ -12,18 +12,9 @@ X_val <- data[[3]]
 y_val <- data[[4]]
 
 
-test_that("smoke test", {
-    output <- backward(X_train, y_train, X_val, y_val,
-                       n_features=0.5, criterion='r-squared',
-                       verbose=TRUE)
-    expect_true(length(output) > 0)
-})
-
-
 # -----------------------------------------------------------------------------
 # Data Params
 # -----------------------------------------------------------------------------
-
 
 test_that("training data is in the correct format", {
     # Test that the training data params in `backward()` will raise
@@ -90,7 +81,7 @@ test_that("criterion param must be either aic or bic", {
 test_that("backward() selects the best features", {
     # Test that `backward()` will output a vector with the 'best' features
     output <- backward(X_train, y_train, X_val, y_val,
-                     n_features=1, criterion='r-squared',
+                     n_features=1, min_change=NULL, criterion='r-squared',
                      verbose=TRUE)
     expect_equal(output, c(10))
     expect_length(output, 1)

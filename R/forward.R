@@ -76,7 +76,8 @@ forward_break_criteria <- function(S, current_best_j, n_features,
 #' @return A vector
 #' @export
 #' @examples
-#' forward(X_train, y_train, X_val, y_val, n_features=0.5, criterion='aic', verbose=TRUE)
+#' model <- lm(Sepal.Length~Sepal.Width+Petal.Length+Petal.Width, data=iris)
+#' forward(X_train, y_train, X_val, y_val, min_change=0.3, criterion='aic')
 #'
 #' @export
 forward <- function(X_train, y_train, X_val, y_val,
