@@ -94,7 +94,7 @@ aic <- function(model){
 #' @export
 bic <- function(model){
 
-    return(NULL)    if(!is.object(model)){
+    if(!is.object(model)){
         stop("`model` not a Base-R Model.")
     }
 
