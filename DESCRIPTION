@@ -1,4 +1,4 @@
-Package: punisheR
+Package: punishR
 Type: Package
 Title: Feature Selection Using AIC and BIC
 Version: 0.1.0
