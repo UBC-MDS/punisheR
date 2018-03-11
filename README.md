@@ -46,7 +46,7 @@ information criterion (AIC), as we intend ours to be.
 
 ## How to run unit tests
 
-We are using `testthat` for unit testing in punisheR. To run all tests in **RStudio**, press `Cmd/Ctrl` + `Shift` + `T` . 
+We are using `testthat` for unit testing in punisheR. To run all tests in **RStudio**, use `Cmd/Ctrl` + `Shift` + `T` or `devtools::test()` in your console. 
 
 ## Contributors: 
 
