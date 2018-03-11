@@ -38,7 +38,7 @@ The package contains two metrics that evaluate model performance:
 - `bic()`: The [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) (BIC) or Schwarz criterion is a criterion for model selection among a finite set of models. It is based, in part, on the [likelihood function](https://en.wikipedia.org/wiki/Likelihood_function) and it is closely related to the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC).
 
 
-These two criteria will be used to measure the relative quality of models within `forward_selection()` and `backward_selection()`. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The penalty term is larger in BIC than in AIC. The lower the AIC and BIC score, the better the model.
+These two criteria will be used to measure the relative quality of models within `forward()` and `backward()`. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The penalty term is larger in BIC than in AIC. The lower the AIC and BIC score, the better the model.
 
 ## How does punisheR fit into the existing R ecosystem?
 
@@ -60,25 +60,25 @@ y_val <- rnorm(10)
 
 
 ```{r}
-forward(lm, X_train, y_train, X_val, y_val,
+forward(X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='aic',
                      verbose=TRUE)
 ```
 
 ```{r}
-forward(lm, X_train, y_train, X_val, y_val,
+forward(X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='bic',
                      verbose=TRUE)
 ```
 
 ```{r}
-backward(lm, X_train, y_train, X_val, y_val,
+backward(X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='aic',
                      verbose=TRUE)
 ```
 
 ```{r}
-backward(lm, X_train, y_train, X_val, y_val,
+backward(X_train, y_train, X_val, y_val,
                      n_features=2, min_change=0.5, criterion='bic',
                      verbose=TRUE)
 ```
