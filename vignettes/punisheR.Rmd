@@ -11,8 +11,6 @@ vignette: >
 
 ```{r setup, include = FALSE}
 
-knitr::opts_chunk$set(eval = FALSE)
-
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -51,57 +49,61 @@ forward and backward stepwise selection, respectively. Both of these are p-value
 which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an
 information criterion (AIC), as we intend ours to be.
 
+
 ```{r}
-library(punishR)
+
+library(knitr)
+source('tests/testthat/data_for_tests.R')
+source('R/backward.R')
+source('R/backward.R')
+source('R/criterion.R')
+
 ```
 
 
 ```{r}
-source('../tests/testthat/data_for_tests.R')
+#Loading the demo data
 data <- test_data(99)
 X_train <- data[[1]]
 y_train <- data[[2]]
 X_val <- data[[3]]
 y_val <- data[[4]]
+
+#Training data set
+kable(as.data.frame(X_train[1:5,])) 
 ```
 
+#### Forward Selection
 
-
-```{r}
-forward(X_train, y_train, X_val, y_val, min_change=0.5,
-                    n_features=NULL, criterion='r-squared', verbose=TRUE)
+```{r, warning=FALSE}
 
 forward(X_train, y_train, X_val, y_val, min_change=0.5,
-                    n_features=NULL, criterion='r-squared', verbose=TRUE)
+                    n_features=NULL, criterion='r-squared', verbose=FALSE)
+
 ```
+When implementing forward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
 
-```{r}
-forward(X_train, y_train, X_val, y_val,
-                     n_features=2, min_change=0.5, criterion='bic',
-                     verbose=TRUE)
-forward(X_train, y_train, X_val, y_val, min_change=0.5,
-                    n_features=NULL, criterion='r-squared', verbose=TRUE)
-```
+#### Backward Selection
 
-```{r}
+```{r, warning=FALSE}
+
 backward(X_train, y_train, X_val, y_val,
-                     n_features=2, min_change=0.5, criterion='aic',
-                     verbose=TRUE)
+                     n_features=1, min_change=NULL, criterion='r-squared',
+                     verbose=FALSE)
+
 ```
+
+When implementing backward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
+
+#### AIC & BIC
 
 ```{r}
-backward(X_train, y_train, X_val, y_val,
-                     n_features=2, min_change=0.5, criterion='bic',
-                     verbose=TRUE)
+
+model <- lm(y_train~X_train)
+
+aic(model)
+
+bic(model)
 ```
 
-```{r}
-aic(lm(y_train~X_train))
-```
-
-
-```{r}
-bic(lm(y_train~X_train))
-```
-
-
+When scoring the two the model using AIC and BIC, we can see that the penalty when using `bic` is greater than the penalty obtained using `aic`.
