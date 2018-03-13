@@ -18,22 +18,16 @@ r_squared <- function(fit_model, X, y){
     return(1 - (num / denom))
 }
 
-
-
+#' Get coefficients
+#' @descriptoin a helper function that gets the coefficients required for
+#' AIC and BIC calculations.
+#'
+#' @param model base R model object
+#'
+#' @return n (number of samples), k (number of features),
+#' llf (maximized value of log-likelihood function)
+#' @keywords internal
 .get_coeffs <- function(model){
-
-    # Args:
-    #   model : model object
-    #          A Base-R Model
-    #
-    # Returns:
-    #   n : double
-    #       Number of samples
-    #   k : double
-    #       Number of features
-    #   llf : double
-    #       Maximized value of log likelihood function
-
     n <- length(model$residuals)
     k <- model$rank + 1
     rss = sum(model$residuals^2)

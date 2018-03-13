@@ -1,27 +1,26 @@
 source("R/checks.R")
 source("R/utils.R")
 
-forward_break_criteria <- function(S, current_best_j, n_features,
+#' Forward Break Criteria
+#'
+#' @description checks if `forward()` should break
+#'
+#' @param S the list of features as foud in `forward()` and `backward()` (vector)
+#'
+#' @param current_best_j the best feature currently in `forward()` (vector)
+#'
+#' @param j_score_dict dictionary of scores in step 1. of `forward()` (dict)
+#'
+#' @param n_features `n_features` object as developed inside `forward()` (numeric)
+#'
+#' @param total_number_of_features total number of features in `X_train`/`X_val`
+#'
+#' @return a logical, whether or not `forward()` should halt
+#'
+#' @keywords internal
+.forward_break_criteria <- function(S, current_best_j, n_features,
                                    total_number_of_features){
-    # Check if `forward()` should break.
-    #
-    # Args:
-    #   S : vector
-    #       The 'list' of features as found in `forward`
-    #       and `backward()`
-    #   current_best_j : vector
-    #       The best feature currently in `forward()`.
-    #   j_score_dict : dict
-    #       A dictionary of scores in step 1. of `forward()`.
-    #   n_features : numeric
-    #       The `n_features` object as developed inide `forward()`.
-    #   total_number_of_features : numeric
-    #       The total number of features in `X_train`/`X_val`.
-    #
-    # Returns:
-    #   logical
-    #       Whether or not `forward()` should halt.
-    #
+
     # a. Check if the algorithm should halt b/c of features themselves
     if (is.null(current_best_j)){
         return(TRUE)
@@ -77,9 +76,9 @@ forward_break_criteria <- function(S, current_best_j, n_features,
 forward <- function(X_train, y_train, X_val, y_val,
                     min_change=0.5, n_features=NULL,
                     criterion='r-squared', verbose=TRUE){
-    input_data_checks(X_train, y_train)
-    input_data_checks(X_val, y_val)
-    input_checks(n_features, min_change=min_change, criterion=criterion)
+    .input_data_checks(X_train, y_train)
+    .input_data_checks(X_val, y_val)
+    .input_checks(n_features, min_change=min_change, criterion=criterion)
     total_number_of_features <- ncol(X_train)
     S <- c()
     best_score <- -Inf
@@ -122,7 +121,7 @@ forward <- function(X_train, y_train, X_val, y_val,
             itera <- itera[itera != best_j]  # no longer search over this feature.
         }
         # 3. Check if the algorithm should halt.
-        do_halt <- forward_break_criteria(
+        do_halt <- .forward_break_criteria(
             S=S, current_best_j=current_best_j, n_features=n_features,
             total_number_of_features=total_number_of_features
         )

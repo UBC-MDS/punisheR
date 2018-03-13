@@ -42,16 +42,15 @@ backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,
                      criterion='r-squared', verbose=TRUE){
 
-    input_data_checks(X_train, y_train)
-    input_data_checks(X_val, y_val)
-    input_checks(n_features=n_features, min_change=min_change, criterion=criterion)
+    .input_data_checks(X_train, y_train)
+    .input_data_checks(X_val, y_val)
+    .input_checks(n_features=n_features, min_change=min_change, criterion=criterion)
     S = 1:ncol(X_train)  # start with all features
 
     if (!is.null(n_features)){
         n_features <- parse_n_features(
             n_features=n_features, total=length(S)
         )
-        min_change <- NULL
     }
 
     last_iter_score <- fit_and_score(
@@ -93,6 +92,7 @@ backward <- function(X_train, y_train, X_val, y_val,
 
         # 2b. Halt if the change is not longer considered significant.
         if (!is.null(min_change)){
+          n_features <- NULL
             if (defeated_last_iter_score){
                 if ((best_new_score - last_iter_score) < min_change){
                     break  # there was a change, but it was not large enough.

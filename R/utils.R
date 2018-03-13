@@ -1,26 +1,19 @@
 # Utils
 source("R/criterion.R")
 
-
+#' Parsing features
+#' @description Parse `n_features` for forward and backward selection.
+#' Handles two cases: (a) if `n_features` is an int, ensure it lies on (0, `total`),
+#' and (b) if `n_features` is a float, ensure it lies on (0, 1).
+#'
+#' @param n_features numeric value passed to forward or backward selection
+#'
+#' @param total total features in the data
+#'
+#' @return number of features to select. If `n_features` and it lies on (0, `total`),
+#' it will be returned 'as is'. Whole numbers must lie of [0, total].
+#' @keywords internal
 parse_n_features <- function(n_features, total){
-    # Parse either the `n_features` for forward
-    # and backward selection. Namely
-    # (a) if `n_features` is an int, ensure it lies on (0, `total`),
-    # (a) if `n_features` is a float, ensure it lies on (0, 1).
-    #
-    # Args:
-    #   n_features : numeric
-    #       An `n_features` parameter passed to forward or backward selection.
-    #   total : numeric
-    #       The total features in the data
-    #
-    # Returns:
-    #   numeric
-    #       * number of features to select.
-    #       If `n_features` and it lies on (0, `total`),
-    #       it will be returned 'as is'.
-    #
-    # Whole numbers must lie of [0, total].
     if (n_features <= 0){
         stop("`n_features` must be greater than zero.")
     }
@@ -33,21 +26,18 @@ parse_n_features <- function(n_features, total){
     }
 }
 
-
-fitter <- function(X0, y0){
-    # Fit a linear regression model.
-    #
-    # Args:
-    #   X : matrix
-    #       A matrix of features
-    #   y : vector
-    #       A response vector
-    #
-    # Returns:
-    #   A fitted `lm()` model.
-    #
-    X<-X0
-    y<-y0
+#' Fitter
+#' @description Fits data to a linear regression model.
+#'
+#' @param X0 a matrix of features
+#'
+#' @param y0 a response vector
+#'
+#' @return a fitted lm() model
+#' @keywords internal
+.fitter <- function(X_input, y_input){
+    X<-X_input
+    y<-y_input
     df <- cbind(as.data.frame(X),as.data.frame(y))
 
     # Fit and return model
@@ -55,36 +45,31 @@ fitter <- function(X0, y0){
     return(m)
 }
 
+#' Fit and Score
+#' @description fit and scores the linear regression model
+#'
+#' @param S list of features as found in `forward()` and `backward()`
+#'
+#' @param feature feature to add or drop (int)
+#'
+#' @param algorithm direction of feature selection. One of: 'forward', 'backward'
+#'
+#' @param X_train a 2D matrix of (observations, features).
+#'
+#' @param y_train a 1D array of target classes for X_train.
+#'
+#' @param X_val a 2D matrix of (observations, features).
+#'
+#' @param y_val a 1D array of target classes for X_validate
+#'
+#' @param criterion model selection criterion (string). One of:
+#' 'r-squared', 'aic', 'bic'
+#'
+#' @return score of the model as a float
+#' @keywords internal
 
 fit_and_score <- function(S, feature, algorithm, X_train,
                           y_train, X_val, y_val, criterion){
-    # Fit and score the model.
-    #
-    # Args:
-    #   S : list
-    #       The list of features as found in `forward`
-    #       and `backward()`
-    #   feature : int
-    #       The feature to add or drop.
-    #   algorithm : char
-    #       One of: 'forward', 'backward'.
-    #     X_train matrix
-    #         a 2D matrix of (observations, features).
-    #     y_train : matrix
-    #         a 1D array of target classes for X_train.
-    #     X_val : matrix
-    #         a 2D matrix of (observations, features).
-    #     y_val : matrix
-    #         a 1D array of target classes for X_validate.
-    #     criterion : char
-    #         model selection criterion.
-    #         * 'r-squared': use R-Squared as the criterion.
-    #         * 'aic': use Akaike Information Criterion.
-    #         * 'bic': use Bayesian Information Criterion.
-    #
-    # Returns : float
-    #   The score of the model.
-    #
     if (algorithm == "forward"){
         features <- c(S, feature)
     } else {  # backward
@@ -106,7 +91,7 @@ fit_and_score <- function(S, feature, algorithm, X_train,
         X_val_to_use <- as.matrix(X_val_to_use)
     }
 
-    fit <- fitter(X=X_train_to_use, y=y_train)
+    fit <- .fitter(X_input=X_train_to_use, y_input=y_train)
     if (criterion == 'r-squared'){
         score <- r_squared(fit_model=fit, X=X_val_to_use, y=y_val)
     } else if (criterion == 'aic'){
