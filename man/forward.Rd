@@ -4,8 +4,8 @@
 \alias{forward}
 \title{Forward Selection Algorithm.}
 \usage{
-forward(X_train, y_train, X_val, y_val,
-min_change=0.5,criterion='r-squared', verbose=TRUE)
+forward(X_train, y_train, X_val, y_val, min_change = 0.5, n_features = NULL,
+  criterion = "r-squared", verbose = TRUE)
 }
 \arguments{
 \item{X_train}{Training data. Represented as a 2D matrix of (observations, features).}
@@ -18,7 +18,7 @@ min_change=0.5,criterion='r-squared', verbose=TRUE)
 
 \item{min_change}{The smallest change in criterion score to be considered significant.}
 
-\item{n_features}{The number of features to allow, expressed either as a proporition (0,1)
+\item{n_features}{The number of features to select, expressed either as a proporition (0,1)
 or whole number with range (0,total_features)}
 
 \item{criterion}{Model selection criterion to measure relative model quality. Can be one of:

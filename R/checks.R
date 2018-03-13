@@ -53,7 +53,7 @@ input_checks <- function(n_features, min_change, criterion){
 #' \itemize{
 #'   \item \code{X} and \code{y} are appropriate dimensions (both same number of observations)
 #'   \item \code{X} is a 2D numeric vector and \code{y} is a 1D numeric vector
-#'
+#' }
 #' @param X input for either \code{X_train} or \code{X_val}. Expected to be a 2D numeric matrix.
 #'
 #' @param y input for either \code{y_train} or \code{y_val}. Expected to be a 1D numeric matrix.

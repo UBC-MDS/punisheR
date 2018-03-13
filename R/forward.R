@@ -46,8 +46,6 @@ source("R/utils.R")
 #' This function is built for the specific case of forward selection in
 #' linear regression.
 #'
-#' @usage forward(X_train, y_train, X_val, y_val,
-#' min_change=0.5,criterion='r-squared', verbose=TRUE)
 #'
 #' @param X_train Training data. Represented as a 2D matrix of (observations, features).
 #'
@@ -66,7 +64,7 @@ source("R/utils.R")
 #'
 #' @param min_change The smallest change in criterion score to be considered significant.
 #'
-#' @param n_features The number of features to allow, expressed either as a proporition (0,1)
+#' @param n_features The number of features to select, expressed either as a proporition (0,1)
 #' or whole number with range (0,total_features)
 #'
 #' @param verbose

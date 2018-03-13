@@ -19,13 +19,14 @@ r_squared <- function(fit_model, X, y){
 }
 
 #' Get coefficients
-#' @description a helper function that gets the coefficients required for
+#' @description A helper function that gets the coefficients required for
 #' AIC and BIC calculations.
 #'
 #' @param model base R model object
 #'
-#' @return n (number of samples), k (number of features),
-#' llf (maximized value of log-likelihood function)
+#' @return A vector of \code{n} (number of samples), \code{k} (number of features),
+#' \code{llf} (maximized value of log-likelihood function)
+#'
 #' @keywords internal
 .get_coeffs <- function(model){
     n <- length(model$residuals)
@@ -47,12 +48,11 @@ r_squared <- function(fit_model, X, y){
 #'  where L is the maximized value of the likelihood function.
 #'  A smaller AIC value suggests that the model is a better fit for the data.
 #'
-#' @param model R model object
+#' @param model A base R model object (e.g., \code{lm()})
 #'
 #' @return  AIC value gets returned as a float.
 #'
-#' @references
-#' https://en.wikipedia.org/wiki/Akaike_information_criterion
+#' @references https://en.wikipedia.org/wiki/Akaike_information_criterion
 #' @export
 aic <- function(model){
 
@@ -80,7 +80,7 @@ aic <- function(model){
 #'  where L is the maximized value of the likelihood function.
 #'  A smaller BIC value suggests that the model is a better fit for the data.
 #'
-#' @param  model Base R model
+#' @param  model A base R model object (e.g., \code{lm()})
 #'
 #' @return BIC value gets returned as a flaot.
 #'

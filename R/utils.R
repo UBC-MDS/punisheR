@@ -2,16 +2,20 @@
 source("R/criterion.R")
 
 #' Parsing features
-#' @description Parse `n_features` for forward and backward selection.
-#' Handles two cases: (a) if `n_features` is an int, ensure it lies on (0, `total`),
-#' and (b) if `n_features` is a float, ensure it lies on (0, 1).
+#' @description Parse \code{n_features} for forward and backward selection.
+#' Handles two cases:
+#' \itemize{
+#' \item if \code{n_features} is an integer, ensure it lies on (0, total).
+#' \item if \code{n_features} is a float, ensure it lies on (0, 1).
+#' }
+#' @param n_features Numeric value passed to forward or backward selection.
 #'
-#' @param n_features numeric value passed to forward or backward selection
+#' @param total Total features in the data
 #'
-#' @param total total features in the data
+#' @return Number of features to select. If initial \code{n_features} lies on (0, total_features),
+#' it will be returned 'as is'. If \code{n_feature} is passed in as a proporition with range (0,1), it will
+#' be converted to an integer representing proprition with respect to the total number of features.
 #'
-#' @return number of features to select. If `n_features` and it lies on (0, `total`),
-#' it will be returned 'as is'. Whole numbers must lie of [0, total].
 #' @keywords internal
 parse_n_features <- function(n_features, total){
     if (n_features <= 0){
@@ -29,11 +33,11 @@ parse_n_features <- function(n_features, total){
 #' Fitter
 #' @description Fits data to a linear regression model.
 #'
-#' @param X0 a matrix of features
+#' @param X_input A 2D matrix of features
 #'
-#' @param y0 a response vector
+#' @param y_input A 1D vector representing the resposne variable
 #'
-#' @return a fitted lm() model
+#' @return A fitted \code{lm()} model
 #' @keywords internal
 fitter <- function(X_input, y_input){
     X<-X_input

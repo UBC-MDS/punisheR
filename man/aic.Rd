@@ -7,7 +7,7 @@
 aic(model)
 }
 \arguments{
-\item{model}{R model object}
+\item{model}{A base R model object (e.g., \code{lm()})}
 }
 \value{
 AIC value gets returned as a float.

@@ -7,12 +7,12 @@
 fitter(X_input, y_input)
 }
 \arguments{
-\item{X0}{a matrix of features}
+\item{X_input}{A 2D matrix of features}
 
-\item{y0}{a response vector}
+\item{y_input}{A 1D vector representing the resposne variable}
 }
 \value{
-a fitted lm() model
+A fitted \code{lm()} model
 }
 \description{
 Fits data to a linear regression model.

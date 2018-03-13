@@ -11,4 +11,12 @@ input_data_checks(X, y)
 
 \item{y}{input for either \code{y_train} or \code{y_val}. Expected to be a 1D numeric matrix.}
 }
+\description{
+Checks that input data for `forward()` and `backward()`
+functions are the correct format. Specifically looks for:
+\itemize{
+  \item \code{X} and \code{y} are appropriate dimensions (both same number of observations)
+  \item \code{X} is a 2D numeric vector and \code{y} is a 1D numeric vector
+}
+}
 \keyword{internal}

@@ -4,8 +4,8 @@
 \alias{backward}
 \title{Backward Selection Algorithm.}
 \usage{
-backward(X_train, y_train, X_val, y_val,
-n_features=0.5,criterion='aic', verbose=TRUE)
+backward(X_train, y_train, X_val, y_val, n_features = 0.5,
+  min_change = NULL, criterion = "r-squared", verbose = TRUE)
 }
 \arguments{
 \item{X_train}{Training data. Represented as a 2D matrix of (observations, features).}
@@ -16,7 +16,7 @@ n_features=0.5,criterion='aic', verbose=TRUE)
 
 \item{y_val}{Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.}
 
-\item{n_features}{The number of features to allow, expressed either as a proporition (0,1)
+\item{n_features}{The number of features to select, expressed either as a proporition (0,1)
 or whole number with range (0,total_features)}
 
 \item{min_change}{Smallest change in criterion score to be considered significant, as a numeric.}

@@ -10,8 +10,6 @@ source("R/utils.R")
 #' least useful feature at each step. This function is built for the specific case
 #' of backward selection in linear regression models.
 #'
-#' @usage backward(X_train, y_train, X_val, y_val,
-#' n_features=0.5,criterion='aic', verbose=TRUE)
 #'
 #' @param X_train Training data. Represented as a 2D matrix of (observations, features).
 #'
@@ -30,7 +28,7 @@ source("R/utils.R")
 #'
 #' @param min_change Smallest change in criterion score to be considered significant, as a numeric.
 #'
-#' @param n_features The number of features to allow, expressed either as a proporition (0,1)
+#' @param n_features The number of features to select, expressed either as a proporition (0,1)
 #' or whole number with range (0,total_features)
 #'
 #' @param verbose

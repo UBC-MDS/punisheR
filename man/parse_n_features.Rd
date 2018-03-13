@@ -7,17 +7,21 @@
 parse_n_features(n_features, total)
 }
 \arguments{
-\item{n_features}{numeric value passed to forward or backward selection}
+\item{n_features}{Numeric value passed to forward or backward selection.}
 
-\item{total}{total features in the data}
+\item{total}{Total features in the data}
 }
 \value{
-number of features to select. If `n_features` and it lies on (0, `total`),
-it will be returned 'as is'. Whole numbers must lie of [0, total].
+Number of features to select. If initial \code{n_features} lies on (0, total_features),
+it will be returned 'as is'. If \code{n_feature} is passed in as a proporition with range (0,1), it will
+be converted to an integer representing proprition with respect to the total number of features.
 }
 \description{
-Parse `n_features` for forward and backward selection.
-Handles two cases: (a) if `n_features` is an int, ensure it lies on (0, `total`),
-and (b) if `n_features` is a float, ensure it lies on (0, 1).
+Parse \code{n_features} for forward and backward selection.
+Handles two cases:
+\itemize{
+\item if \code{n_features} is an integer, ensure it lies on (0, total).
+\item if \code{n_features} is a float, ensure it lies on (0, 1).
+}
 }
 \keyword{internal}
