@@ -42,9 +42,9 @@ backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,
                      criterion='r-squared', verbose=TRUE){
 
-    .input_data_checks(X_train, y_train)
-    .input_data_checks(X_val, y_val)
-    .input_checks(n_features=n_features, min_change=min_change, criterion=criterion)
+    input_data_checks(X_train, y_train)
+    input_data_checks(X_val, y_val)
+    input_checks(n_features=n_features, min_change=min_change, criterion=criterion)
     S = 1:ncol(X_train)  # start with all features
 
     if (!is.null(n_features)){

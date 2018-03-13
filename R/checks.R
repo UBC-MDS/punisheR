@@ -16,7 +16,7 @@
 #' * 'aic': use Akaike Information Criterion
 #' * 'bic': use Bayesian Information Criterion
 #' @keywords internal
-.input_checks <- function(n_features, min_change, criterion){
+input_checks <- function(n_features, min_change, criterion){
     criterion_stop_msg <- "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
     if (is.null(criterion)){
         stop(criterion_stop_msg)
@@ -57,7 +57,7 @@
 #' @param y input for either y_train or y_val (expected to be a 1D numeric matrix)
 #'
 #' @keywords internal
-.input_data_checks <- function(X, y) {
+input_data_checks <- function(X, y) {
 
     stop_msg <- "X must be a 2D matrix"
     if(!is.matrix(X)) {

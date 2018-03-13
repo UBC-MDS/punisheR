@@ -19,7 +19,7 @@ r_squared <- function(fit_model, X, y){
 }
 
 #' Get coefficients
-#' @descriptoin a helper function that gets the coefficients required for
+#' @description a helper function that gets the coefficients required for
 #' AIC and BIC calculations.
 #'
 #' @param model base R model object

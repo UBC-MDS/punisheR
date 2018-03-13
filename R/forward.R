@@ -76,9 +76,9 @@ source("R/utils.R")
 forward <- function(X_train, y_train, X_val, y_val,
                     min_change=0.5, n_features=NULL,
                     criterion='r-squared', verbose=TRUE){
-    .input_data_checks(X_train, y_train)
-    .input_data_checks(X_val, y_val)
-    .input_checks(n_features, min_change=min_change, criterion=criterion)
+    input_data_checks(X_train, y_train)
+    input_data_checks(X_val, y_val)
+    input_checks(n_features, min_change=min_change, criterion=criterion)
     total_number_of_features <- ncol(X_train)
     S <- c()
     best_score <- -Inf

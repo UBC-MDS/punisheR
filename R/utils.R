@@ -35,7 +35,7 @@ parse_n_features <- function(n_features, total){
 #'
 #' @return a fitted lm() model
 #' @keywords internal
-.fitter <- function(X_input, y_input){
+fitter <- function(X_input, y_input){
     X<-X_input
     y<-y_input
     df <- cbind(as.data.frame(X),as.data.frame(y))
@@ -91,7 +91,7 @@ fit_and_score <- function(S, feature, algorithm, X_train,
         X_val_to_use <- as.matrix(X_val_to_use)
     }
 
-    fit <- .fitter(X_input=X_train_to_use, y_input=y_train)
+    fit <- fitter(X_input=X_train_to_use, y_input=y_train)
     if (criterion == 'r-squared'){
         score <- r_squared(fit_model=fit, X=X_val_to_use, y=y_val)
     } else if (criterion == 'aic'){
