@@ -3,19 +3,19 @@ source("R/utils.R")
 
 #' Forward Break Criteria
 #'
-#' @description checks if `forward()` should break
+#' @description Checks if \code{forward()} should break.
 #'
-#' @param S the list of features as foud in `forward()` and `backward()` (vector)
+#' @param S A vector of selected features in \code{forward()} and \code{backward()}
 #'
-#' @param current_best_j the best feature currently in `forward()` (vector)
+#' @param current_best_j A vector representing the best feature currently in \code{forward()}
 #'
-#' @param j_score_dict dictionary of scores in step 1. of `forward()` (dict)
+#' @param j_score_dict A dictionary of scores in step 1 of \code{forward()}
 #'
-#' @param n_features `n_features` object as developed inside `forward()` (numeric)
+#' @param n_features A numeric `n_features` object as developed inside \code{forward()}
 #'
-#' @param total_number_of_features total number of features in `X_train`/`X_val`
+#' @param total_number_of_features The total number of features in \code{X_train}/\code{X_train}
 #'
-#' @return a logical, whether or not `forward()` should halt
+#' @return A logical that represents whether or not \code{forward()} should halt
 #'
 #' @keywords internal
 .forward_break_criteria <- function(S, current_best_j, n_features,
@@ -44,34 +44,36 @@ source("R/utils.R")
 #' This is an implementation of the forward selection algorithm in which you
 #' start with a null model and iteratively add the most useful features.
 #' This function is built for the specific case of forward selection in
-#' linear regression models.
+#' linear regression.
 #'
-#' @param X_train Training data
+#' @usage forward(X_train, y_train, X_val, y_val,
+#' min_change=0.5,criterion='r-squared', verbose=TRUE)
 #'
-#'  A 2D matrix of (observations, features)
+#' @param X_train Training data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param y_train Target class for training data
+#' @param y_train Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
 #'
-#'  A 1D array of target classes for X_train
+#' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param X_val Validation data
+#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 #'
-#'  A 2D matrix of (observations, features)
+#' @param criterion Model selection criterion to measure relative model quality. Can be one of:
+#' \itemize{
+#'  \item 'aic': use Akaike Information Criterion
+#'  \item 'bic': use Akaike Information Criterion
+#'  \item 'r-squared': use coefficient of determination
+#' }
 #'
-#' @param y_val Target class for validation data
+#' @param min_change The smallest change in criterion score to be considered significant.
 #'
-#'  A 1D array of target classes for X_val
-#'
-#' @param criterion Model selection criterion
-#'  A criterion to measure relative model quality.
-#'  'aic': use Akaike Information Criterion
-#'  'bic': use Bayesian Information Criterion
-#' @param min_change Smallest change in criterion score to be considered significant.
-#'
-#' @param n_features Number of features to allow.
+#' @param n_features The number of features to allow, expressed either as a proporition (0,1)
+#' or whole number with range (0,total_features)
 #'
 #' @param verbose
-#'  if True, print additional information as selection occurs
+#'  if \code{TRUE}, print additional information as selection occurs
+#'
+#' @return A vector of indices that represent the best features of the model.
+#'
 #' @export
 forward <- function(X_train, y_train, X_val, y_val,
                     min_change=0.5, n_features=NULL,

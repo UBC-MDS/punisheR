@@ -2,26 +2,26 @@
 % Please edit documentation in R/checks.R
 \name{input_checks}
 \alias{input_checks}
-\title{Input Checks}
+\title{Check parameter input}
 \usage{
 input_checks(n_features, min_change, criterion)
 }
 \arguments{
 \item{n_features}{the number of features to select. Floats will be regarded as proportions
-of the total that must lie on (0,1). `min_change` must be None for `n_features` to
+of the total that must lie on (0,1). min_change must be None for `n_features` to
 operate.}
 
 \item{min_change}{The smallest change to be considered significant.
-`n_features` must be None for `min_change` to operate.}
+\code{n_features} must be None for \code{min_change} to operate.}
 
-\item{criterion}{model selection criterion:
-* 'r-squared': use R-squared as the criterion
-* 'aic': use Akaike Information Criterion
-* 'bic': use Bayesian Information Criterion}
+\item{criterion}{A string representing the model selection criterion to be used.
+Can be one of 'r-squared', aic', 'bic'}
 }
 \description{
-checks that:
-(a) the only one of the the two inputs, `n_features` and `min_change`, are non-None
-(b) the remaining element is numeric and is strictly greater than zero
+Checks that:
+\itemize{
+  \item only one of the the two inputs, \code{n_features} and \code{min_change}, are non-None
+  \item the remaining element is numeric and is strictly greater than zero
+}
 }
 \keyword{internal}

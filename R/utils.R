@@ -46,26 +46,31 @@ fitter <- function(X_input, y_input){
 }
 
 #' Fit and Score
-#' @description fit and scores the linear regression model
+#' @description Fits a linear regression model to the data and
+#' scores the relative quality of the model using r-squared, aic, or bic.
 #'
-#' @param S list of features as found in `forward()` and `backward()`
+#' @param S A vector representing the list of selected features in `forward()` and `backward()`
 #'
-#' @param feature feature to add or drop (int)
+#' @param feature Feature to add or drop, expressed as an integer.
 #'
-#' @param algorithm direction of feature selection. One of: 'forward', 'backward'
+#' @param algorithm Direction of feature selection. One of: 'forward', 'backward'.
 #'
-#' @param X_train a 2D matrix of (observations, features).
+#' @param X_train Training data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param y_train a 1D array of target classes for X_train.
+#' @param y_train Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
 #'
-#' @param X_val a 2D matrix of (observations, features).
+#' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param y_val a 1D array of target classes for X_validate
+#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 #'
-#' @param criterion model selection criterion (string). One of:
-#' 'r-squared', 'aic', 'bic'
+#' @param criterion Model selection criterion to measure relative model quality. Can be one of:
+#' \itemize{
+#'  \item 'aic': use Akaike Information Criterion
+#'  \item 'bic': use Akaike Information Criterion
+#'  \item 'r-squared': use coefficient of determination
+#' }
 #'
-#' @return score of the model as a float
+#' @return Score of the model as a float.
 #' @keywords internal
 
 fit_and_score <- function(S, feature, algorithm, X_train,

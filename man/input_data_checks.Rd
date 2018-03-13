@@ -2,19 +2,13 @@
 % Please edit documentation in R/checks.R
 \name{input_data_checks}
 \alias{input_data_checks}
-\title{Input Data Checks}
+\title{Check Data Input}
 \usage{
 input_data_checks(X, y)
 }
 \arguments{
-\item{X}{input for either X_train or X_val (expected to be a 2D numeric matrix)}
+\item{X}{input for either \code{X_train} or \code{X_val}. Expected to be a 2D numeric matrix.}
 
-\item{y}{input for either y_train or y_val (expected to be a 1D numeric matrix)}
-}
-\description{
-checks that input data for `forward()` and `backward()`
-functions are the correct format. Specifically looks for:
-- X and y are appropriate dimensions (both same number of observations)
-- X is a 2D numeric vector and y is a 1D numeric vector
+\item{y}{input for either \code{y_train} or \code{y_val}. Expected to be a 1D numeric matrix.}
 }
 \keyword{internal}

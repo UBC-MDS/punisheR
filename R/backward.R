@@ -10,33 +10,34 @@ source("R/utils.R")
 #' least useful feature at each step. This function is built for the specific case
 #' of backward selection in linear regression models.
 #'
+#' @usage backward(X_train, y_train, X_val, y_val,
+#' n_features=0.5,criterion='aic', verbose=TRUE)
 #'
-#' @param X_train Training data
+#' @param X_train Training data. Represented as a 2D matrix of (observations, features).
 #'
-#'  A 2D matrix of (observations, features)
+#' @param y_train Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
 #'
-#' @param y_train Target class for training data
+#' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
 #'
-#'  A 1D array of target classes for X_train
+#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 #'
-#' @param X_val Validation data
+#' @param criterion Model selection criterion to measure relative model quality. Can be one of:
+#' \itemize{
+#'  \item 'aic': use Akaike Information Criterion
+#'  \item 'bic': use Akaike Information Criterion
+#'  \item 'r-squared': use coefficient of determination
+#' }
 #'
-#'  A 2D matrix of (observations, features)
+#' @param min_change Smallest change in criterion score to be considered significant, as a numeric.
 #'
-#' @param y_val Target class for validation data
-#'
-#'  A 1D array of target classes for X_val
-#'
-#' @param criterion Model selection criterion
-#'  A criterion to measure relative model quality.
-#'  'aic': use Akaike Information Criterion
-#'  'bic': use Bayesian Information Criterion
-#' @param min_change Smallest change in criterion score to be considered significant.
-#'
-#' @param n_features Number of features to allow.
+#' @param n_features The number of features to allow, expressed either as a proporition (0,1)
+#' or whole number with range (0,total_features)
 #'
 #' @param verbose
-#'  if True, print additional information as selection occurs
+#'  if \code{TRUE}, print additional information as selection occurs
+#'
+#' @return A vector of indices that represent the best features of the model.
+#'
 #' @export
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,

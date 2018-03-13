@@ -7,27 +7,32 @@
 fit_and_score(S, feature, algorithm, X_train, y_train, X_val, y_val, criterion)
 }
 \arguments{
-\item{S}{list of features as found in `forward()` and `backward()`}
+\item{S}{A vector representing the list of selected features in `forward()` and `backward()`}
 
-\item{feature}{feature to add or drop (int)}
+\item{feature}{Feature to add or drop, expressed as an integer.}
 
-\item{algorithm}{direction of feature selection. One of: 'forward', 'backward'}
+\item{algorithm}{Direction of feature selection. One of: 'forward', 'backward'.}
 
-\item{X_train}{a 2D matrix of (observations, features).}
+\item{X_train}{Training data. Represented as a 2D matrix of (observations, features).}
 
-\item{y_train}{a 1D array of target classes for X_train.}
+\item{y_train}{Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.}
 
-\item{X_val}{a 2D matrix of (observations, features).}
+\item{X_val}{Validation data. Represented as a 2D matrix of (observations, features).}
 
-\item{y_val}{a 1D array of target classes for X_validate}
+\item{y_val}{Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.}
 
-\item{criterion}{model selection criterion (string). One of:
-'r-squared', 'aic', 'bic'}
+\item{criterion}{Model selection criterion to measure relative model quality. Can be one of:
+\itemize{
+ \item 'aic': use Akaike Information Criterion
+ \item 'bic': use Akaike Information Criterion
+ \item 'r-squared': use coefficient of determination
+}}
 }
 \value{
-score of the model as a float
+Score of the model as a float.
 }
 \description{
-fit and scores the linear regression model
+Fits a linear regression model to the data and
+scores the relative quality of the model using r-squared, aic, or bic.
 }
 \keyword{internal}

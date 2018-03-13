@@ -1,20 +1,21 @@
-#' Input Checks
+#' Check parameter input
 #'
-#' @description checks that:
-#' (a) the only one of the the two inputs, `n_features` and `min_change`, are non-None
-#' (b) the remaining element is numeric and is strictly greater than zero
+#' @description Checks that:
+#' \itemize{
+#'   \item only one of the the two inputs, \code{n_features} and \code{min_change}, are non-None
+#'   \item the remaining element is numeric and is strictly greater than zero
+#' }
 #'
 #' @param n_features the number of features to select. Floats will be regarded as proportions
-#' of the total that must lie on (0,1). `min_change` must be None for `n_features` to
+#' of the total that must lie on (0,1). min_change must be None for `n_features` to
 #' operate.
 #'
 #' @param min_change The smallest change to be considered significant.
-#' `n_features` must be None for `min_change` to operate.
+#' \code{n_features} must be None for \code{min_change} to operate.
 #'
-#' @param criterion model selection criterion:
-#' * 'r-squared': use R-squared as the criterion
-#' * 'aic': use Akaike Information Criterion
-#' * 'bic': use Bayesian Information Criterion
+#' @param criterion A string representing the model selection criterion to be used.
+#' Can be one of 'r-squared', aic', 'bic'
+#'
 #' @keywords internal
 input_checks <- function(n_features, min_change, criterion){
     criterion_stop_msg <- "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
@@ -45,16 +46,17 @@ input_checks <- function(n_features, min_change, criterion){
     }
 }
 
-#' Input Data Checks
+#' Check Data Input
 #'
-#' @description checks that input data for `forward()` and `backward()`
+#' @description Checks that input data for `forward()` and `backward()`
 #' functions are the correct format. Specifically looks for:
-#' - X and y are appropriate dimensions (both same number of observations)
-#' - X is a 2D numeric vector and y is a 1D numeric vector
+#' \itemize{
+#'   \item \code{X} and \code{y} are appropriate dimensions (both same number of observations)
+#'   \item \code{X} is a 2D numeric vector and \code{y} is a 1D numeric vector
 #'
-#' @param X input for either X_train or X_val (expected to be a 2D numeric matrix)
+#' @param X input for either \code{X_train} or \code{X_val}. Expected to be a 2D numeric matrix.
 #'
-#' @param y input for either y_train or y_val (expected to be a 1D numeric matrix)
+#' @param y input for either \code{y_train} or \code{y_val}. Expected to be a 1D numeric matrix.
 #'
 #' @keywords internal
 input_data_checks <- function(X, y) {
