@@ -19,25 +19,27 @@
 #' @keywords internal
 input_checks <- function(n_features, min_change, criterion){
     criterion_stop_msg <- "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
-    if (is.null(criterion)){
+    if (is.null(criterion)) {
         stop(criterion_stop_msg)
-    } else if (!(criterion %in% c('r-squared', 'aic', 'bic'))){
+    } else if (!(criterion %in% c("r-squared", "aic", "bic"))) {
         stop(criterion_stop_msg)
     }
-    if(!is.numeric(n_features) & !is.null(n_features)) {
+    if (!is.numeric(n_features) & !is.null(n_features)) {
         stop("`n_features` must be numeric")
     }
-    if (!is.null(n_features) & !is.null(min_change)){
+    if (!is.null(n_features) & !is.null(min_change)) {
         stop("At least one of `n_features` and `min_change` must be NULL")
     }
-    if (is.null(n_features)){  # `min_change` must be 'on'.
+    # `min_change` must be 'on'.
+    if (is.null(n_features)) {
         if (!is.numeric(min_change)){
             stop("`min_change` must be numeric.")
         } else if (min_change <= 0){
             stop("`min_change` must be greater than zero.")
         }
     }
-    if (is.null(min_change)){  # `n_features` must be 'on'.
+    # `n_features` must be 'on'.
+    if (is.null(min_change)) {
         if (!is.numeric(n_features)){
             stop("`n_features` must be numeric.")
         } else if (n_features <= 0){
@@ -62,12 +64,12 @@ input_checks <- function(n_features, min_change, criterion){
 input_data_checks <- function(X, y) {
 
     stop_msg <- "X must be a 2D matrix"
-    if(!is.matrix(X)) {
+    if (!is.matrix(X)) {
         stop(stop_msg)
-    } else if(!(is.vector(y) & is.numeric(y))) {
+    } else if ( !(is.vector(y) & is.numeric(y))) {
         stop_msg <- "y must be a 1D vector"
         stop(stop_msg)
-    } else if(length(y)!=dim(X)[1]) {
+    } else if (length(y) != dim(X)[1]) {
         shape_msg <- "X and y must have the same number of observations"
         stop(shape_msg)
     }

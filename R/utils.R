@@ -21,9 +21,9 @@ parse_n_features <- function(n_features, total){
     if (n_features <= 0){
         stop("`n_features` must be greater than zero.")
     }
-    if (n_features > 0 & n_features < 1){  # interpret `n_features` as a proportion.
+    if (n_features > 0 & n_features < 1) {
         return(round(n_features * total))
-    } else if (n_features > total){  # interpret `n_features` as a count.
+    } else if (n_features > total) {
         stop(paste0("If a whole number, `n_features` must be on (0, ", total, ")."))
     } else {
         return(n_features)
@@ -40,12 +40,12 @@ parse_n_features <- function(n_features, total){
 #' @return A fitted \code{lm()} model
 #' @keywords internal
 fitter <- function(X_input, y_input){
-    X<-X_input
-    y<-y_input
-    df <- cbind(as.data.frame(X),as.data.frame(y))
+    X <- X_input
+    y <- y_input
+    df <- cbind(as.data.frame(X), as.data.frame(y))
 
     # Fit and return model
-    m <- stats::lm(y ~., data=df)
+    m <- stats::lm(y ~., data = df)
     return(m)
 }
 
@@ -100,7 +100,7 @@ fit_and_score <- function(S, feature, algorithm, X_train,
         X_val_to_use <- as.matrix(X_val_to_use)
     }
 
-    fit <- fitter(X_input=X_train_to_use, y_input=y_train)
+    fit <- fitter(X_input = X_train_to_use, y_input = y_train)
     if (criterion == 'r-squared'){
         score <- r_squared(fit_model=fit, X=X_val_to_use, y=y_val)
     } else if (criterion == 'aic'){

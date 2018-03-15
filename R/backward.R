@@ -39,34 +39,36 @@ source("R/utils.R")
 #' @export
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,
-                     criterion='r-squared', verbose=TRUE){
+                     criterion="r-squared", verbose=TRUE){
 
     input_data_checks(X_train, y_train)
     input_data_checks(X_val, y_val)
-    input_checks(n_features=n_features, min_change=min_change, criterion=criterion)
-    S = 1:ncol(X_train)  # start with all features
+    input_checks(n_features = n_features,
+                 min_change = min_change,
+                 criterion = criterion)
+    S <- 1:ncol(X_train)  # start with all features
 
     if (!is.null(n_features)){
         n_features <- parse_n_features(
-            n_features=n_features, total=length(S)
+            n_features = n_features, total = length(S)
         )
     }
 
     last_iter_score <- fit_and_score(
-        S=S, feature=NULL, algorithm='backward', X_train=X_train,
-        y_train=y_train, X_val=X_val, y_val=y_val, criterion=criterion
-    )
-    for (i in 1:ncol(X_train)){  # assume worst case to start.
-        if (verbose){
-            print(paste0(c("Iteration ", i), collapse=""))
-        }
+        S = S, feature = NULL, algorithm = "backward", X_train = X_train,
+        y_train = y_train, X_val = X_val, y_val = y_val, criterion = criterion)
 
+    for (i in 1:ncol(X_train)) {
+        if (verbose) {
+            print(paste0(c("Iteration ", i), collapse = ""))
+        }
         # 1. Hunt for the least predictive feature.
-        best = NULL
+        best <- NULL
         for (j in S){
-            score = fit_and_score(
-                S=S, feature=j, algorithm='backward', X_train=X_train,
-                y_train=y_train, X_val=X_val, y_val=y_val, criterion=criterion
+            score <- fit_and_score(
+                S = S, feature = j, algorithm = "backward",
+                X_train = X_train, y_train = y_train,
+                X_val = X_val, y_val = y_val, criterion = criterion
             )
             if (is.null(best)){
                 best <- c(j, score, score > last_iter_score)
@@ -81,7 +83,7 @@ backward <- function(X_train, y_train, X_val, y_val,
         # 2a. Halting Blindly Based on `n_features`.
         if (!is.null(n_features)){
             S <- S[S != to_drop]
-            last_iter_score = best_new_score
+            last_iter_score <- best_new_score
             if (length(S) == n_features){
                 break
             } else {
@@ -93,11 +95,11 @@ backward <- function(X_train, y_train, X_val, y_val,
         if (!is.null(min_change)){
           n_features <- NULL
             if (defeated_last_iter_score){
-                if ((best_new_score - last_iter_score) < min_change){
+                if ( (best_new_score - last_iter_score) < min_change) {
                     break  # there was a change, but it was not large enough.
                 } else {
                     S <- S[S != to_drop]
-                    last_iter_score = best_new_score
+                    last_iter_score <- best_new_score
                 }
             } else {
                 break

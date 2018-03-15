@@ -74,34 +74,35 @@ source("R/utils.R")
 #'
 #' @export
 forward <- function(X_train, y_train, X_val, y_val,
-                    min_change=0.5, n_features=NULL,
-                    criterion='r-squared', verbose=TRUE){
+                    min_change = 0.5, n_features = NULL,
+                    criterion = "r-squared", verbose = TRUE){
     input_data_checks(X_train, y_train)
     input_data_checks(X_val, y_val)
-    input_checks(n_features, min_change=min_change, criterion=criterion)
+    input_checks(n_features, min_change = min_change, criterion = criterion)
     total_number_of_features <- ncol(X_train)
     S <- c()
     best_score <- -Inf
-    itera = 1:total_number_of_features
+    itera <- 1:total_number_of_features
 
     if (!is.null(n_features)){
         n_features <- parse_n_features(
-            n_features=n_features, total=length(S)
+            n_features = n_features, total = length(S)
         )
         min_change <- NULL
     }
 
-    for (i in 1:total_number_of_features){  # assume worst case
+    for (i in 1:total_number_of_features) {
         if (verbose){
-            print(paste0(c("Iteration ", i), collapse=""))
+            print(paste0(c("Iteration ", i), collapse = ""))
         }
 
         # 1. Find best feature, j, to add.
-        current_best_j = NULL
+        current_best_j <- NULL
         for (j in itera){
-            score = fit_and_score(
-                S=S, feature=j, algorithm='forward', X_train=X_train,
-                y_train=y_train, X_val=X_val, y_val=y_val, criterion=criterion
+            score <- fit_and_score(
+                S = S, feature = j, algorithm = "forward",
+                X_train = X_train, y_train = y_train,
+                X_val = X_val, y_val = y_val, criterion = criterion
             )
             if (score > best_score){
                 if (is.null(current_best_j)){
@@ -118,12 +119,12 @@ forward <- function(X_train, y_train, X_val, y_val,
             # Update S, the best score and score history ---
             best_score <- best_j_score   # update the score to beat
             S <- c(S, best_j)   # add feature
-            itera <- itera[itera != best_j]  # no longer search over this feature.
+            itera <- itera[itera != best_j]  # no longer search over feature
         }
         # 3. Check if the algorithm should halt.
         do_halt <- .forward_break_criteria(
-            S=S, current_best_j=current_best_j, n_features=n_features,
-            total_number_of_features=total_number_of_features
+            S = S, current_best_j = current_best_j, n_features = n_features,
+            total_number_of_features = total_number_of_features
         )
         if (do_halt){
             break
