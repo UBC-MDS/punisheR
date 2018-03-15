@@ -54,7 +54,7 @@ information criterion (AIC), as we intend ours to be.
 
 ```{r}
 library(knitr)
-library(punishR)
+library(punisheR)
 ```
 
 

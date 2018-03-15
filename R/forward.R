@@ -1,27 +1,26 @@
 source("R/checks.R")
 source("R/utils.R")
 
-forward_break_criteria <- function(S, current_best_j, n_features,
+#' Forward Break Criteria
+#'
+#' @description Checks if \code{forward()} should break.
+#'
+#' @param S A vector of selected features in \code{forward()} and \code{backward()}
+#'
+#' @param current_best_j A vector representing the best feature currently in \code{forward()}
+#'
+#' @param j_score_dict A dictionary of scores in step 1 of \code{forward()}
+#'
+#' @param n_features A numeric `n_features` object as developed inside \code{forward()}
+#'
+#' @param total_number_of_features The total number of features in \code{X_train}/\code{X_train}
+#'
+#' @return A logical that represents whether or not \code{forward()} should halt
+#'
+#' @keywords internal
+.forward_break_criteria <- function(S, current_best_j, n_features,
                                    total_number_of_features){
-    # Check if `forward()` should break.
-    #
-    # Args:
-    #   S : vector
-    #       The 'list' of features as found in `forward`
-    #       and `backward()`
-    #   current_best_j : vector
-    #       The best feature currently in `forward()`.
-    #   j_score_dict : dict
-    #       A dictionary of scores in step 1. of `forward()`.
-    #   n_features : numeric
-    #       The `n_features` object as developed inide `forward()`.
-    #   total_number_of_features : numeric
-    #       The total number of features in `X_train`/`X_val`.
-    #
-    # Returns:
-    #   logical
-    #       Whether or not `forward()` should halt.
-    #
+
     # a. Check if the algorithm should halt b/c of features themselves
     if (is.null(current_best_j)){
         return(TRUE)
@@ -45,64 +44,65 @@ forward_break_criteria <- function(S, current_best_j, n_features,
 #' This is an implementation of the forward selection algorithm in which you
 #' start with a null model and iteratively add the most useful features.
 #' This function is built for the specific case of forward selection in
-#' linear regression models.
+#' linear regression.
 #'
-#' @param X_train Training data
 #'
-#'  A 2D matrix of (observations, features)
+#' @param X_train Training data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param y_train Target class for training data
+#' @param y_train Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
 #'
-#'  A 1D array of target classes for X_train
+#' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param X_val Validation data
+#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 #'
-#'  A 2D matrix of (observations, features)
+#' @param criterion Model selection criterion to measure relative model quality. Can be one of:
+#' \itemize{
+#'  \item 'aic': use Akaike Information Criterion
+#'  \item 'bic': use Akaike Information Criterion
+#'  \item 'r-squared': use coefficient of determination
+#' }
 #'
-#' @param y_val Target class for validation data
+#' @param min_change The smallest change in criterion score to be considered significant.
 #'
-#'  A 1D array of target classes for X_val
-#'
-#' @param criterion Model selection criterion
-#'  A criterion to measure relative model quality.
-#'  'aic': use Akaike Information Criterion
-#'  'bic': use Bayesian Information Criterion
-#' @param min_change Smallest change in criterion score to be considered significant.
-#'
-#' @param n_features Number of features to allow.
+#' @param n_features The number of features to select, expressed either as a proporition (0,1)
+#' or whole number with range (0,total_features)
 #'
 #' @param verbose
-#'  if True, print additional information as selection occurs
+#'  if \code{TRUE}, print additional information as selection occurs
+#'
+#' @return A vector of indices that represent the best features of the model.
+#'
 #' @export
 forward <- function(X_train, y_train, X_val, y_val,
-                    min_change=0.5, n_features=NULL,
-                    criterion='r-squared', verbose=TRUE){
+                    min_change = 0.5, n_features = NULL,
+                    criterion = "r-squared", verbose = TRUE){
     input_data_checks(X_train, y_train)
     input_data_checks(X_val, y_val)
-    input_checks(n_features, min_change=min_change, criterion=criterion)
+    input_checks(n_features, min_change = min_change, criterion = criterion)
     total_number_of_features <- ncol(X_train)
     S <- c()
     best_score <- -Inf
-    itera = 1:total_number_of_features
+    itera <- 1:total_number_of_features
 
     if (!is.null(n_features)){
         n_features <- parse_n_features(
-            n_features=n_features, total=length(S)
+            n_features = n_features, total = length(S)
         )
         min_change <- NULL
     }
 
-    for (i in 1:total_number_of_features){  # assume worst case
+    for (i in 1:total_number_of_features) {
         if (verbose){
-            print(paste0(c("Iteration ", i), collapse=""))
+            print(paste0(c("Iteration ", i), collapse = ""))
         }
 
         # 1. Find best feature, j, to add.
-        current_best_j = NULL
+        current_best_j <- NULL
         for (j in itera){
-            score = fit_and_score(
-                S=S, feature=j, algorithm='forward', X_train=X_train,
-                y_train=y_train, X_val=X_val, y_val=y_val, criterion=criterion
+            score <- fit_and_score(
+                S = S, feature = j, algorithm = "forward",
+                X_train = X_train, y_train = y_train,
+                X_val = X_val, y_val = y_val, criterion = criterion
             )
             if (score > best_score){
                 if (is.null(current_best_j)){
@@ -119,12 +119,12 @@ forward <- function(X_train, y_train, X_val, y_val,
             # Update S, the best score and score history ---
             best_score <- best_j_score   # update the score to beat
             S <- c(S, best_j)   # add feature
-            itera <- itera[itera != best_j]  # no longer search over this feature.
+            itera <- itera[itera != best_j]  # no longer search over feature
         }
         # 3. Check if the algorithm should halt.
-        do_halt <- forward_break_criteria(
-            S=S, current_best_j=current_best_j, n_features=n_features,
-            total_number_of_features=total_number_of_features
+        do_halt <- .forward_break_criteria(
+            S = S, current_best_j = current_best_j, n_features = n_features,
+            total_number_of_features = total_number_of_features
         )
         if (do_halt){
             break

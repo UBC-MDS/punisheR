@@ -14,6 +14,8 @@ Please follow the [Google style guides](http://sphinxcontrib-napoleon.readthedoc
 
 Once you have made all of your proposed updates, submit a **pull request** and reference the appropriate `issue` that you have tackled.
 
+**Note:** As a contributor, you must adhere to the terms outlined in our [Contributor Code of Conduct](CONDUCT.md).
+
 
 ### 2. Core Contributors
 

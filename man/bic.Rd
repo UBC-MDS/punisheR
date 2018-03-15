@@ -7,7 +7,7 @@
 bic(model)
 }
 \arguments{
-\item{model}{Base R model}
+\item{model}{A base R model object (e.g., \code{lm()})}
 }
 \value{
 BIC value gets returned as a flaot.

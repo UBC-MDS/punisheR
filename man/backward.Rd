@@ -8,32 +8,30 @@ backward(X_train, y_train, X_val, y_val, n_features = 0.5,
   min_change = NULL, criterion = "r-squared", verbose = TRUE)
 }
 \arguments{
-\item{X_train}{Training data
+\item{X_train}{Training data. Represented as a 2D matrix of (observations, features).}
 
- A 2D matrix of (observations, features)}
+\item{y_train}{Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.}
 
-\item{y_train}{Target class for training data
+\item{X_val}{Validation data. Represented as a 2D matrix of (observations, features).}
 
- A 1D array of target classes for X_train}
+\item{y_val}{Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.}
 
-\item{X_val}{Validation data
+\item{n_features}{The number of features to select, expressed either as a proporition (0,1)
+or whole number with range (0,total_features)}
 
- A 2D matrix of (observations, features)}
+\item{min_change}{Smallest change in criterion score to be considered significant, as a numeric.}
 
-\item{y_val}{Target class for validation data
+\item{criterion}{Model selection criterion to measure relative model quality. Can be one of:
+\itemize{
+ \item 'aic': use Akaike Information Criterion
+ \item 'bic': use Akaike Information Criterion
+ \item 'r-squared': use coefficient of determination
+}}
 
- A 1D array of target classes for X_val}
-
-\item{n_features}{Number of features to allow.}
-
-\item{min_change}{Smallest change in criterion score to be considered significant.}
-
-\item{criterion}{Model selection criterion
-A criterion to measure relative model quality.
-'aic': use Akaike Information Criterion
-'bic': use Bayesian Information Criterion}
-
-\item{verbose}{if True, print additional information as selection occurs}
+\item{verbose}{if \code{TRUE}, print additional information as selection occurs}
+}
+\value{
+A vector of indices that represent the best features of the model.
 }
 \description{
 This is an implementation of the backward selection algorithm
