@@ -24,7 +24,9 @@ parse_n_features <- function(n_features, total){
     if (n_features > 0 & n_features < 1) {
         return(round(n_features * total))
     } else if (n_features > total) {
-        stop(paste0("If a whole number, `n_features` must be on (0, ", total, ")."))
+        stop(paste0(
+            "If a whole number, `n_features` must be on (0, ", total, ")."
+            ))
     } else {
         return(n_features)
     }
@@ -81,7 +83,7 @@ fit_and_score <- function(S, feature, algorithm, X_train,
                           y_train, X_val, y_val, criterion){
     if (algorithm == "forward"){
         features <- c(S, feature)
-    } else {  # backward
+    } else {
         if (is.null(feature)){
             features <- S
         } else {
@@ -101,12 +103,12 @@ fit_and_score <- function(S, feature, algorithm, X_train,
     }
 
     fit <- fitter(X_input = X_train_to_use, y_input = y_train)
-    if (criterion == 'r-squared'){
-        score <- r_squared(fit_model=fit, X=X_val_to_use, y=y_val)
-    } else if (criterion == 'aic'){
-        score <- aic(model=fit)
-    } else if (criterion == 'bic'){
-        score <- bic(model=fit)
+    if (criterion == "r-squared") {
+        score <- r_squared(fit_model = fit, X = X_val_to_use, y = y_val)
+    } else if (criterion == "aic") {
+        score <- aic(model = fit)
+    } else if (criterion == "bic") {
+        score <- bic(model = fit)
     }
     return(score)
 }
