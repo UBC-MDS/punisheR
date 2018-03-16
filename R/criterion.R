@@ -1,3 +1,19 @@
+#' RSS Calculator
+#' @param fit_model A fitted model
+#'
+#' @param X Feature data
+#'
+#' @param y True labels (response)
+#'
+#' @keywords internal
+.rss_calc <- function(model, X, y){
+    df <- as.data.frame(X)
+    y_pred <- suppressWarnings(predict(model, df))
+    rss <- sum((y - y_pred)^2)
+    return(rss)
+}
+
+
 #' R-squared
 #' @description Calculates the coefficient of determination.
 #'
@@ -10,13 +26,12 @@
 #' @references http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
 #' @export
 r_squared <- function(fit_model, X, y){
-    df <- as.data.frame(X)
-    y_pred <- suppressWarnings(predict(fit_model, df))
     y_true_mean <- mean(y)
-    num <- sum( (y - y_pred) ^ 2)
-    denom <- sum( (y - y_true_mean) ^ 2)
+    num <- .rss_calc(fit_model, X = X, y = y)
+    denom <- sum((y - y_true_mean) ^ 2)
     return(1 - (num / denom))
 }
+
 
 #' Get coefficients
 #' @description A helper function that gets the coefficients required for
@@ -28,15 +43,17 @@ r_squared <- function(fit_model, X, y){
 #' \code{llf} (maximized value of log-likelihood function)
 #'
 #' @keywords internal
-.get_coeffs <- function(model){
+.get_coeffs <- function(model, X, y){
+    if (!is.object(model)) {
+        stop("`model` not a Base-R Model.")
+    }
+
     n <- length(model$residuals)
     k <- model$rank + 1
-    rss <- sum(model$residuals ^ 2)
+    rss <- .rss_calc(model, X = X, y = y)
     llf <- -1 * (n / 2) * log(2 * pi) - (n / 2) * log(rss / n) - n / 2
     return(c(n, k, llf))
 }
-
-
 
 
 #' Akaike Information Criterion (AIC)
@@ -49,21 +66,20 @@ r_squared <- function(fit_model, X, y){
 #'
 #' @param model A base R model object (e.g., \code{lm()})
 #'
+#' @param X Feature data
+#'
+#' @param y True labels of the response variable
+#'
 #' @return  AIC value gets returned as a float.
 #'
 #' @references https://en.wikipedia.org/wiki/Akaike_information_criterion
 #' @export
-aic <- function(model){
-
-    if (!is.object(model)) {
-        stop("`model` not a Base-R Model.")
-    }
+aic <- function(model, X, y){
     # Calculate AIC
-    coeff <- .get_coeffs(model)
+    coeff <- .get_coeffs(model, X = X, y = y)
     k <- coeff[2]
     llf <- coeff[3]
     aic <- -2 * llf + 2 * k
-
     return(aic)
 }
 
@@ -79,20 +95,20 @@ aic <- function(model){
 #'
 #' @param  model A base R model object (e.g., \code{lm()})
 #'
+#' @param X Feature data
+#'
+#' @param y True labels of the response variable
+#'
 #' @return BIC value gets returned as a flaot.
 #'
 #' @references https://en.wikipedia.org/wiki/Bayesian_information_criterion
 #' @export
-bic <- function(model){
-    if (!is.object(model)) {
-        stop("`model` not a Base-R Model.")
-    }
+bic <- function(model, X, y){
     # Calcualte BIC
-    coeff <- .get_coeffs(model)
+    coeff <- .get_coeffs(model, X = X, y = y)
     n <- coeff[1]
     k <- coeff[2]
     llf <- coeff[3]
     bic <- -2 * llf + log(n) * k
-
     return(bic)
 }
