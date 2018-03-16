@@ -35,9 +35,11 @@ source("R/utils.R")
         test_c <- length(S) == total_number_of_features
         # d. Break if the number of features in S > n_features.
         d_cond <- !is.null(n_features) & missing(min_change)
-        test_d <- ifelse(d_cond, n_features > length(S), FALSE)
+        test_d <- ifelse(d_cond, n_features - 1 > length(S), FALSE)
+        # e. Check absolute length
+        test_e <- n_features == length(S)
         # Compose Bool
-        do_halt <- any(c(test_a, test_b, test_c, test_d))
+        do_halt <- any(c(test_a, test_b, test_c, test_d, test_e))
         return(do_halt)
     }
 
