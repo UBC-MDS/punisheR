@@ -14,8 +14,6 @@ vignette: >
 
 ```{r setup, include = FALSE}
 
-#knitr::opts_chunk$set(eval = FALSE)
-
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -62,73 +60,95 @@ library(punisheR)
 
 
 ```{r, echo=FALSE}
-test_data <- function(seed_value) {
-  set.seed(seed_value)
-  features = 20
-  obs = 500
-  middle_feature = features / 2
 
-  X <- matrix(0L, nrow=obs, ncol=features)
-  y <- 1:obs
-  X[, middle_feature] <- y + runif(n=obs, min=0, max=50)
+mtcars_data <- function(seed) {
+    y <- mtcars$hp
+    X <- mtcars
+    X$hp <- NULL
+    set.seed(seed)
+    training <- sample(rep(c(TRUE, TRUE, TRUE, FALSE), nrow(mtcars) / 4))
+    # Training Data ---
+    X_train <- X[training,]
+    y_train <- y[training]
 
-  # 75% Training, 25% test (i.e., obs / 4).
-  training <- sample(rep(c(TRUE, TRUE, TRUE, FALSE), obs / 4))
-
-  # Training Data ---
-  X_train <- X[training,]
-  y_train <- y[training]
-
-  # Validation Data ---
-  X_val <- X[!training,]
-  y_val <- y[!training]
-
-  TRUE_BEST_FEATURE <- middle_feature
-
-  return(list(X_train, y_train, X_val, y_val))
+    # Validation Data ---
+    X_val <- X[!training,]
+    y_val <- y[!training]
+    return(list(X_train, y_train, X_val, y_val))
 }
 
 ```
 
 ```{r}
 #Loading the demo data
-data <- test_data(99)
+data <- mtcars_data(99)
 X_train <- data[[1]]
 y_train <- data[[2]]
 X_val <- data[[3]]
 y_val <- data[[4]]
 
+backward(X_train, y_train, X_val, y_val,
+                       n_features=0.5, criterion='r-squared',
+                       verbose=FALSE)
+
+backward(X_train, y_train, X_val, y_val,
+                       n_features=0.5, criterion='aic',
+                       verbose=FALSE)
+
+backward(X_train, y_train, X_val, y_val,
+                       n_features=0.5, criterion='bic',
+                       verbose=FALSE)
 #Training data set
-kable(as.data.frame(X_train[1:5,])) 
+kable(X_train[1:5,]) 
 ```
 
-#### Forward Selection
+
+#### Forward Selection by specifying the number of features
 
 ```{r, warning=FALSE}
+
+forward(X_train, y_train, X_val, y_val, min_change=NULL,
+                    n_features=4, criterion='bic', verbose=FALSE)
+forward(X_train, y_train, X_val, y_val, min_change=NULL,
+                    n_features=4, criterion='aic', verbose=FALSE)
+forward(X_train, y_train, X_val, y_val, min_change=NULL,
+                    n_features=4, criterion='r-squared', verbose=FALSE)
+
+```
+
+#### Forward Selection by specifying the smallest change in criterion 
+
+```{r}
 
 forward(X_train, y_train, X_val, y_val, min_change=0.5,
                     n_features=NULL, criterion='r-squared', verbose=FALSE)
 
 ```
-When implementing forward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
+
+When implementing forward selection on the mtcars dataset with `hp` as the explanatory variable , it returns a list of features that form the best model. Here it can be seen that the function correctly returns all the 7 feature; i.e. the features at position 2, 1, 3, 4, 5, 6 and 7.
 
 #### Backward Selection
 
 ```{r, warning=FALSE}
 
 backward(X_train, y_train, X_val, y_val,
-                     n_features=1, min_change=NULL, criterion='r-squared',
+                     n_features=7, min_change=NULL, criterion='r-squared',
                      verbose=FALSE)
-
+backward(X_train, y_train, X_val, y_val,
+                     n_features=7, min_change=NULL, criterion='aic',
+                     verbose=FALSE)
+backward(X_train, y_train, X_val, y_val,
+                     n_features=7, min_change=NULL, criterion='bic',
+                     verbose=FALSE)
 ```
 
-When implementing backward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
+When implementing backward selection using bic on the demo data, it returns a list of features that are eliminated. Here it can be seen that the function correctly returns 13 feature; i.e. the backward selection has eliminated the features 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 and 20.
 
 #### AIC & BIC
 
 ```{r}
 
-model <- lm(y_train~X_train)
+model <- lm(y_train ~ mpg + cyl + disp, data = X_train)
 
 aic(model)
 
