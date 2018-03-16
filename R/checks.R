@@ -69,11 +69,12 @@ input_checks <- function(n_features, min_change, criterion){
 input_data_checks <- function(X, y) {
     if (is.data.frame(X)){
         if (is.character(y)){
-            y_extract <- X[y]
+            y_extract <- X[[y]]
             X <- X[, colnames(X) != y]  # drop y
-            y <- y_extract
+            y <- as.numeric(y_extract)
         }
         X <- as.matrix(X)
+        colnames(X) <- NULL
     }
 
     if (!is.matrix(X) | length(dim(X)) != 2) {
