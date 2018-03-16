@@ -2,7 +2,10 @@
 title: "punisheR"
 author: "Jill Cates, Tariq Hassan, Avinash Prabhakaran"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+    rmarkdown::html_vignette: default
+    github_document: default
+    
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
