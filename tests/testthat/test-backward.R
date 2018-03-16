@@ -223,7 +223,8 @@ test_that("criterion param must be either aic or bic", {
 # Output format and value
 # -----------------------------------------------------------------------------
 
-test_that("backward() selects the best features when data are passed in as dataframes",
+test_that("backward() selects the best features
+          when data are passed in as dataframes",
           {
               X_train_df <- data.frame(X_train)
               X_train_df$y_train <- y_train
@@ -243,7 +244,8 @@ test_that("backward() selects the best features when data are passed in as dataf
               expect_length(output, 1)
           })
 
-test_that("backward() selects the best features when data are passed in as matrices",
+test_that("backward() selects the best features
+          when data are passed in as matrices",
           {
               # Test that `backward()` will output a vector with the 'best' features
               output <- backward(

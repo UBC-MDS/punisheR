@@ -116,7 +116,8 @@ forward <- function(X_train,
     itera <- 1:total_number_of_features
 
     if (!is.null(n_features)) {
-        n_features <- parse_n_features(n_features = n_features, total = length(S))
+        n_features <- parse_n_features(n_features = n_features,
+                                       total = length(S))
         min_change <- NULL
     }
 

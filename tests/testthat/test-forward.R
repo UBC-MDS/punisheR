@@ -207,7 +207,8 @@ test_that("n_features and min_change cannot be active at the same time", {
 # Output format and value
 # -----------------------------------------------------------------------------
 
-test_that("forward() selects the best features when data are passed in as dataframes",
+test_that("forward() selects the best features
+          when data are passed in as dataframes",
           {
               X_train_df <- data.frame(X_train)
               X_train_df$y_train <- y_train
@@ -229,7 +230,8 @@ test_that("forward() selects the best features when data are passed in as datafr
           })
 
 
-test_that("forward() selects the best features when data are passed in as matrices",
+test_that("forward() selects the best features when
+          data are passed in as matrices",
           {
               # Test that `forward()` will output a vector with the 'best' features
               output <- forward(

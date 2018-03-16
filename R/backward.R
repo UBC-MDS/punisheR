@@ -63,7 +63,8 @@ backward <- function(X_train,
     S <- seq(1, ncol(X_train))  # start with all features
 
     if (!is.null(n_features)) {
-        n_features <- parse_n_features(n_features = n_features, total = length(S))
+        n_features <- parse_n_features(n_features = n_features,
+                                       total = length(S))
     }
 
     last_iter_score <- fit_and_score(
