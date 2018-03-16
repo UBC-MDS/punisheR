@@ -82,6 +82,12 @@ backward <- function(X_train,
         if (verbose) {
             print(paste0(c("Iteration ", i), collapse = ""))
         }
+
+        # Halt if only one feature present.
+        if (length(S) == 1) {
+            break
+        }
+
         # 1. Hunt for the least predictive feature.
         best <- NULL
         for (j in S) {
@@ -131,10 +137,6 @@ backward <- function(X_train,
             }
         }
 
-        # 2c. Halt if only one feature remains.
-        if (length(S) == 1) {
-            break
-        }
     }
     return(S)
 }

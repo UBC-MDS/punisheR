@@ -34,17 +34,17 @@ input_checks <- function(n_features, min_change, criterion) {
     # `min_change` must be 'on'.
     if (is.null(n_features)) {
         if (!is.numeric(min_change)) {
-            stop("`min_change` must be numeric.")
+            stop("`min_change` must be numeric and greater than 0.")
         } else if (min_change <= 0) {
-            stop("`min_change` must be greater than zero.")
+            stop("`min_change` must be numeric and greater than 0.")
         }
     }
     # `n_features` must be 'on'.
     if (is.null(min_change)) {
         if (!is.numeric(n_features)) {
-            stop("`n_features` must be numeric.")
+            stop("`n_features` must be number and greater than zero.")
         } else if (n_features <= 0) {
-            stop("`n_features` must be greater than zero.")
+            stop("`n_features` must be number and greater than zero.")
         }
     }
 }

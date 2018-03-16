@@ -27,27 +27,20 @@ source("R/utils.R")
              min_change,
              total_number_of_features) {
         # a. Check if the algorithm should halt b/c of features themselves
-        if (is.null(current_best_j)) {
-            return(TRUE)
-        }
+        test_a <- is.null(current_best_j)
         # b. Check that the score is, at least, > `min_change`.
-        if (is.numeric(min_change)) {
-            if (current_best_j[2] < min_change) {
-                return(TRUE)  # if not, break
-            }
-        }
+        test_b <- ifelse(is.numeric(min_change),
+                         current_best_j[2] < min_change, FALSE)
         # c. Check if the total number of features has been reached.
-        if (length(S) == total_number_of_features) {
-            return(TRUE)
-            # d. Break if the number of features in S > n_features.
-        } else if (!is.null(n_features) & missing(min_change)) {
-            if (n_features > length(S)) {
-                return(TRUE)
-            }
-        } else {
-            return(FALSE)
-        }
+        test_c <- length(S) == total_number_of_features
+        # d. Break if the number of features in S > n_features.
+        d_cond <- !is.null(n_features) & missing(min_change)
+        test_d <- ifelse(d_cond, n_features > length(S), FALSE)
+        # Compose Bool
+        do_halt <- any(c(test_a, test_b, test_c, test_d))
+        return(do_halt)
     }
+
 
 
 #' Forward Selection Algorithm.
@@ -117,7 +110,7 @@ forward <- function(X_train,
 
     if (!is.null(n_features)) {
         n_features <- parse_n_features(n_features = n_features,
-                                       total = length(S))
+                                       total = total_number_of_features)
         min_change <- NULL
     }
 

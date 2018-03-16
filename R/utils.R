@@ -26,8 +26,7 @@ parse_n_features <- function(n_features, total) {
     } else if (n_features > total) {
         stop(paste0(
             "If a whole number, `n_features` must be on (0, ",
-            total,
-            ")."
+            total, ")."
         ))
     } else {
         return(n_features)
