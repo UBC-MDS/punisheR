@@ -247,7 +247,8 @@ test_that("backward() selects the best features
 test_that("backward() selects the best features
           when data are passed in as matrices",
           {
-              # Test that `backward()` will output a vector with the 'best' features
+              # Test that `backward()` will output a
+              # vector with the 'best' features
               output <- backward(
                   X_train,
                   y_train,

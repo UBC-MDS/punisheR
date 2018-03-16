@@ -233,7 +233,8 @@ test_that("forward() selects the best features
 test_that("forward() selects the best features when
           data are passed in as matrices",
           {
-              # Test that `forward()` will output a vector with the 'best' features
+              # Test that `forward()` will output a
+              # vector with the 'best' features
               output <- forward(
                   X_train,
                   y_train,
