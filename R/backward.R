@@ -127,8 +127,12 @@ backward <- function(X_train,
             n_features <- NULL
             if (defeated_last_iter_score) {
                 if ((best_new_score - last_iter_score) < min_change) {
+                    print("HERE!!!!!!!!!!!")
                     break  # there was a change, but it was not large enough.
                 } else {
+                    print("HERE!!!!!!!!!!! --- 2")
+                    print(best_new_score - last_iter_score)
+                    print(min_change)
                     S <- S[S != to_drop]
                     last_iter_score <- best_new_score
                 }

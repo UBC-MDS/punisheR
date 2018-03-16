@@ -265,28 +265,6 @@ test_that("backward() selects the best features
 
 test_that("backward() selects the best features
           when data are passed in as matrices
-          using `min_change`",
-          {
-          for (mc in c(0.001, 10)){
-              # Test that `backward()` will output a
-              # vector with the 'best' features
-              output <- backward(
-                  X_train,
-                  y_train,
-                  X_val,
-                  y_val,
-                  n_features = NULL,
-                  min_change = mc,
-                  criterion = 'r-squared',
-                  verbose = FALSE
-              )
-              expect_equal(length(output) > 0, TRUE)
-              }
-          })
-
-
-test_that("backward() selects the best features
-          when data are passed in as matrices
           using different metrics",
           {
               for (metric in c('aic', 'bic')){
@@ -373,8 +351,8 @@ test_that("backward() selects the best features
 })
 
 
-test_that("backward() selects the best features
-          using mtcars dataset -- `min_change`", {
+test_that("backward() selects at least
+          some features with `min_change` (small)", {
     # Test for output with nonzero length (i.e., some features)
     output <- backward(
         X_train,
@@ -388,3 +366,21 @@ test_that("backward() selects the best features
     )
     expect_equal(length(output) > 0, TRUE)
 })
+
+
+test_that("backward() selects at least
+          some features with `min_change` (large[er])", {
+              # Test for output with nonzero length (i.e., some features)
+              output <- backward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  n_features = NULL,
+                  min_change = 0.1,
+                  criterion = 'r-squared',
+                  verbose = FALSE
+              )
+              expect_equal(length(output) > 0, TRUE)
+          })
+
