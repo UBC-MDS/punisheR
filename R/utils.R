@@ -1,93 +1,89 @@
 # Utils
 source("R/criterion.R")
 
-
+#' Parsing features
+#' @description Parse \code{n_features} for forward and backward selection.
+#' Handles two cases:
+#' \itemize{
+#' \item if \code{n_features} is an integer, ensure it lies on (0, total).
+#' \item if \code{n_features} is a float, ensure it lies on (0, 1).
+#' }
+#' @param n_features Numeric value passed to forward or backward selection.
+#'
+#' @param total Total features in the data
+#'
+#' @return Number of features to select. If initial \code{n_features} lies on (0, total_features),
+#' it will be returned 'as is'. If \code{n_feature} is passed in as a proporition with range (0,1), it will
+#' be converted to an integer representing proprition with respect to the total number of features.
+#'
+#' @keywords internal
 parse_n_features <- function(n_features, total){
-    # Parse either the `n_features` for forward
-    # and backward selection. Namely
-    # (a) if `n_features` is an int, ensure it lies on (0, `total`),
-    # (a) if `n_features` is a float, ensure it lies on (0, 1).
-    #
-    # Args:
-    #   n_features : numeric
-    #       An `n_features` parameter passed to forward or backward selection.
-    #   total : numeric
-    #       The total features in the data
-    #
-    # Returns:
-    #   numeric
-    #       * number of features to select.
-    #       If `n_features` and it lies on (0, `total`),
-    #       it will be returned 'as is'.
-    #
-    # Whole numbers must lie of [0, total].
     if (n_features <= 0){
         stop("`n_features` must be greater than zero.")
     }
-    if (n_features > 0 & n_features < 1){  # interpret `n_features` as a proportion.
+    if (n_features > 0 & n_features < 1) {
         return(round(n_features * total))
-    } else if (n_features > total){  # interpret `n_features` as a count.
-        stop(paste0("If a whole number, `n_features` must be on (0, ", total, ")."))
+    } else if (n_features > total) {
+        stop(paste0(
+            "If a whole number, `n_features` must be on (0, ", total, ")."
+            ))
     } else {
         return(n_features)
     }
 }
 
-
-fitter <- function(X0, y0){
-    # Fit a linear regression model.
-    #
-    # Args:
-    #   X : matrix
-    #       A matrix of features
-    #   y : vector
-    #       A response vector
-    #
-    # Returns:
-    #   A fitted `lm()` model.
-    #
-    X<-X0
-    y<-y0
-    df <- cbind(as.data.frame(X),as.data.frame(y))
+#' Fitter
+#' @description Fits data to a linear regression model.
+#'
+#' @param X_input A 2D matrix of features
+#'
+#' @param y_input A 1D vector representing the resposne variable
+#'
+#' @return A fitted \code{lm()} model
+#' @keywords internal
+fitter <- function(X_input, y_input){
+    X <- X_input
+    y <- y_input
+    df <- cbind(as.data.frame(X), as.data.frame(y))
 
     # Fit and return model
-    m <- stats::lm(y ~., data=df)
+    m <- stats::lm(y ~., data = df)
     return(m)
 }
 
+#' Fit and Score
+#' @description Fits a linear regression model to the data and
+#' scores the relative quality of the model using r-squared, aic, or bic.
+#'
+#' @param S A vector representing the list of selected features in `forward()` and `backward()`
+#'
+#' @param feature Feature to add or drop, expressed as an integer.
+#'
+#' @param algorithm Direction of feature selection. One of: 'forward', 'backward'.
+#'
+#' @param X_train Training data. Represented as a 2D matrix of (observations, features).
+#'
+#' @param y_train Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
+#'
+#' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
+#'
+#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
+#'
+#' @param criterion Model selection criterion to measure relative model quality. Can be one of:
+#' \itemize{
+#'  \item 'aic': use Akaike Information Criterion
+#'  \item 'bic': use Akaike Information Criterion
+#'  \item 'r-squared': use coefficient of determination
+#' }
+#'
+#' @return Score of the model as a float.
+#' @keywords internal
 
 fit_and_score <- function(S, feature, algorithm, X_train,
                           y_train, X_val, y_val, criterion){
-    # Fit and score the model.
-    #
-    # Args:
-    #   S : list
-    #       The list of features as found in `forward`
-    #       and `backward()`
-    #   feature : int
-    #       The feature to add or drop.
-    #   algorithm : char
-    #       One of: 'forward', 'backward'.
-    #     X_train matrix
-    #         a 2D matrix of (observations, features).
-    #     y_train : matrix
-    #         a 1D array of target classes for X_train.
-    #     X_val : matrix
-    #         a 2D matrix of (observations, features).
-    #     y_val : matrix
-    #         a 1D array of target classes for X_validate.
-    #     criterion : char
-    #         model selection criterion.
-    #         * 'r-squared': use R-Squared as the criterion.
-    #         * 'aic': use Akaike Information Criterion.
-    #         * 'bic': use Bayesian Information Criterion.
-    #
-    # Returns : float
-    #   The score of the model.
-    #
     if (algorithm == "forward"){
         features <- c(S, feature)
-    } else {  # backward
+    } else {
         if (is.null(feature)){
             features <- S
         } else {
@@ -106,13 +102,13 @@ fit_and_score <- function(S, feature, algorithm, X_train,
         X_val_to_use <- as.matrix(X_val_to_use)
     }
 
-    fit <- fitter(X=X_train_to_use, y=y_train)
-    if (criterion == 'r-squared'){
-        score <- r_squared(fit_model=fit, X=X_val_to_use, y=y_val)
-    } else if (criterion == 'aic'){
-        score <- aic(model=fit)
-    } else if (criterion == 'bic'){
-        score <- bic(model=fit)
+    fit <- fitter(X_input = X_train_to_use, y_input = y_train)
+    if (criterion == "r-squared") {
+        score <- r_squared(fit_model = fit, X = X_val_to_use, y = y_val)
+    } else if (criterion == "aic") {
+        score <- aic(model = fit)
+    } else if (criterion == "bic") {
+        score <- bic(model = fit)
     }
     return(score)
 }

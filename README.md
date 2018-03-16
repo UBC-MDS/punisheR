@@ -57,3 +57,4 @@ We are using `testthat` for unit testing in punisheR. To run all tests in **RStu
 - Jill, [@topspinj](https://github.com/topspinj/)
 
 Instructions and guidelines on how to contribute can be found [here](CONTRIBUTING.md).
+To contribute to this project, you must adhere to the terms outlined in our [Contributor Code of Conduct](CONDUCT.md) 

@@ -1,10 +1,15 @@
-# Test Data
-#
-# Generate: y = x + e, where e ~ Uniform(0, 50) and
-# `x` is embedded as the middle column in a zero matrix.
-# That is, only ONE column is predictive of y, the rest are
-# trivial column vectors.
-
+#' Test Data
+#'
+#' @description generates test data that can be used with `forward()` and
+#' `backward()` functions. Generates y = x + e, where e ~ Uniform(0, 50) and
+#' `x` is embedded as the middle column in a zero matrix. Only ONE column is
+#' predictive of y, the rest are trivial column vectors.
+#'
+#' @param seed_value seed value to randomize runif value generation
+#'
+#' @return X_train, y_train, X_val, y_val (as a list)
+#'
+#' @keywords internal
 test_data <- function(seed_value) {
   set.seed(seed_value)
   features = 20
