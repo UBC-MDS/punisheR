@@ -87,12 +87,22 @@ test_that("n_features and min_change cannot be active at the same time", {
                           verbose=FALSE), "At least one of `n_features` and `min_change` must be NULL")
 })
 
-
 # -----------------------------------------------------------------------------
 # Output format and value
 # -----------------------------------------------------------------------------
 
-test_that("forward() selects the best features", {
+test_that("forward() selects the best features when data are passed in as dataframes", {
+    X_train_df <- data.frame(X_train); X_train_df$y_train <- y_train
+    X_val_df <- as.data.frame(X_val); X_val_df$y_val <- y_val
+
+    output <- forward(X_train=X_train_df, y_train='y_train', X_val=X_val_df, y_val='y_val',
+                      n_features=0.5, min_change=NULL,criterion='r-squared',
+                      verbose=FALSE)
+    expect_length(output, 1)
+})
+
+
+test_that("forward() selects the best features when data are passed in as matrices", {
   # Test that `forward()` will output a vector with the 'best' features
   output <- forward(X_train, y_train, X_val, y_val,
                     n_features=0.5, criterion='r-squared', verbose=FALSE)
@@ -113,8 +123,7 @@ y_val <- data[[4]]
 test_that("forward() selects the best features using mtcars dataset", {
     # expect length of output to be greater than 1
     output <- forward(X_train, y_train, X_val, y_val,
-                       n_features=0.5, criterion='r-squared',
-                       verbose=FALSE)
+                      n_features=0.5, criterion='r-squared',
+                      verbose=FALSE)
     expect_gt(length(output), 1)
 })
-

@@ -48,6 +48,6 @@ mtcars_data <- function() {
     # Validation Data ---
     X_val <- X[!training,]
     y_val <- y[!training]
-    return(list(as.matrix(X_train), as.numeric(y_train), as.matrix(X_val), as.numeric(y_val)))
+    return(list(X_train, y_train, X_val, y_val))
 }
 
