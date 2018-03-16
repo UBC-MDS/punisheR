@@ -94,8 +94,15 @@ test_that("n_features and min_change cannot be active at the same time", {
 
 test_that("forward() selects the best features", {
   # Test that `forward()` will output a vector with the 'best' features
-  output <- forward(X_train, y_train, X_val, y_val, min_change=0.5,
-                    n_features=NULL, criterion='r-squared', verbose=FALSE)
+  output <- forward(X_train, y_train, X_val, y_val,
+                    n_features=0.5, criterion='r-squared', verbose=FALSE)
   expect_length(output, 1)
+})
+
+test_that("forward() selects the best features", {
+    # Test that `forward()` will output a vector with the 'best' features
+    output <- forward(X_train, y_train, X_val, y_val,
+                      min_change=0.5, criterion='r-squared', verbose=FALSE)
+    expect_length(output, 1)
 })
 

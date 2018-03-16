@@ -37,7 +37,7 @@ source("R/utils.R")
     if (length(S) == total_number_of_features){
         return(TRUE)
     # d. Break if the number of features in S > n_features.
-    } else if (!is.null(n_features)){
+    } else if (!is.null(n_features) & missing(min_change)) {
         if (n_features > length(S)){
             return(TRUE)
         }
@@ -87,6 +87,10 @@ forward <- function(X_train, y_train, X_val, y_val,
                     criterion = "r-squared", verbose = TRUE){
     input_data_checks(X_train, y_train)
     input_data_checks(X_val, y_val)
+    # set min_change to null if n_features arg is passed into function
+    if (!is.null(n_features) & missing(min_change)) {
+        min_change <- NULL
+    }
     input_checks(n_features, min_change = min_change, criterion = criterion)
     total_number_of_features <- ncol(X_train)
     S <- c()
