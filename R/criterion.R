@@ -84,6 +84,10 @@ r_squared <- function(fit_model, X, y){
 #'
 #' @return  AIC value gets returned as a float.
 #'
+#' @examples
+#' model <- lm(hp~., data=mtcars)
+#' aic(model)
+#'
 #' @references https://en.wikipedia.org/wiki/Akaike_information_criterion
 #' @export
 aic <- function(model, X=NULL, y=NULL){
@@ -113,6 +117,10 @@ aic <- function(model, X=NULL, y=NULL){
 #'          If NULL, extract `y` from `model`.
 #'
 #' @return BIC value gets returned as a float.
+#'
+#' @examples
+#' model <- lm(Sepal.Length~., data=iris)
+#' bic(model)
 #'
 #' @references https://en.wikipedia.org/wiki/Bayesian_information_criterion
 #' @export

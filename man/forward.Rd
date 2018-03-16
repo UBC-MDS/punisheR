@@ -39,3 +39,8 @@ start with a null model and iteratively add the most useful features.
 This function is built for the specific case of forward selection in
 linear regression.
 }
+\examples{
+forward(X_train, y_train, X_val, y_val, n_features=NULL,
+min_change=0.5, criterion="r-squared", verbose=TRUE)
+
+}

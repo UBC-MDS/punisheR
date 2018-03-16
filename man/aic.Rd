@@ -25,6 +25,11 @@ The Akaike Information Criterion's objective is to prevent model
  where L is the maximized value of the likelihood function.
  A smaller AIC value suggests that the model is a better fit for the data.
 }
+\examples{
+model <- lm(hp~., data=mtcars)
+aic(model)
+
+}
 \references{
 https://en.wikipedia.org/wiki/Akaike_information_criterion
 }

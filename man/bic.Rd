@@ -25,6 +25,11 @@ The Bayesian Information Criterion's objective is to prevent model
  where L is the maximized value of the likelihood function.
  A smaller BIC value suggests that the model is a better fit for the data.
 }
+\examples{
+model <- lm(Sepal.Length~., data=iris)
+bic(model)
+
+}
 \references{
 https://en.wikipedia.org/wiki/Bayesian_information_criterion
 }
