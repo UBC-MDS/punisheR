@@ -17,10 +17,4 @@ A fitted \code{lm()} model
 \description{
 Fits data to a linear regression model.
 }
-\examples{
-features <- matrix(c(1:9), ncol=3)
-response_var <- c(1:3)
-fitter(X_input=features, y_input=response_var)
-
-}
 \keyword{internal}

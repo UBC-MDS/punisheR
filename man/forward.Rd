@@ -43,10 +43,10 @@ This function is built for the specific case of forward selection in
 linear regression.
 }
 \examples{
-X_train <- matrix(runif(50,0,50), ncol=5)
-y_train <- runif(10,0,50)
-X_val <- matrix(runif(20,0,20), ncol=5)
-y_val <- runif(4,0,20)
+X_train <- matrix(runif(50, 0, 50), ncol=5)
+y_train <- runif(10, 0, 50)
+X_val <- matrix(runif(50, 0, 20), ncol=5)
+y_val <- runif(10, 0, 20)
 forward(X_train, y_train, X_val, y_train, min_change=0.1, criterion="r-squared")
 forward(X_train, y_train, X_val, y_train, n_features=0.1, criterion="aic")
 

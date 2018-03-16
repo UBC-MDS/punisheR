@@ -43,12 +43,12 @@ least useful feature at each step. This function is built for the specific case
 of backward selection in linear regression models.
 }
 \examples{
-X_train <- matrix(runif(50,0,50), ncol=5)
-y_train <- runif(10,0,50)
-X_val <- matrix(runif(20,0,20), ncol=5)
-y_val <- runif(4,0,20)
-backward(X_train, y_train, X_val, y_train, min_change=0.1, criterion="r-squared")
-backward(X_train, y_train, X_val, y_train, n_features=0.1, criterion="aic")
+X_train <- matrix(runif(50, 0, 50), ncol=5)
+y_train <- runif(10, 0, 50)
+X_val <- matrix(runif(50, 0, 20), ncol=5)
+y_val <- runif(10, 0, 20)
+backward(X_train, y_train, X_val, y_train, min_change=0.1, n_features=NULL, criterion="r-squared")
+backward(X_train, y_train, X_val, y_train, n_features=0.1, min_change=NULL, criterion="aic")
 
 
 }

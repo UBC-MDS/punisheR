@@ -9,9 +9,9 @@ r_squared(fit_model, X, y)
 \arguments{
 \item{fit_model}{A fitted model}
 
-\item{X}{Feature data}
+\item{X}{Validation data as a 2D matrix of (observations, features)}
 
-\item{y}{True labels of the response variable}
+\item{y}{True labels as a 1D vector}
 }
 \description{
 Calculates the coefficient of determination.

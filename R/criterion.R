@@ -3,14 +3,14 @@
 #'
 #' @param fit_model A fitted model
 #'
-#' @param X Feature data
+#' @param X Validation data as a 2D matrix of (observations, features)
 #'
-#' @param y True labels (response)
+#' @param y True labels as a 1D vector
 #'
 #' @keywords internal
 .rss_calc <- function(model, X, y) {
     df <- as.data.frame(X)
-    y_pred <- suppressWarnings(predict(model, df))
+    y_pred <- suppressWarnings(stats::predict(model, df))
     rss <- sum((y - y_pred) ^ 2)
     return(rss)
 }
@@ -21,9 +21,9 @@
 #'
 #' @param fit_model A fitted model
 #'
-#' @param X Feature data
+#' @param X Validation data as a 2D matrix of (observations, features)
 #'
-#' @param y True labels of the response variable
+#' @param y True labels as a 1D vector
 #'
 #' @references http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
 #' @export
@@ -73,9 +73,10 @@ r_squared <- function(fit_model, X, y) {
 #'
 #' @param model A base R model object (e.g., \code{lm()})
 #'
-#' @param X Feature data. If NULL, extract `X` from `model`.
+#' @param X Validation data as a 2D matrix of (observations, features).
+#' If NULL, extract `X` from `model`.
 #'
-#' @param y True labels of the response variable
+#' @param y True labels as a 1D vector.
 #'          If NULL, extract `y` from `model`.
 #'
 #' @return  AIC value gets returned as a float.
@@ -107,9 +108,10 @@ aic <- function(model, X = NULL, y = NULL) {
 #'
 #' @param  model A base R model object (e.g., \code{lm()})
 #'
-#' @param X Feature data. If NULL, extract `X` from `model`.
+#' @param X Validation data as a 2D matrix of (observations, features).
+#' If NULL, extract `X` from `model`.
 #'
-#' @param y True labels of the response variable.
+#' @param y True labels as a 1D vector.
 #'          If NULL, extract `y` from `model`.
 #'
 #' @return BIC value gets returned as a float.

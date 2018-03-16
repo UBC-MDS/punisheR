@@ -13,10 +13,6 @@ source("R/criterion.R")
 #'
 #' @param total Total features in the data (equivalent to number of columns in X)
 #'
-#' @examples
-#' parse_n_features(0.5, 10)
-#' parse_n_features(7, 10)
-#'
 #' @return Number of features to select. If initial \code{n_features} lies on (0, total_features),
 #' it will be returned 'as is'. If \code{n_feature} is passed in as a proportion with range (0,1), it will
 #' be converted to an integer representing proportion with respect to the total number of features.
@@ -39,11 +35,6 @@ parse_n_features <- function(n_features, total) {
 #' @param X_input A 2D matrix of features
 #'
 #' @param y_input A 1D vector representing the response variable
-#'
-#' @examples
-#' features <- matrix(c(1:9), ncol=3)
-#' response_var <- c(1:3)
-#' fitter(X_input=features, y_input=response_var)
 #'
 #' @return A fitted \code{lm()} model
 #' @keywords internal
