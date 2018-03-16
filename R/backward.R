@@ -28,10 +28,11 @@ source("R/utils.R")
 #'  \item 'r-squared': use coefficient of determination
 #' }
 #'
-#' @param min_change Smallest change in criterion score to be considered significant, as a numeric.
+#' @param min_change The smallest change in criterion score to be considered significant.
+#'                   Note: `n_features` must be NULL if this is numeric.
 #'
 #' @param n_features The number of features to select, expressed either as a proportion (0,1)
-#' or whole number with range (0,total_features)
+#' or whole number with range (0,total_features). Note: `min_change` must be NULL if this is numeric.
 #'
 #' @param verbose
 #'  if \code{TRUE}, print additional information as selection occurs
