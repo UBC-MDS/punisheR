@@ -183,7 +183,7 @@ test_that("n_features must be a positive integer", {
             criterion = 'r-squared',
             verbose = FALSE
         ),
-        "`n_features` must be greater than zero."
+        "n_features` must be number and greater than zero."
     )
 })
 
@@ -247,6 +247,108 @@ test_that("forward() selects the best features when
               expect_length(output, 1)
           })
 
+
+test_that("forward() selects the best features
+          when data are passed in as matrices
+          using `min_change`",
+          {
+              for (mc in c(0.001, 10)){
+                  # Test that `backward()` will output a
+                  # vector with the 'best' features
+                  output <- forward(
+                      X_train,
+                      y_train,
+                      X_val,
+                      y_val,
+                      n_features = NULL,
+                      min_change = mc,
+                      criterion = 'r-squared',
+                      verbose = FALSE
+                  )
+                  expect_equal(length(output) > 0, TRUE)
+              }
+          })
+
+
+test_that("forward() selects the best features
+          when data are passed in as matrices
+          using different metrics",
+          {
+            for (metric in c('aic', 'bic')){
+                  # Test that `backward()` will output a
+                  # vector with the 'best' features
+                output <- forward(
+                      X_train,
+                      y_train,
+                      X_val,
+                      y_val,
+                      n_features = 0.5,
+                      min_change = NULL,
+                      criterion = metric,
+                      verbose = FALSE
+                  )
+                expect_equal(length(output) > 0, TRUE)
+              }
+          })
+
+# -----------------------------------------------------------------------------
+# Testing for failures
+# -----------------------------------------------------------------------------
+
+test_that("Test for raising w.r.t. criterion.",
+          {
+              for (metric in c('bik', 'aiccc', NULL)){  # invalid
+                  expect_error(forward(
+                      X_train,
+                      y_train,
+                      X_val,
+                      y_val,
+                      n_features = 0.5,
+                      min_change = NULL,
+                      criterion = metric,
+                      verbose = FALSE
+                  ), "`criterion` must be on of: 'r-squared', 'aic', 'bic'")
+              }
+          })
+
+
+test_that("Test for raising w.r.t.",
+          {
+              for (m in c('NULL', -10)){  # invalid, should throw.
+                  expect_error(forward(
+                      X_train,
+                      y_train,
+                      X_val,
+                      y_val,
+                      n_features = NULL,
+                      min_change = m,
+                      criterion = 'r-squared',
+                      verbose = FALSE
+                  ), "`min_change` must be numeric and greater than 0.")
+              }
+          })
+
+
+# -----------------------------------------------------------------------------
+# Testing forward() with mtcars dataset
+# -----------------------------------------------------------------------------
+
+test_that("forward() selects the best features when
+          data are passed in as matrices",
+          {
+              # Test that `forward()` will output a
+              # vector with the 'best' features
+              output <- forward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  n_features = 0.5,
+                  criterion = 'r-squared',
+                  verbose = TRUE
+              )
+              expect_length(output, 1)
+          })
 
 # -----------------------------------------------------------------------------
 # Testing forward() with mtcars dataset
