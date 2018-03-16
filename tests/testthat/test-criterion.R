@@ -4,7 +4,7 @@ context("criterion.R")
 # Setup
 # -----------------------------------------------------------------------------
 
-model <- lm(formula = Petal.Length~Sepal.Length, data = iris)
+model <- lm(formula = Petal.Length ~ Sepal.Length, data = iris)
 
 # -----------------------------------------------------------------------------
 # `model` Param
@@ -29,7 +29,7 @@ test_that("test_metric_model_parm", {
 test_that("test_metric_output", {
     # Test that both metrics (`aic()` and `bic()`)
     # return numerics
-    for (metric in c(aic, bic)){
+    for (metric in c(aic, bic)) {
         expect_is(metric(model), "numeric")
     }
 })
@@ -57,7 +57,7 @@ test_that("test aic() against manual calculation.", {
     # Test *very* simple case of `y = x`:
     N <- 100
     values <- 1:N
-    data <- data.frame(x=values, y=values)
+    data <- data.frame(x = values, y = values)
     rank <- 2
     model <- lm(formula = y ~ x, data = data)
 
@@ -80,7 +80,7 @@ test_that("test bic() against manual calculation.", {
     # Test *very* simple case of `y = x`:
     N <- 100
     values <- 1:N
-    data <- data.frame(x=values, y=values)
+    data <- data.frame(x = values, y = values)
     rank <- 2
     model <- lm(formula = y ~ x, data = data)
 

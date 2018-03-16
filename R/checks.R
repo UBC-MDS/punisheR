@@ -17,8 +17,9 @@
 #' Can be one of 'r-squared', aic', 'bic'
 #'
 #' @keywords internal
-input_checks <- function(n_features, min_change, criterion){
-    criterion_stop_msg <- "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
+input_checks <- function(n_features, min_change, criterion) {
+    criterion_stop_msg <-
+        "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
     if (is.null(criterion)) {
         stop(criterion_stop_msg)
     } else if (!(criterion %in% c("r-squared", "aic", "bic"))) {
@@ -32,17 +33,17 @@ input_checks <- function(n_features, min_change, criterion){
     }
     # `min_change` must be 'on'.
     if (is.null(n_features)) {
-        if (!is.numeric(min_change)){
+        if (!is.numeric(min_change)) {
             stop("`min_change` must be numeric.")
-        } else if (min_change <= 0){
+        } else if (min_change <= 0) {
             stop("`min_change` must be greater than zero.")
         }
     }
     # `n_features` must be 'on'.
     if (is.null(min_change)) {
-        if (!is.numeric(n_features)){
+        if (!is.numeric(n_features)) {
             stop("`n_features` must be numeric.")
-        } else if (n_features <= 0){
+        } else if (n_features <= 0) {
             stop("`n_features` must be greater than zero.")
         }
     }
@@ -68,8 +69,8 @@ input_checks <- function(n_features, min_change, criterion){
 #'
 #' @keywords internal
 input_data_checks <- function(X, y) {
-    if (is.data.frame(X)){
-        if (is.character(y)){
+    if (is.data.frame(X)) {
+        if (is.character(y)) {
             y_extract <- X[[y]]
             X <- X[, colnames(X) != y]  # drop y
             y <- as.numeric(y_extract)

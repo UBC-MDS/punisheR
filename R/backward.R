@@ -40,46 +40,63 @@ source("R/utils.R")
 #' @return A vector of indices that represent the best features of the model.
 #'
 #' @export
-backward <- function(X_train, y_train, X_val, y_val,
-                     n_features=0.5, min_change=NULL,
-                     criterion="r-squared", verbose=TRUE){
+backward <- function(X_train,
+                     y_train,
+                     X_val,
+                     y_val,
+                     n_features = 0.5,
+                     min_change = NULL,
+                     criterion = "r-squared",
+                     verbose = TRUE) {
     # Check data is of the correct form (a matrix)
     # If not, `input_data_checks` will coerce it to be.
     train <- input_data_checks(X_train, y_train)
-    X_train <- train[[1]]; y_train <- train[[2]]
+    X_train <- train[[1]]
+    y_train <- train[[2]]
     test <- input_data_checks(X_val, y_val)
-    X_val <- test[[1]]; y_val <- test[[2]]
+    X_val <- test[[1]]
+    y_val <- test[[2]]
 
     input_checks(n_features = n_features,
                  min_change = min_change,
                  criterion = criterion)
-    S <- 1:ncol(X_train)  # start with all features
+    S <- seq(1, ncol(X_train))  # start with all features
 
-    if (!is.null(n_features)){
-        n_features <- parse_n_features(
-            n_features = n_features, total = length(S)
-        )
+    if (!is.null(n_features)) {
+        n_features <- parse_n_features(n_features = n_features, total = length(S))
     }
 
     last_iter_score <- fit_and_score(
-        S = S, feature = NULL, algorithm = "backward", X_train = X_train,
-        y_train = y_train, X_val = X_val, y_val = y_val, criterion = criterion)
+        S = S,
+        feature = NULL,
+        algorithm = "backward",
+        X_train = X_train,
+        y_train = y_train,
+        X_val = X_val,
+        y_val = y_val,
+        criterion = criterion
+    )
 
-    for (i in 1:ncol(X_train)) {
+    for (i in seq(1, ncol(X_train))) {
         if (verbose) {
             print(paste0(c("Iteration ", i), collapse = ""))
         }
         # 1. Hunt for the least predictive feature.
         best <- NULL
-        for (j in S){
+        for (j in S) {
             score <- fit_and_score(
-                S = S, feature = j, algorithm = "backward",
-                X_train = X_train, y_train = y_train,
-                X_val = X_val, y_val = y_val, criterion = criterion
+                S = S,
+                feature = j,
+                algorithm = "backward",
+                X_train = X_train,
+                y_train = y_train,
+                X_val = X_val,
+                y_val = y_val,
+                criterion = criterion
             )
-            if (is.null(best)){
+            if (is.null(best)) {
                 best <- c(j, score, score > last_iter_score)
-            } else if (score > best[2]){
+            } else if (score > best[2]) {
                 best <- c(j, score, score > last_iter_score)
             }
         }
@@ -88,10 +105,10 @@ backward <- function(X_train, y_train, X_val, y_val,
         defeated_last_iter_score <- best[3]
 
         # 2a. Halting Blindly Based on `n_features`.
-        if (!is.null(n_features)){
+        if (!is.null(n_features)) {
             S <- S[S != to_drop]
             last_iter_score <- best_new_score
-            if (length(S) == n_features){
+            if (length(S) == n_features) {
                 break
             } else {
                 next # i.e., ignore criteria below.
@@ -99,10 +116,10 @@ backward <- function(X_train, y_train, X_val, y_val,
         }
 
         # 2b. Halt if the change is not longer considered significant.
-        if (!is.null(min_change)){
-          n_features <- NULL
-            if (defeated_last_iter_score){
-                if ( (best_new_score - last_iter_score) < min_change) {
+        if (!is.null(min_change)) {
+            n_features <- NULL
+            if (defeated_last_iter_score) {
+                if ((best_new_score - last_iter_score) < min_change) {
                     break  # there was a change, but it was not large enough.
                 } else {
                     S <- S[S != to_drop]
@@ -114,7 +131,7 @@ backward <- function(X_train, y_train, X_val, y_val,
         }
 
         # 2c. Halt if only one feature remains.
-        if (length(S) == 1){
+        if (length(S) == 1) {
             break
         }
     }
