@@ -48,6 +48,7 @@ input_checks <- function(n_features, min_change, criterion){
     }
 }
 
+
 #' Check Data Input
 #'
 #' @description Checks that input data for `forward()` and `backward()`
@@ -59,20 +60,35 @@ input_checks <- function(n_features, min_change, criterion){
 #' @param X input for either \code{X_train} or \code{X_val}. Expected to be a 2D numeric matrix.
 #'
 #' @param y input for either \code{y_train} or \code{y_val}. Expected to be a 1D numeric matrix.
+#'          If `y` is a character string AND X is a dataframe, it will be extracted from X.
+#'
+#' @return list X matrix (If X is a dataframe when input, it will be convered into a matrix.
+#'                        Otherwise, if all of the checks pass, it will be returned 'as is'.)
+#'              y 'as is' or extracted from X (if y was a character string on input.
 #'
 #' @keywords internal
 input_data_checks <- function(X, y) {
-    if (!is.matrix(X) & length(dim(X)) != 2) {
+    if (is.data.frame(X)){
+        if (is.character(y)){
+            y_extract <- X[[y]]
+            X <- X[, colnames(X) != y]  # drop y
+            y <- as.numeric(y_extract)
+        }
+        X <- as.matrix(X)
+        colnames(X) <- NULL
+    }
+
+    if (!is.matrix(X) | length(dim(X)) != 2) {
         stop_msg <- "X must be a 2D numeric matrix"
         stop(stop_msg)
-    } else if ( !is.numeric(X)) {
+    } else if (!is.numeric(X)) {
         stop_msg <- "X must be a 2D numeric matrix"
         stop(stop_msg)
     }
-    if ( !(is.vector(y) & is.numeric(y))) {
+    if (!(is.vector(y) & is.numeric(y))) {
         stop_msg <- "y must be a 1D numeric vector"
         stop(stop_msg)
-    } else if ( (is.vector(y) & !is.numeric(y))) {
+    } else if ((is.vector(y) & !is.numeric(y))) {
         stop_msg <- "y must be a 1D numeric vector"
         stop(stop_msg)
     }
@@ -80,5 +96,5 @@ input_data_checks <- function(X, y) {
         stop <- "X and y must have the same number of observations"
         stop(stop)
     }
-
+    return(list(X, y))
 }
