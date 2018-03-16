@@ -312,7 +312,7 @@ test_that("Test for raising w.r.t. criterion.",
           })
 
 
-test_that("Test for raising w.r.t.",
+test_that("Test for raising w.r.t. `min_change`",
           {
               for (m in c('NULL', -10)){  # invalid, should throw.
                   expect_error(forward(

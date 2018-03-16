@@ -155,7 +155,8 @@ test_that("X_train and y_train have appropriate dimensions", {
 
 
 
-test_that("n_features must be a positive integer", {
+test_that("n_features must be a positive integer
+          less than the total number of feature.", {
     # Test that the data params in `backward()`
     # will raise a TypeError when passed something other
     # than a 2D matrix (data) or 1D vector (response variable)
@@ -183,7 +184,19 @@ test_that("n_features must be a positive integer", {
         ),
         "`n_features` must be number and greater than zero."
     )
+    expect_error(
+        backward(
+            X_train,
+            y_train,
+            X_val,
+            y_val,
+            n_features = 25,  # FYI, X_train/Val has 20 features.
+            criterion = 'r-squared',
+            verbose = FALSE
+        )
+    )
 })
+
 
 test_that("n_features and min_change cannot be active at the same time", {
     expect_error(
@@ -221,9 +234,11 @@ test_that("criterion param must be either aic or bic", {
     }
 })
 
+
 # -----------------------------------------------------------------------------
 # Output format and value
 # -----------------------------------------------------------------------------
+
 
 test_that("backward() selects the best features
           when data are passed in as dataframes",
@@ -245,6 +260,7 @@ test_that("backward() selects the best features
                   )
               expect_length(output, 1)
           })
+
 
 test_that("backward() selects the best features
           when data are passed in as matrices",
@@ -307,6 +323,7 @@ test_that("backward() test behavior with only one feature",
 # -----------------------------------------------------------------------------
 # Verbose
 # -----------------------------------------------------------------------------
+
 
 test_that("backward() selects the best features
           when data are passed in as matrices - Verbose.",

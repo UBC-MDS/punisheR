@@ -18,16 +18,11 @@ source("R/criterion.R")
 #'
 #' @keywords internal
 parse_n_features <- function(n_features, total) {
-    if (n_features <= 0) {
-        stop("`n_features` must be greater than zero.")
-    }
     if (n_features > 0 & n_features < 1) {
         return(max(1, round(n_features * total)))
     } else if (n_features > total) {
-        stop(paste0(
-            "If a whole number, `n_features` must be on (0, ",
-            total, ")."
-        ))
+        msg <- c("If a whole number, `n_features` must be on (0, ", total, ").")
+        stop(paste0(msg, collapse = ""))
     } else {
         return(n_features)
     }

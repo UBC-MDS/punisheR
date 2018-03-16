@@ -9,9 +9,6 @@
 #'
 #' @keywords internal
 .rss_calc <- function(model, X, y) {
-    if (is.null(X) | is.null(y)) {
-        stop("Neither `X` nor `y` can be NULL.")
-    }
     df <- as.data.frame(X)
     y_pred <- suppressWarnings(predict(model, df))
     rss <- sum((y - y_pred) ^ 2)
@@ -57,8 +54,6 @@ r_squared <- function(fit_model, X, y) {
     k <- model$rank + 1
     if (is.null(X) & is.null(y)) {
         rss <- sum(model$residuals ^ 2)
-    } else if (is.null(X) | is.null(y)) {
-        stop("if `X` or `y` is NULL, they both must be.")
     } else {
         rss <- .rss_calc(model, X = X, y = y)
     }
