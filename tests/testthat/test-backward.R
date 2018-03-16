@@ -102,7 +102,7 @@ test_that("criterion param must be either aic or bic", {
 # Output format and value
 # -----------------------------------------------------------------------------
 
-test_that("backward() selects the best features - DataFrames", {
+test_that("backward() selects the best features when data are passed in as dataframes", {
     X_train_df <- data.frame(X_train); X_train_df$y_train <- y_train
     X_val_df <- as.data.frame(X_val); X_val_df$y_val <- y_val
 
@@ -112,11 +112,30 @@ test_that("backward() selects the best features - DataFrames", {
     expect_length(output, 1)
 })
 
-test_that("backward() selects the best features", {
+test_that("backward() selects the best features when data are passed in as matrices", {
     # Test that `backward()` will output a vector with the 'best' features
     output <- backward(X_train, y_train, X_val, y_val,
                        n_features=0.05, criterion='r-squared',
                        verbose=FALSE)
     expect_equal(output, c(10))
     expect_length(output, 1)
+})
+
+
+# -----------------------------------------------------------------------------
+# Testing backward() with mtcars dataset
+# -----------------------------------------------------------------------------
+
+data <- mtcars_data()
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
+
+test_that("backward() selects the best features using mtcars dataset", {
+    # Test that `backward()` will output a vector with the 'best' features
+    output <- backward(X_train, y_train, X_val, y_val,
+                       n_features=0.5, criterion='r-squared',
+                       verbose=FALSE)
+    expect_length(output, ncol(X_train)/2)
 })

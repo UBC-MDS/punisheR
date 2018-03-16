@@ -91,7 +91,7 @@ test_that("n_features and min_change cannot be active at the same time", {
 # Output format and value
 # -----------------------------------------------------------------------------
 
-test_that("forward() selects the best features - DataFrames", {
+test_that("forward() selects the best features when data are passed in as dataframes", {
     X_train_df <- data.frame(X_train); X_train_df$y_train <- y_train
     X_val_df <- as.data.frame(X_val); X_val_df$y_val <- y_val
 
@@ -102,7 +102,7 @@ test_that("forward() selects the best features - DataFrames", {
 })
 
 
-test_that("forward() selects the best features -- Matrix", {
+test_that("forward() selects the best features when data are passed in as matrices", {
   # Test that `forward()` will output a vector with the 'best' features
   output <- forward(X_train, y_train, X_val, y_val,
                     n_features=0.5, criterion='r-squared', verbose=FALSE)
@@ -110,9 +110,20 @@ test_that("forward() selects the best features -- Matrix", {
 })
 
 
-test_that("forward() selects the best features", {
-    # Test that `forward()` will output a vector with the 'best' features
+# -----------------------------------------------------------------------------
+# Testing forward() with mtcars dataset
+# -----------------------------------------------------------------------------
+
+data <- mtcars_data()
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
+
+test_that("forward() selects the best features using mtcars dataset", {
+    # expect length of output to be greater than 1
     output <- forward(X_train, y_train, X_val, y_val,
-                      min_change=0.5, criterion='r-squared', verbose=FALSE)
-    expect_length(output, 1)
+                      n_features=0.5, criterion='r-squared',
+                      verbose=FALSE)
+    expect_gt(length(output), 1)
 })
