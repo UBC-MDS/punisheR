@@ -87,17 +87,28 @@ test_that("n_features and min_change cannot be active at the same time", {
                           verbose=FALSE), "At least one of `n_features` and `min_change` must be NULL")
 })
 
-
 # -----------------------------------------------------------------------------
 # Output format and value
 # -----------------------------------------------------------------------------
 
-test_that("forward() selects the best features", {
+test_that("forward() selects the best features - DataFrames", {
+    X_train_df <- data.frame(X_train); X_train_df$y_train <- y_train
+    X_val_df <- as.data.frame(X_val); X_val_df$y_val <- y_val
+
+    output <- forward(X_train=X_train_df, y_train='y_train', X_val=X_val_df, y_val='y_val',
+                      n_features=0.5, min_change=NULL,criterion='r-squared',
+                      verbose=FALSE)
+    expect_length(output, 1)
+})
+
+
+test_that("forward() selects the best features -- Matrix", {
   # Test that `forward()` will output a vector with the 'best' features
   output <- forward(X_train, y_train, X_val, y_val,
                     n_features=0.5, criterion='r-squared', verbose=FALSE)
   expect_length(output, 1)
 })
+
 
 test_that("forward() selects the best features", {
     # Test that `forward()` will output a vector with the 'best' features
@@ -105,4 +116,3 @@ test_that("forward() selects the best features", {
                       min_change=0.5, criterion='r-squared', verbose=FALSE)
     expect_length(output, 1)
 })
-
