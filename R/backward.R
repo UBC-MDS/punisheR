@@ -17,7 +17,7 @@ source("R/utils.R")
 #'
 #' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
+#' @param y_val Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 #'
 #' @param criterion Model selection criterion to measure relative model quality. Can be one of:
 #' \itemize{
@@ -28,7 +28,7 @@ source("R/utils.R")
 #'
 #' @param min_change Smallest change in criterion score to be considered significant, as a numeric.
 #'
-#' @param n_features The number of features to select, expressed either as a proporition (0,1)
+#' @param n_features The number of features to select, expressed either as a proportion (0,1)
 #' or whole number with range (0,total_features)
 #'
 #' @param verbose
@@ -79,32 +79,6 @@ backward <- function(X_train, y_train, X_val, y_val,
         to_drop <- best[1]
         best_new_score <- best[2]
         defeated_last_iter_score <- best[3]
-
-        # 2a. Halting Blindly Based on `n_features`.
-        if (!is.null(n_features)){
-            S <- S[S != to_drop]
-            last_iter_score <- best_new_score
-            if (length(S) == n_features){
-                break
-            } else {
-                next # i.e., ignore criteria below.
-            }
-        }
-
-        # 2b. Halt if the change is not longer considered significant.
-        if (!is.null(min_change)){
-          n_features <- NULL
-            if (defeated_last_iter_score){
-                if ( (best_new_score - last_iter_score) < min_change) {
-                    break  # there was a change, but it was not large enough.
-                } else {
-                    S <- S[S != to_drop]
-                    last_iter_score <- best_new_score
-                }
-            } else {
-                break
-            }
-        }
 
         # 2c. Halt if only one feature remains.
         if (length(S) == 1){
