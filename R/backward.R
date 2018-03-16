@@ -34,9 +34,6 @@ source("R/utils.R")
 #' @param verbose
 #'  if \code{TRUE}, print additional information as selection occurs
 #'
-#' @examples
-#' backward(X_train, y_train, X_val, y_val, n_features=NULL,
-#' min_change=0.5, criterion="r-squared", verbose=TRUE)
 #'
 #' @return A vector of indices that represent the best features of the model.
 #'

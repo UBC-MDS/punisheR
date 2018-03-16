@@ -39,8 +39,3 @@ in which you start with a full model and iteratively remove the
 least useful feature at each step. This function is built for the specific case
 of backward selection in linear regression models.
 }
-\examples{
-backward(X_train, y_train, X_val, y_val, n_features=NULL,
-min_change=0.5, criterion="r-squared", verbose=TRUE)
-
-}
