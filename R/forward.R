@@ -13,21 +13,30 @@ source("R/utils.R")
 #'
 #' @param n_features A numeric `n_features` object as developed inside \code{forward()}
 #'
+#' @param min_change The smallest change in criterion score to be considered significant.
+#'
 #' @param total_number_of_features The total number of features in \code{X_train}/\code{X_train}
 #'
 #' @return A logical that represents whether or not \code{forward()} should halt
 #'
 #' @keywords internal
-.forward_break_criteria <- function(S, current_best_j, n_features,
-                                   total_number_of_features){
+.forward_break_criteria <- function(S, current_best_j, n_features, min_change,
+                                    total_number_of_features){
 
     # a. Check if the algorithm should halt b/c of features themselves
     if (is.null(current_best_j)){
         return(TRUE)
     }
+    # b. Check that the score is, at least, > `min_change`.
+    if (is.numeric(min_change)){
+        if (current_best_j[2] < min_change){
+            return(TRUE)  # if not, break
+        }
+    }
+    # c. Check if the total number of features has been reached.
     if (length(S) == total_number_of_features){
         return(TRUE)
-    # b. Break if the number of features in S > n_features.
+    # d. Break if the number of features in S > n_features.
     } else if (!is.null(n_features)){
         if (n_features > length(S)){
             return(TRUE)
@@ -123,7 +132,8 @@ forward <- function(X_train, y_train, X_val, y_val,
         }
         # 3. Check if the algorithm should halt.
         do_halt <- .forward_break_criteria(
-            S = S, current_best_j = current_best_j, n_features = n_features,
+            S = S, current_best_j = current_best_j,
+            n_features = n_features, min_change = min_change,
             total_number_of_features = total_number_of_features
         )
         if (do_halt){
