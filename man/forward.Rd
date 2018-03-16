@@ -8,13 +8,15 @@ forward(X_train, y_train, X_val, y_val, min_change = 0.5, n_features = NULL,
   criterion = "r-squared", verbose = TRUE)
 }
 \arguments{
-\item{X_train}{Training data. Represented as a 2D matrix of (observations, features).}
+\item{X_train}{Training data. Represented as a 2D matrix or dataframe of (observations, features).}
 
-\item{y_train}{Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.}
+\item{y_train}{Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
+If y_train is a character string AND X is a dataframe, it will be extracted from X.}
 
-\item{X_val}{Validation data. Represented as a 2D matrix of (observations, features).}
+\item{X_val}{Validation data. Represented as a 2D matrix or dataframe of (observations, features).}
 
-\item{y_val}{Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.}
+\item{y_val}{Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
+If y_val is a character string AND X is a dataframe, it will be extracted from X.}
 
 \item{min_change}{The smallest change in criterion score to be considered significant.}
 
