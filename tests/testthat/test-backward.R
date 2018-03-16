@@ -205,18 +205,20 @@ test_that("n_features and min_change cannot be active at the same time", {
 test_that("criterion param must be either aic or bic", {
     # Test that the `criterion` param will raise a TypeError
     # when passed something other than 'aic' or 'bic'
-    expect_error(
-        backward(
-            X_train,
-            y_train,
-            X_val,
-            y_val,
-            n_features = 0.5,
-            criterion = "abc",
-            verbose = FALSE
-        ),
-        "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
-    )
+    for (c in c('abc', NULL)){
+        expect_error(
+            backward(
+                X_train,
+                y_train,
+                X_val,
+                y_val,
+                n_features = 0.5,
+                criterion = "abc",
+                verbose = FALSE
+            ),
+            "`criterion` must be on of: 'r-squared', 'aic', 'bic'"
+        )
+    }
 })
 
 # -----------------------------------------------------------------------------
