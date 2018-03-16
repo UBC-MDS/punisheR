@@ -94,8 +94,6 @@ forward <- function(X_train, y_train, X_val, y_val,
     test <- input_data_checks(X_val, y_val)
     X_val <- test[[1]]; y_val <- test[[2]]
 
-    input_data_checks(X_train, y_train)
-    input_data_checks(X_val, y_val)
     # set min_change to null if n_features arg is passed into function
     if (!is.null(n_features) & missing(min_change)) {
         min_change <- NULL

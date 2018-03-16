@@ -49,8 +49,6 @@ backward <- function(X_train, y_train, X_val, y_val,
     test <- input_data_checks(X_val, y_val)
     X_val <- test[[1]]; y_val <- test[[2]]
 
-    input_data_checks(X_train, y_train)
-    input_data_checks(X_val, y_val)
     input_checks(n_features = n_features,
                  min_change = min_change,
                  criterion = criterion)
