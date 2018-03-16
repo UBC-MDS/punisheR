@@ -41,7 +41,9 @@ In the R ecosystem, forward and backward selection are implemented in both the [
 and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides
 [`ols_step_forward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward) and
 [`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward) for
-forward and backward stepwise selection, respectively. Both of these are p-value-based methods of feature selection.
+forward and backward stepwise selection, respectively. Both of these use p-value as a metric for feature selection. Other packages that provide subset selection for regression models are [leaps](https://cran.r-project.org/web/packages/leaps/leaps.pdf) and [bestglm](https://cran.r-project.org/web/packages/bestglm/bestglm.pdf).
+
+
 The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html),
 which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an
 information criterion (AIC), as we intend ours to be.

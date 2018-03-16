@@ -1,11 +1,11 @@
 #' R-squared
-#' @description Coefficient of Determination
+#' @description Calculates the coefficient of determination.
 #'
 #' @param fit_model A fitted model
 #'
 #' @param X Feature data
 #'
-#' @param y True labels (response)
+#' @param y True labels of the response variable
 #'
 #' @references http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
 #' @export
@@ -40,7 +40,6 @@ r_squared <- function(fit_model, X, y){
 
 
 #' Akaike Information Criterion (AIC)
-#'
 #' @description The Akaike Information Criterion's objective is to prevent model
 #'  overfitting by adding a penalty term which penalizes more compelx models.
 #'  Its formal definition is:
@@ -59,14 +58,13 @@ aic <- function(model){
     if (!is.object(model)) {
         stop("`model` not a Base-R Model.")
     }
-
+    # Calculate AIC
     coeff <- .get_coeffs(model)
     k <- coeff[2]
     llf <- coeff[3]
     aic <- -2 * llf + 2 * k
 
     return(aic)
-
 }
 
 
@@ -86,11 +84,10 @@ aic <- function(model){
 #' @references https://en.wikipedia.org/wiki/Bayesian_information_criterion
 #' @export
 bic <- function(model){
-
     if (!is.object(model)) {
         stop("`model` not a Base-R Model.")
     }
-
+    # Calcualte BIC
     coeff <- .get_coeffs(model)
     n <- coeff[1]
     k <- coeff[2]
@@ -98,4 +95,4 @@ bic <- function(model){
     bic <- -2 * llf + log(n) * k
 
     return(bic)
-    }
+}

@@ -16,34 +16,57 @@ y_val <- data[[4]]
 # Data Params
 # -----------------------------------------------------------------------------
 
-test_that("model data is in the correct format", {
-  # Test that the data params in `forward()` will raise
-  # a TypeError when passed something other than a
-  # 2D matrix (features) or 1D vector (response variable) where
-  # X is 'features' and Y is the response variable
-  expect_error(forward(1234, y_train, X_val, y_val,
-                        min_change=0.5, criterion='aic',
-                        verbose=TRUE), "X must be a 2D matrix")
-  expect_error(forward(X_train, y_train='1234', X_val, y_val,
-                        min_change=0.5, criterion='aic',
-                        verbose=TRUE), "y must be a 1D vector")
+test_that("X_train is a 2D numeric matrix", {
+    expect_error(forward(X_train=1234, y_train, X_val, y_val,
+                         min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "X must be a 2D numeric matrix")
+    expect_error(forward(X_train=matrix(c('a', 'b', 'c', 'd', 'e', 'f'), nrow=2),
+                         y_train, X_val, y_val,
+                         min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "X must be a 2D numeric matrix")
+})
+
+test_that("y_train is a 1D numeric vector", {
+    expect_error(forward(X_train, y_train='1234', X_val, y_val,
+                         min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "y must be a 1D numeric vector")
+    expect_error(forward(X_train,
+                         y_train=matrix(c(1,2,3,4,5,6), nrow=2),
+                         X_val, y_val,
+                         min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "y must be a 1D numeric vector")
+})
+
+test_that("X_train and y_train have appropriate dimensions", {
   expect_error(forward(X_train, y_train=1234, X_val, y_val,
-                       min_change=0.5, criterion='aic',
+                       min_change=0.5, criterion='r-squared',
                        verbose=TRUE), "X and y must have the same number of observations")
 })
 
-test_that("validation data is in the correct format", {
+test_that("X_val is a 2D numeric matrix", {
     expect_error(forward(X_train, y_train, X_val=1234, y_val,
-                         min_change=0.5, criterion='aic',
-                         verbose=TRUE), "X must be a 2D matrix")
-    expect_error(forward(X_train, y_train, X_val, y_val=1234,
-                         min_change=0.5, criterion='aic',
-                         verbose=TRUE), "X and y must have the same number of observations")
-    expect_error(forward(X_train, y_train, X_val, y_val='1234',
-                         min_change=0.5, criterion='aic',
-                         verbose=TRUE), "y must be a 1D vector")
+                         min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "X must be a 2D numeric matrix")
+    expect_error(forward(X_train, y_train,
+                         X_val=matrix(c('a', 'b', 'c', 'd', 'e', 'f'), nrow=2),
+                         y_val, min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "X must be a 2D numeric matrix")
 })
 
+test_that("y_val is a 1D numeric matrix", {
+    expect_error(forward(X_train, y_train, X_val, y_val='1234',
+                         min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "y must be a 1D numeric vector")
+    expect_error(forward(X_train, y_train, X_val, y_val=matrix(c(1,2,3,4,5,6), nrow=2),
+                         min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "y must be a 1D numeric vector")
+})
+
+test_that("X_train and y_train have appropriate dimensions", {
+    expect_error(forward(X_train, y_train, X_val, y_val=1234,
+                         min_change=0.5, criterion='r-squared',
+                         verbose=TRUE), "X and y must have the same number of observations")
+})
 
 
 test_that("n_features must be a positive integer", {
@@ -51,10 +74,10 @@ test_that("n_features must be a positive integer", {
   # will raise a TypeError when passed something other
   # than a 2D matrix (data) or 1D vector (response variable)
   expect_error(forward(X_train, y_train, X_val, y_val,
-                        n_features="abc", criterion='aic',
+                        n_features="abc", criterion='r-squared',
                         verbose=TRUE), "`n_features` must be numeric")
   expect_error(forward(X_train, y_train, X_val, y_val,
-                        min_change=NULL, n_features=-2, criterion='aic',
+                        min_change=NULL, n_features=-2, criterion='r-squared',
                         verbose=TRUE), "`n_features` must be greater than zero.")
 })
 
@@ -75,21 +98,4 @@ test_that("forward() selects the best features", {
                     n_features=NULL, criterion='r-squared', verbose=TRUE)
   expect_length(output, 1)
 })
-
-
-
-# Rough way to test forward()'s output.
-# This will have to be turned into a
-# formal `testthat` test.
-#
-# Note: I don't think you can import
-# the data with source during testing
-# (perhaps you can?).
-#
-# source("R/forward.R")
-# source("tests/testthat/data_for_tests.R")
-# forward_result <- forward(
-#     X_train=X_train, y_train=y_train,
-#     X_val=X_val, y_val=y_val, verbose=FALSE)
-# TRUE_BEST_FEATURE %in% forward_result
 
