@@ -99,10 +99,22 @@ test_that("forward() selects the best features", {
   expect_length(output, 1)
 })
 
-test_that("forward() selects the best features", {
-    # Test that `forward()` will output a vector with the 'best' features
+
+# -----------------------------------------------------------------------------
+# Testing forward() with mtcars dataset
+# -----------------------------------------------------------------------------
+
+data <- mtcars_data()
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
+
+test_that("forward() selects the best features using mtcars dataset", {
+    # expect length of output to be greater than 1
     output <- forward(X_train, y_train, X_val, y_val,
-                      min_change=0.5, criterion='r-squared', verbose=FALSE)
-    expect_length(output, 1)
+                       n_features=0.5, criterion='r-squared',
+                       verbose=FALSE)
+    expect_gt(length(output), 1)
 })
 

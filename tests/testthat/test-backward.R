@@ -110,3 +110,22 @@ test_that("backward() selects the best features", {
     expect_equal(output, c(10))
     expect_length(output, 1)
 })
+
+
+# -----------------------------------------------------------------------------
+# Testing backward() with mtcars dataset
+# -----------------------------------------------------------------------------
+
+data <- mtcars_data()
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
+
+test_that("backward() selects the best features using mtcars dataset", {
+    # Test that `backward()` will output a vector with the 'best' features
+    output <- backward(X_train, y_train, X_val, y_val,
+                       n_features=0.5, criterion='r-squared',
+                       verbose=FALSE)
+    expect_length(output, ncol(X_train)/2)
+})

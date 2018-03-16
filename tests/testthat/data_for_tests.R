@@ -35,3 +35,19 @@ test_data <- function(seed_value) {
 
   return(list(X_train, y_train, X_val, y_val))
 }
+
+mtcars_data <- function() {
+    y <- mtcars$hp
+    X <- mtcars
+    X$hp <- NULL
+    training <- sample(rep(c(TRUE, TRUE, TRUE, FALSE), nrow(mtcars) / 4))
+    # Training Data ---
+    X_train <- X[training,]
+    y_train <- y[training]
+
+    # Validation Data ---
+    X_val <- X[!training,]
+    y_val <- y[!training]
+    return(list(as.matrix(X_train), as.numeric(y_train), as.matrix(X_val), as.numeric(y_val)))
+}
+
