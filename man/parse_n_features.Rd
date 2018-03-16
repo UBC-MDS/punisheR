@@ -13,8 +13,8 @@ parse_n_features(n_features, total)
 }
 \value{
 Number of features to select. If initial \code{n_features} lies on (0, total_features),
-it will be returned 'as is'. If \code{n_feature} is passed in as a proporition with range (0,1), it will
-be converted to an integer representing proprition with respect to the total number of features.
+it will be returned 'as is'. If \code{n_feature} is passed in as a proportion with range (0,1), it will
+be converted to an integer representing proportion with respect to the total number of features.
 }
 \description{
 Parse \code{n_features} for forward and backward selection.

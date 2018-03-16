@@ -14,9 +14,9 @@ backward(X_train, y_train, X_val, y_val, n_features = 0.5,
 
 \item{X_val}{Validation data. Represented as a 2D matrix of (observations, features).}
 
-\item{y_val}{Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.}
+\item{y_val}{Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.}
 
-\item{n_features}{The number of features to select, expressed either as a proporition (0,1)
+\item{n_features}{The number of features to select, expressed either as a proportion (0,1)
 or whole number with range (0,total_features)}
 
 \item{min_change}{Smallest change in criterion score to be considered significant, as a numeric.}
