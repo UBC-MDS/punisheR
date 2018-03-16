@@ -36,6 +36,13 @@ test_data <- function(seed_value) {
     return(list(X_train, y_train, X_val, y_val))
 }
 
+#' mtcars data generator
+#'
+#' @description generates test data using base R's mtcars dataset
+#'
+#' @return X_train, y_train, X_val, y_val (as a list)
+#'
+#' @keywords internal
 mtcars_data <- function() {
     y <- mtcars$hp
     X <- mtcars
