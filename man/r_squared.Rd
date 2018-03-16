@@ -11,10 +11,10 @@ r_squared(fit_model, X, y)
 
 \item{X}{Feature data}
 
-\item{y}{True labels (response)}
+\item{y}{True labels of the response variable}
 }
 \description{
-Coefficient of Determination
+Calculates the coefficient of determination.
 }
 \references{
 http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination

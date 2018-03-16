@@ -13,7 +13,7 @@ y_val <- data[[4]]
 
 
 # -----------------------------------------------------------------------------
-# Data Params
+# Test that the input data parameters (X,y) are in the correct format
 # -----------------------------------------------------------------------------
 
 test_that("X_train is a 2D numeric matrix", {
@@ -69,7 +69,11 @@ test_that("X_train and y_train have appropriate dimensions", {
 })
 
 
-test_that("n_features must be a positive integer", {
+# ------------------------------------------------------------------------------------
+# Test that n_feature, min_change, and criterion parameters are in the correct format
+# ------------------------------------------------------------------------------------
+
+test_that("n_features must be a positive numeric", {
   # Test that the data params in `forward()`
   # will raise a TypeError when passed something other
   # than a 2D matrix (data) or 1D vector (response variable)
@@ -77,13 +81,13 @@ test_that("n_features must be a positive integer", {
                         n_features="abc", criterion='r-squared',
                         verbose=TRUE), "`n_features` must be numeric")
   expect_error(forward(X_train, y_train, X_val, y_val,
-                        min_change=NULL, n_features=-2, criterion='r-squared',
+                        n_features=-2, criterion='r-squared',
                         verbose=TRUE), "`n_features` must be greater than zero.")
 })
 
 test_that("n_features and min_change cannot be active at the same time", {
     expect_error(forward(X_train, y_train, X_val, y_val,
-                          n_features=0.5, min_change=0.2,criterion='r-squared',
+                          n_features=0.5, min_change=0.2, criterion='r-squared',
                           verbose=TRUE), "At least one of `n_features` and `min_change` must be NULL")
 })
 
