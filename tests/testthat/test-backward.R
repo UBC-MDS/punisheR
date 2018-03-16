@@ -17,6 +17,8 @@ y_val <- data[[4]]
 # -----------------------------------------------------------------------------
 
 test_that("X_train is a 2D numeric matrix", {
+    # Test that `backward()` raises an error when
+    # X_train is numeric but is not a 2D matrix
     expect_error(
         backward(
             X_train = 1234,
@@ -28,6 +30,8 @@ test_that("X_train is a 2D numeric matrix", {
         ),
         "X must be a 2D numeric matrix"
     )
+    # Test that `backward()` raises an error when
+    # X_train is a 2D matrix but is not numeric
     expect_error(
         backward(
             X_train = matrix(c('a', 'b', 'c', 'd', 'e', 'f'), nrow = 2),
@@ -43,6 +47,8 @@ test_that("X_train is a 2D numeric matrix", {
 
 
 test_that("y_train is a 1D numeric vector", {
+    # Test that `backward()` will raise an error when
+    # y_train is a 1D vector but is not numeric
     expect_error(
         backward(
             X_train,
@@ -55,6 +61,8 @@ test_that("y_train is a 1D numeric vector", {
         ),
         "y must be a 1D numeric vector"
     )
+    # Test that `backward()` raises an error when
+    # y_train is numeric but is not a 1D vector
     expect_error(
         backward(
             X_train,
@@ -70,6 +78,8 @@ test_that("y_train is a 1D numeric vector", {
 })
 
 test_that("X_train and y_train have appropriate dimensions", {
+    # Test that `backward()` raises an error when
+    # X_train and y_train do not have the same number of observations
     expect_error(
         backward(
             X_train,
@@ -85,6 +95,8 @@ test_that("X_train and y_train have appropriate dimensions", {
 })
 
 test_that("X_val is a 2D numeric matrix", {
+    # Test that `backward()` raises an error when
+    # X_val is numeric but is not a 2D matrix
     expect_error(
         backward(
             X_train,
@@ -97,6 +109,8 @@ test_that("X_val is a 2D numeric matrix", {
         ),
         "X must be a 2D numeric matrix"
     )
+    # Test that `backward()` raises an error when
+    # X_val is a 2D matrix but is not numeric
     expect_error(
         backward(
             X_train,
@@ -112,6 +126,8 @@ test_that("X_val is a 2D numeric matrix", {
 })
 
 test_that("y_val is a 1D numeric matrix", {
+    # Test that `backward()` raises an error when
+    # y_val is numeric but is not a 1D vector
     expect_error(
         backward(
             X_train,
@@ -124,6 +140,8 @@ test_that("y_val is a 1D numeric matrix", {
         ),
         "y must be a 1D numeric vector"
     )
+    # Test that `backward()` raises an error when
+    # y_val is a 1D vector but is not numeric
     expect_error(
         backward(
             X_train,
@@ -139,6 +157,8 @@ test_that("y_val is a 1D numeric matrix", {
 })
 
 test_that("X_train and y_train have appropriate dimensions", {
+    # Test that `backward()` raises an error when
+    # X_val and y_val do not have the same number of observations
     expect_error(
         backward(
             X_train,
@@ -157,9 +177,8 @@ test_that("X_train and y_train have appropriate dimensions", {
 
 test_that("n_features must be a positive integer
           less than the total number of feature.", {
-    # Test that the data params in `backward()`
-    # will raise a TypeError when passed something other
-    # than a 2D matrix (data) or 1D vector (response variable)
+    # Test that `backward()` will raise error when
+    # `n_features` is an invalid arg
     expect_error(
         backward(
             X_train,
@@ -190,15 +209,18 @@ test_that("n_features must be a positive integer
             y_train,
             X_val,
             y_val,
-            n_features = 25,  # FYI, X_train/Val has 20 features.
+            n_features = 25,  # FYI, X_train/_val has 20 features.
             criterion = 'r-squared',
             verbose = FALSE
-        )
+        ),
+        "If a whole number, `n_features` must be on.*"
     )
 })
 
 
 test_that("n_features and min_change cannot be active at the same time", {
+    # Test that `backward()` will raise an error when
+    # `n_features` and `min_change` are both passed in as args
     expect_error(
         backward(
             X_train,
@@ -215,9 +237,9 @@ test_that("n_features and min_change cannot be active at the same time", {
 })
 
 
-test_that("criterion param must be either aic or bic", {
-    # Test that the `criterion` param will raise a TypeError
-    # when passed something other than 'aic' or 'bic'
+test_that("criterion param must be either aic, bic, or r-squared", {
+    # Test that the `criterion` param will raise an error
+    # when passed something other than 'aic', 'bic', or 'r-squared'
     for (c in c('abc', NULL)){
         expect_error(
             backward(
@@ -265,8 +287,6 @@ test_that("backward() selects the best features
 test_that("backward() selects the best features
           when data are passed in as matrices",
           {
-              # Test that `backward()` will output a
-              # vector with the 'best' features
               output <- backward(
                   X_train,
                   y_train,
@@ -283,11 +303,11 @@ test_that("backward() selects the best features
 
 test_that("backward() selects the best features
           when data are passed in as matrices
-          using different metrics",
+          using different criterion",
           {
+              # Test that function works when we use
+              # aic and bic as criterion
               for (metric in c('aic', 'bic')){
-                  # Test that `backward()` will output a
-                  # vector with the 'best' features
                   output <- forward(
                       X_train,
                       y_train,
@@ -298,7 +318,9 @@ test_that("backward() selects the best features
                       criterion = metric,
                       verbose = FALSE
                   )
-                  expect_equal(length(output) > 0, TRUE)
+                  # Test that length of output is equal
+                  # to 1 (since the dataset has 1 sig feature)
+                  expect_equal(length(output), 1)
               }
           })
 

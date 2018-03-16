@@ -17,6 +17,8 @@ y_val <- data[[4]]
 # -----------------------------------------------------------------------------
 
 test_that("X_train is a 2D numeric matrix", {
+    # Test that `forward()` raises an error when
+    # X_train is numeric but is not a 2D matrix
     expect_error(
         forward(
             X_train = 1234,
@@ -29,6 +31,8 @@ test_that("X_train is a 2D numeric matrix", {
         ),
         "X must be a 2D numeric matrix"
     )
+    # Test that `forward()` raises an error when
+    # X_train is a 2D matrix but is not numeric
     expect_error(
         forward(
             X_train = matrix(c('a', 'b', 'c', 'd', 'e', 'f'), nrow = 2),
@@ -44,6 +48,8 @@ test_that("X_train is a 2D numeric matrix", {
 })
 
 test_that("y_train is a 1D numeric vector", {
+    # Test that `forward()` raises an error when
+    # y_train is a 1D vector but is not numeric
     expect_error(
         forward(
             X_train,
@@ -56,6 +62,8 @@ test_that("y_train is a 1D numeric vector", {
         ),
         "y must be a 1D numeric vector"
     )
+    # Test that `forward()` raises an error when
+    # y_train is numeric but is not a 1D vector
     expect_error(
         forward(
             X_train,
@@ -71,6 +79,8 @@ test_that("y_train is a 1D numeric vector", {
 })
 
 test_that("X_train and y_train have appropriate dimensions", {
+    # Test that `forward()` raises an error when
+    # X_train and y_train do not have the same number of rows
     expect_error(
         forward(
             X_train,
@@ -86,6 +96,8 @@ test_that("X_train and y_train have appropriate dimensions", {
 })
 
 test_that("X_val is a 2D numeric matrix", {
+    # Test that `forward()` raises an error when
+    # X_val is numeric but is not a 2D matrix
     expect_error(
         forward(
             X_train,
@@ -98,6 +110,8 @@ test_that("X_val is a 2D numeric matrix", {
         ),
         "X must be a 2D numeric matrix"
     )
+    # Test that `forward()` raises an error when
+    # X_val is a 2D matrix but is not numeric
     expect_error(
         forward(
             X_train,
@@ -114,6 +128,8 @@ test_that("X_val is a 2D numeric matrix", {
 })
 
 test_that("y_val is a 1D numeric matrix", {
+    # Test that `forward()` raises an error when
+    # y_val is a 1D vector but is not numeric
     expect_error(
         forward(
             X_train,
@@ -126,6 +142,8 @@ test_that("y_val is a 1D numeric matrix", {
         ),
         "y must be a 1D numeric vector"
     )
+    # Test that `forward()` raises an error when
+    # y_val is numeric but is not a 1D vector
     expect_error(
         forward(
             X_train,
@@ -141,6 +159,8 @@ test_that("y_val is a 1D numeric matrix", {
 })
 
 test_that("X_train and y_train have appropriate dimensions", {
+    # Test that `forward()` raises an error when
+    # X_val and y_val do not have the same number of rows
     expect_error(
         forward(
             X_train,
@@ -155,11 +175,13 @@ test_that("X_train and y_train have appropriate dimensions", {
     )
 })
 
+# -----------------------------------------------------------------------------
+# Testing when `n_features`, `criterion`, `min_change` are invalid arguments
+# -----------------------------------------------------------------------------
 
 test_that("n_features must be a positive integer", {
-    # Test that the data params in `forward()`
-    # will raise a TypeError when passed something other
-    # than a 2D matrix (data) or 1D vector (response variable)
+    # Test that `forward()` will raise an error
+    # if `n_features` arg is invalid
     expect_error(
         forward(
             X_train,
@@ -202,6 +224,41 @@ test_that("n_features and min_change cannot be active at the same time", {
         "At least one of `n_features` and `min_change` must be NULL"
     )
 })
+
+test_that("error gets raise when `criterion` arg is invalid",
+          {
+              for (metric in c('bik', 'aiccc', NULL)){  # invalid
+                  expect_error(forward(
+                      X_train,
+                      y_train,
+                      X_val,
+                      y_val,
+                      n_features = 0.5,
+                      min_change = NULL,
+                      criterion = metric,
+                      verbose = FALSE
+                  ), "`criterion` must be on of: 'r-squared', 'aic', 'bic'")
+              }
+          })
+
+
+test_that("error gets raised when `min_change` arg is invalid",
+          {
+              for (m in c('NULL', -10)){  # invalid, should throw.
+                  expect_error(forward(
+                      X_train,
+                      y_train,
+                      X_val,
+                      y_val,
+                      n_features = NULL,
+                      min_change = m,
+                      criterion = 'r-squared',
+                      verbose = FALSE
+                  ), "`min_change` must be numeric and greater than 0.")
+              }
+          })
+
+
 
 # -----------------------------------------------------------------------------
 # Output format and value
@@ -291,43 +348,6 @@ test_that("forward() selects the best features
               }
           })
 
-# -----------------------------------------------------------------------------
-# Testing for failures
-# -----------------------------------------------------------------------------
-
-test_that("Test for raising w.r.t. criterion.",
-          {
-              for (metric in c('bik', 'aiccc', NULL)){  # invalid
-                  expect_error(forward(
-                      X_train,
-                      y_train,
-                      X_val,
-                      y_val,
-                      n_features = 0.5,
-                      min_change = NULL,
-                      criterion = metric,
-                      verbose = FALSE
-                  ), "`criterion` must be on of: 'r-squared', 'aic', 'bic'")
-              }
-          })
-
-
-test_that("Test for raising w.r.t. `min_change`",
-          {
-              for (m in c('NULL', -10)){  # invalid, should throw.
-                  expect_error(forward(
-                      X_train,
-                      y_train,
-                      X_val,
-                      y_val,
-                      n_features = NULL,
-                      min_change = m,
-                      criterion = 'r-squared',
-                      verbose = FALSE
-                  ), "`min_change` must be numeric and greater than 0.")
-              }
-          })
-
 
 # -----------------------------------------------------------------------------
 # Testing forward() with mtcars dataset
@@ -369,7 +389,8 @@ test_that("forward() selects the best features when
 
 test_that("forward() selects the best features
           from mtcars dataset using `n_features`", {
-    # expect length of output to be greater than 1
+    # Test that `n_features` will result in the
+    # length of output being greater than or equal to 1
     output <- forward(
         X_train,
         y_train,
@@ -384,7 +405,8 @@ test_that("forward() selects the best features
 
 test_that("forward() selects the best features
           from mtcars dataset using `min_change`", {
-    # expect length of output to be greater than 1
+    # Test that a small `min_change` will result in the
+    # length of output being greater than or equal to 1
     output <- forward(
         X_train,
         y_train,
