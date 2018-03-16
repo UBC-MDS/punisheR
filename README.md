@@ -58,6 +58,8 @@ forward(X_train, y_train, X_val, y_val, min_change=0.5,
     n_features=NULL, criterion='r-squared', verbose=FALSE)
 #> [1] 10
 ```
+When implementing forward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature; i.e. the feature at position 10.
+
 ### Backward Selection using r-squared
 
 ``` r
@@ -67,6 +69,8 @@ backward(X_train, y_train, X_val, y_val,
     verbose=FALSE)
 #> [1] 10
 ```
+
+When implementing backward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature; i.e. the feature at position 10.
 
 ## How to run unit tests
 
