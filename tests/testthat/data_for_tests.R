@@ -12,8 +12,8 @@
 #' @keywords internal
 test_data <- function(seed_value) {
   set.seed(seed_value)
-  features = 20
-  obs = 500
+  features <- 20
+  obs <- 500
   middle_feature = features / 2
 
   X <- matrix(0L, nrow=obs, ncol=features)
