@@ -11,36 +11,37 @@
 #'
 #' @keywords internal
 test_data <- function(seed_value) {
-  set.seed(seed_value)
-  features <- 20
-  obs <- 500
-  middle_feature = features / 2
+    set.seed(seed_value)
+    features <- 20
+    obs <- 500
+    middle_feature <- features / 2
 
-  X <- matrix(0L, nrow=obs, ncol=features)
-  y <- 1:obs
-  X[, middle_feature] <- y + runif(n=obs, min=0, max=50)
+    X <- matrix(0L, nrow = obs, ncol = features)
+    y <- 1:obs
+    X[, middle_feature] <- y + runif(n = obs, min = 0, max = 50)
 
-  # 75% Training, 25% test (i.e., obs / 4).
-  training <- sample(rep(c(TRUE, TRUE, TRUE, FALSE), obs / 4))
+    # 75% Training, 25% test (i.e., obs / 4).
+    training <- sample(rep(c(TRUE, TRUE, TRUE, FALSE), obs / 4))
 
-  # Training Data ---
-  X_train <- X[training,]
-  y_train <- y[training]
+    # Training Data ---
+    X_train <- X[training,]
+    y_train <- y[training]
 
-  # Validation Data ---
-  X_val <- X[!training,]
-  y_val <- y[!training]
+    # Validation Data ---
+    X_val <- X[!training,]
+    y_val <- y[!training]
 
-  TRUE_BEST_FEATURE <- middle_feature
+    TRUE_BEST_FEATURE <- middle_feature
 
-  return(list(X_train, y_train, X_val, y_val))
+    return(list(X_train, y_train, X_val, y_val))
 }
 
 mtcars_data <- function() {
     y <- mtcars$hp
     X <- mtcars
     X$hp <- NULL
-    training <- sample(rep(c(TRUE, TRUE, TRUE, FALSE), nrow(mtcars) / 4))
+    training <-
+        sample(rep(c(TRUE, TRUE, TRUE, FALSE), nrow(mtcars) / 4))
     # Training Data ---
     X_train <- X[training,]
     y_train <- y[training]
@@ -50,4 +51,3 @@ mtcars_data <- function() {
     y_val <- y[!training]
     return(list(X_train, y_train, X_val, y_val))
 }
-
