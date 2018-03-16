@@ -333,12 +333,28 @@ test_that("Test for raising w.r.t. `min_change`",
 # Testing forward() with mtcars dataset
 # -----------------------------------------------------------------------------
 
+data <- mtcars_data()
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
+
 test_that("forward() selects the best features when
-          data are passed in as matrices",
+          data are passed in as matrices and verbose
+          is set to TRUE",
           {
-              # Test that `forward()` will output a
-              # vector with the 'best' features
-              output <- forward(
+              # Test that verbose=TRUE does not break
+              # functionality
+              verbose_false <- forward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  n_features = 0.5,
+                  criterion = 'r-squared',
+                  verbose = FALSE
+              )
+              verbose_true <- forward(
                   X_train,
                   y_train,
                   X_val,
@@ -347,20 +363,12 @@ test_that("forward() selects the best features when
                   criterion = 'r-squared',
                   verbose = TRUE
               )
-              expect_length(output, 1)
+              expect_equal(length(verbose_true), length(verbose_false))
+              expect_gte(length(verbose_true), 1)
           })
 
-# -----------------------------------------------------------------------------
-# Testing forward() with mtcars dataset
-# -----------------------------------------------------------------------------
-
-data <- mtcars_data()
-X_train <- data[[1]]
-y_train <- data[[2]]
-X_val <- data[[3]]
-y_val <- data[[4]]
-
-test_that("forward() selects the best features using mtcars dataset", {
+test_that("forward() selects the best features
+          from mtcars dataset using `n_features`", {
     # expect length of output to be greater than 1
     output <- forward(
         X_train,
@@ -368,6 +376,21 @@ test_that("forward() selects the best features using mtcars dataset", {
         X_val,
         y_val,
         n_features = 0.5,
+        criterion = 'r-squared',
+        verbose = FALSE
+    )
+    expect_gt(length(output), 1)
+})
+
+test_that("forward() selects the best features
+          from mtcars dataset using `min_change`", {
+    # expect length of output to be greater than 1
+    output <- forward(
+        X_train,
+        y_train,
+        X_val,
+        y_val,
+        min_change = 0.0001,
         criterion = 'r-squared',
         verbose = FALSE
     )
