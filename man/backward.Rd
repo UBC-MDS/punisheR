@@ -19,9 +19,10 @@ If y_train is a character string AND X is a dataframe, it will be extracted from
 If y_val is a character string AND X is a dataframe, it will be extracted from X.}
 
 \item{n_features}{The number of features to select, expressed either as a proportion (0,1)
-or whole number with range (0,total_features)}
+or whole number with range (0,total_features). Note: `min_change` must be NULL if this is numeric.}
 
-\item{min_change}{Smallest change in criterion score to be considered significant, as a numeric.}
+\item{min_change}{The smallest change in criterion score to be considered significant.
+Note: `n_features` must be NULL if this is numeric.}
 
 \item{criterion}{Model selection criterion to measure relative model quality. Can be one of:
 \itemize{

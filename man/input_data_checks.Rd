@@ -13,7 +13,7 @@ input_data_checks(X, y)
 If `y` is a character string AND X is a dataframe, it will be extracted from X.}
 }
 \value{
-list X matrix (If X is a dataframe when input, it will be convered into a matrix.
+list X matrix (If X is a dataframe when input, it will be converted into a matrix.
                        Otherwise, if all of the checks pass, it will be returned 'as is'.)
              y 'as is' or extracted from X (if y was a character string on input.
 }

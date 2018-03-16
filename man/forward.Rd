@@ -18,10 +18,11 @@ If y_train is a character string AND X is a dataframe, it will be extracted from
 \item{y_val}{Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 If y_val is a character string AND X is a dataframe, it will be extracted from X.}
 
-\item{min_change}{The smallest change in criterion score to be considered significant.}
+\item{min_change}{The smallest change in criterion score to be considered significant.
+Note: `n_features` must be NULL if this is numeric.}
 
 \item{n_features}{The number of features to select, expressed either as a proportion (0,1)
-or whole number with range (0,total_features)}
+or whole number with range (0,total_features). Note: `min_change` must be NULL if this is numeric.}
 
 \item{criterion}{Model selection criterion to measure relative model quality. Can be one of:
 \itemize{
