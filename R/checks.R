@@ -62,16 +62,23 @@ input_checks <- function(n_features, min_change, criterion){
 #'
 #' @keywords internal
 input_data_checks <- function(X, y) {
-
-    stop_msg <- "X must be a 2D matrix"
-    if (!is.matrix(X)) {
+    if (!is.matrix(X) & length(dim(X)) != 2) {
+        stop_msg <- "X must be a 2D numeric matrix"
         stop(stop_msg)
-    } else if ( !(is.vector(y) & is.numeric(y))) {
-        stop_msg <- "y must be a 1D vector"
+    } else if ( !is.numeric(X)) {
+        stop_msg <- "X must be a 2D numeric matrix"
         stop(stop_msg)
-    } else if (length(y) != dim(X)[1]) {
-        shape_msg <- "X and y must have the same number of observations"
-        stop(shape_msg)
+    }
+    if ( !(is.vector(y) & is.numeric(y))) {
+        stop_msg <- "y must be a 1D numeric vector"
+        stop(stop_msg)
+    } else if ( (is.vector(y) & !is.numeric(y))) {
+        stop_msg <- "y must be a 1D numeric vector"
+        stop(stop_msg)
+    }
+    if (length(y) != dim(X)[1]) {
+        stop <- "X and y must have the same number of observations"
+        stop(stop)
     }
 
 }

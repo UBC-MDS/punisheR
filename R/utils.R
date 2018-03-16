@@ -95,7 +95,7 @@ fit_and_score <- function(S, feature, algorithm, X_train,
     X_val_to_use <- X_val[, features_to_use]
 
     # Correct for delightful R behavior that results
-    # in matrices degenerating to to vectors when
+    # in matrices degenerating to vectors when
     # only a single column is extracted.
     if (length(features) == 1){
         X_train_to_use <- as.matrix(X_train_to_use)
@@ -106,9 +106,9 @@ fit_and_score <- function(S, feature, algorithm, X_train,
     if (criterion == "r-squared") {
         score <- r_squared(fit_model = fit, X = X_val_to_use, y = y_val)
     } else if (criterion == "aic") {
-        score <- aic(model = fit)
+        score <- aic(model = fit, X = X_val_to_use, y = y_val)
     } else if (criterion == "bic") {
-        score <- bic(model = fit)
+        score <- bic(model = fit, X = X_val_to_use, y = y_val)
     }
     return(score)
 }

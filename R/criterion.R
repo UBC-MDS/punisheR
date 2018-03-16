@@ -1,5 +1,5 @@
-#' R-squared
-#' @description Coefficient of Determination
+#' RSS Calculator
+#' @description Compute the Residual Sum of Squares (RSS)
 #'
 #' @param fit_model A fitted model
 #'
@@ -7,16 +7,36 @@
 #'
 #' @param y True labels (response)
 #'
+#' @keywords internal
+.rss_calc <- function(model, X, y){
+    if (is.null(X) | is.null(y)) {
+        stop("Neither `X` nor `y` can be NULL.")
+    }
+    df <- as.data.frame(X)
+    y_pred <- suppressWarnings(predict(model, df))
+    rss <- sum((y - y_pred)^2)
+    return(rss)
+}
+
+
+#' R-squared
+#' @description Calculates the coefficient of determination.
+#'
+#' @param fit_model A fitted model
+#'
+#' @param X Feature data
+#'
+#' @param y True labels of the response variable
+#'
 #' @references http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
 #' @export
 r_squared <- function(fit_model, X, y){
-    df <- as.data.frame(X)
-    y_pred <- suppressWarnings(predict(fit_model, df))
     y_true_mean <- mean(y)
-    num <- sum( (y - y_pred) ^ 2)
-    denom <- sum( (y - y_true_mean) ^ 2)
+    num <- .rss_calc(fit_model, X = X, y = y)
+    denom <- sum((y - y_true_mean) ^ 2)
     return(1 - (num / denom))
 }
+
 
 #' Get coefficients
 #' @description A helper function that gets the coefficients required for
@@ -28,19 +48,26 @@ r_squared <- function(fit_model, X, y){
 #' \code{llf} (maximized value of log-likelihood function)
 #'
 #' @keywords internal
-.get_coeffs <- function(model){
+.get_coeffs <- function(model, X, y){
+    if (!is.object(model)) {
+        stop("`model` not a Base-R Model.")
+    }
+
     n <- length(model$residuals)
     k <- model$rank + 1
-    rss <- sum(model$residuals ^ 2)
+    if (is.null(X) & is.null(y)){
+        rss <- sum(model$residuals ^ 2)
+    } else if (is.null(X) | is.null(y)) {
+        stop("if `X` or `y` is NULL, they both must be.")
+    } else {
+        rss <- .rss_calc(model, X = X, y = y)
+    }
     llf <- -1 * (n / 2) * log(2 * pi) - (n / 2) * log(rss / n) - n / 2
     return(c(n, k, llf))
 }
 
 
-
-
 #' Akaike Information Criterion (AIC)
-#'
 #' @description The Akaike Information Criterion's objective is to prevent model
 #'  overfitting by adding a penalty term which penalizes more complex models.
 #'  Its formal definition is:
@@ -50,23 +77,22 @@ r_squared <- function(fit_model, X, y){
 #'
 #' @param model A base R model object (e.g., \code{lm()})
 #'
+#' @param X Feature data. If NULL, extract `X` from `model`.
+#'
+#' @param y True labels of the response variable
+#'          If NULL, extract `y` from `model`.
+#'
 #' @return  AIC value gets returned as a float.
 #'
 #' @references https://en.wikipedia.org/wiki/Akaike_information_criterion
 #' @export
-aic <- function(model){
-
-    if (!is.object(model)) {
-        stop("`model` not a Base-R Model.")
-    }
-
-    coeff <- .get_coeffs(model)
+aic <- function(model, X=NULL, y=NULL){
+    # Calculate AIC
+    coeff <- .get_coeffs(model, X = X, y = y)
     k <- coeff[2]
     llf <- coeff[3]
     aic <- -2 * llf + 2 * k
-
     return(aic)
-
 }
 
 
@@ -81,21 +107,21 @@ aic <- function(model){
 #'
 #' @param  model A base R model object (e.g., \code{lm()})
 #'
+#' @param X Feature data. If NULL, extract `X` from `model`.
+#'
+#' @param y True labels of the response variable.
+#'          If NULL, extract `y` from `model`.
+#'
 #' @return BIC value gets returned as a float.
 #'
 #' @references https://en.wikipedia.org/wiki/Bayesian_information_criterion
 #' @export
-bic <- function(model){
-
-    if (!is.object(model)) {
-        stop("`model` not a Base-R Model.")
-    }
-
-    coeff <- .get_coeffs(model)
+bic <- function(model, X=NULL, y=NULL){
+    # Calcualte BIC
+    coeff <- .get_coeffs(model, X = X, y = y)
     n <- coeff[1]
     k <- coeff[2]
     llf <- coeff[3]
     bic <- -2 * llf + log(n) * k
-
     return(bic)
-    }
+}

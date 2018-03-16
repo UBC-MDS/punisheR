@@ -4,10 +4,15 @@
 \alias{aic}
 \title{Akaike Information Criterion (AIC)}
 \usage{
-aic(model)
+aic(model, X = NULL, y = NULL)
 }
 \arguments{
 \item{model}{A base R model object (e.g., \code{lm()})}
+
+\item{X}{Feature data. If NULL, extract `X` from `model`.}
+
+\item{y}{True labels of the response variable
+If NULL, extract `y` from `model`.}
 }
 \value{
 AIC value gets returned as a float.

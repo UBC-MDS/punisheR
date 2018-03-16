@@ -1,7 +1,11 @@
 language: r
 cache: packages
-warnings_are_errors: false
 dist: trusty
+warnings_are_errors: false
+r_github_packages:
+  - r-lib/covr
 notifications:
     on_success: never
     on_failure: never
+after_success:
+  - Rscript -e 'covr::codecov()'
