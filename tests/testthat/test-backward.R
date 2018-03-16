@@ -325,22 +325,32 @@ test_that("backward() test behavior with only one feature",
 # -----------------------------------------------------------------------------
 
 
-test_that("backward() selects the best features
-          when data are passed in as matrices - Verbose.",
+test_that("backward() selects the best features when
+            data are passed in as matrices and `verbose`
+            is set to TRUE.",
           {
-              # Test that `backward()` will output a
-              # vector with the 'best' features
-              output <- backward(
+              # Test that verbose=TRUE does not break
+              # functionality
+              verbose_true <- backward(
                   X_train,
                   y_train,
                   X_val,
                   y_val,
-                  n_features = 0.05,
+                  n_features = 0.5,
                   criterion = 'r-squared',
                   verbose = TRUE
               )
-              expect_equal(output, c(10))
-              expect_length(output, 1)
+              verbose_false <- backward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  n_features = 0.5,
+                  criterion = 'r-squared',
+                  verbose = FALSE
+              )
+              expect_equal(length(verbose_true), length(verbose_false))
+              expect_gte(length(verbose_true), 1)
           })
 
 # -----------------------------------------------------------------------------
@@ -354,25 +364,25 @@ X_val <- data[[3]]
 y_val <- data[[4]]
 
 test_that("backward() selects the best features
-          using mtcars dataset -- `n_features`", {
-    # Test that `backward()` will output a vector
-    # with the 'best' features
+          from mtcars dataset using `n_features`", {
+    # Testing `n_features`
+    n_features <- 0.5
     output <- backward(
         X_train,
         y_train,
         X_val,
         y_val,
-        n_features = 0.5,
+        n_features = n_features,
         criterion = 'r-squared',
         verbose = FALSE
     )
-    expect_length(output, ncol(X_train) / 2)
+    expect_length(output, ncol(X_train) * n_features)
 })
 
 
 test_that("backward() selects at least
           some features with `min_change` (small)", {
-    # Test for output with nonzero length (i.e., some features)
+    # Testing `min_change`
     output <- backward(
         X_train,
         y_train,
@@ -383,14 +393,26 @@ test_that("backward() selects at least
         criterion = 'r-squared',
         verbose = FALSE
     )
-    expect_equal(length(output) > 0, TRUE)
+    # Test for output greater than or equal to 1 (i.e., some features)
+    expect_gte(length(output), 1)
 })
 
 
-test_that("backward() selects at least
-          some features with `min_change` (large[er])", {
-              # Test for output with nonzero length (i.e., some features)
-              output <- backward(
+test_that("backward() selects more best features when
+            `min_change` is large (vs small)", {
+              # Output with small min change
+              small_min_change <- backward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  n_features = NULL,
+                  min_change = 0.0000001,
+                  criterion = 'r-squared',
+                  verbose = FALSE
+              )
+             # Output with large min change
+              large_min_change <- backward(
                   X_train,
                   y_train,
                   X_val,
@@ -400,6 +422,8 @@ test_that("backward() selects at least
                   criterion = 'r-squared',
                   verbose = FALSE
               )
-              expect_equal(length(output) > 0, TRUE)
+              # Test that large_min_change output is greater than
+              # or equal to small_min_change output
+              expect_gte(length(large_min_change), length(small_min_change))
           })
 
