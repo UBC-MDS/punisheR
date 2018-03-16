@@ -10,7 +10,7 @@ To contribute to `punisheR`, you must fork the repo and make changes in the fork
 https://github.com/yourusername/punisheR
 ```
 
-Please follow the [Google style guides](http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html) for R doc strings.
+Please follow the [Google style guide](https://google.github.io/styleguide/Rguide.xml) for R syntax and documentation.
 
 Once you have made all of your proposed updates, submit a **pull request** and reference the appropriate `issue` that you have tackled.
 
@@ -24,3 +24,8 @@ Once you have made all of your proposed updates, submit a **pull request** and r
 - When a contributor wants to merge with the *master* branch, they should create a pull request and assign it to a fellow contributor for verifying.
 
 - The user who created the pull request should not merge the request with the *master* branch.
+
+- **Requirements for merging a PR:**
+    - All pull requests must pass the TravisCI build in order to be merged.
+    - All code must pass `devtools::check()` without errors before being merged. 
+    - It is recommended that contributors run [lintr](https://github.com/jimhester/lintr) before submitting a PR.

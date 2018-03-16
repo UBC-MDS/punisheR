@@ -4,8 +4,12 @@ dist: trusty
 warnings_are_errors: false
 r_github_packages:
   - r-lib/covr
+  - jimhester/lintr
 notifications:
     on_success: never
     on_failure: never
 after_success:
   - Rscript -e 'covr::codecov()'
+  - Rscript -e 'lintr::lint_package()'
+env:
+  LINTR_COMMENT_BOT=false

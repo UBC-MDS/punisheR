@@ -13,20 +13,16 @@ source("R/criterion.R")
 #' @param total Total features in the data
 #'
 #' @return Number of features to select. If initial \code{n_features} lies on (0, total_features),
-#' it will be returned 'as is'. If \code{n_feature} is passed in as a proporition with range (0,1), it will
-#' be converted to an integer representing proprition with respect to the total number of features.
+#' it will be returned 'as is'. If \code{n_feature} is passed in as a proportion with range (0,1), it will
+#' be converted to an integer representing proportion with respect to the total number of features.
 #'
 #' @keywords internal
-parse_n_features <- function(n_features, total){
-    if (n_features <= 0){
-        stop("`n_features` must be greater than zero.")
-    }
+parse_n_features <- function(n_features, total) {
     if (n_features > 0 & n_features < 1) {
-        return(round(n_features * total))
+        return(max(1, round(n_features * total)))
     } else if (n_features > total) {
-        stop(paste0(
-            "If a whole number, `n_features` must be on (0, ", total, ")."
-            ))
+        msg <- c("If a whole number, `n_features` must be on (0, ", total, ").")
+        stop(paste0(msg, collapse = ""))
     } else {
         return(n_features)
     }
@@ -37,17 +33,17 @@ parse_n_features <- function(n_features, total){
 #'
 #' @param X_input A 2D matrix of features
 #'
-#' @param y_input A 1D vector representing the resposne variable
+#' @param y_input A 1D vector representing the response variable
 #'
 #' @return A fitted \code{lm()} model
 #' @keywords internal
-fitter <- function(X_input, y_input){
+fitter <- function(X_input, y_input) {
     X <- X_input
     y <- y_input
     df <- cbind(as.data.frame(X), as.data.frame(y))
 
     # Fit and return model
-    m <- stats::lm(y ~., data = df)
+    m <- stats::lm(y ~ ., data = df)
     return(m)
 }
 
@@ -67,7 +63,7 @@ fitter <- function(X_input, y_input){
 #'
 #' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
+#' @param y_val Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 #'
 #' @param criterion Model selection criterion to measure relative model quality. Can be one of:
 #' \itemize{
@@ -79,36 +75,48 @@ fitter <- function(X_input, y_input){
 #' @return Score of the model as a float.
 #' @keywords internal
 
-fit_and_score <- function(S, feature, algorithm, X_train,
-                          y_train, X_val, y_val, criterion){
-    if (algorithm == "forward"){
+fit_and_score <- function(S,
+                          feature,
+                          algorithm,
+                          X_train,
+                          y_train,
+                          X_val,
+                          y_val,
+                          criterion) {
+    if (algorithm == "forward") {
         features <- c(S, feature)
     } else {
-        if (is.null(feature)){
+        if (is.null(feature)) {
             features <- S
         } else {
             features <- S[S != feature]
         }
     }
-    features_to_use <- (1:ncol(X_train)) %in% features
+    features_to_use <- seq(1, ncol(X_train)) %in% features
     X_train_to_use <- X_train[, features_to_use]
     X_val_to_use <- X_val[, features_to_use]
 
     # Correct for delightful R behavior that results
     # in matrices degenerating to vectors when
     # only a single column is extracted.
-    if (length(features) == 1){
+    if (length(features) == 1) {
         X_train_to_use <- as.matrix(X_train_to_use)
         X_val_to_use <- as.matrix(X_val_to_use)
     }
 
     fit <- fitter(X_input = X_train_to_use, y_input = y_train)
     if (criterion == "r-squared") {
-        score <- r_squared(fit_model = fit, X = X_val_to_use, y = y_val)
+        score <- r_squared(fit_model = fit,
+                           X = X_val_to_use,
+                           y = y_val)
     } else if (criterion == "aic") {
-        score <- aic(model = fit, X = X_val_to_use, y = y_val)
+        score <- aic(model = fit,
+                     X = X_val_to_use,
+                     y = y_val)
     } else if (criterion == "bic") {
-        score <- bic(model = fit, X = X_val_to_use, y = y_val)
+        score <- bic(model = fit,
+                     X = X_val_to_use,
+                     y = y_val)
     }
     return(score)
 }
