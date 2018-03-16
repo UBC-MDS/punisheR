@@ -69,7 +69,6 @@ test_that("X_train and y_train have appropriate dimensions", {
 })
 
 
-
 test_that("n_features must be a positive integer", {
   # Test that the data params in `forward()`
   # will raise a TypeError when passed something other
