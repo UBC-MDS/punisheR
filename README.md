@@ -55,7 +55,7 @@ information criterion (AIC), as we intend ours to be.
 ``` r
 
 forward(X_train, y_train, X_val, y_val, min_change=0.5,
-n_features=NULL, criterion='r-squared', verbose=FALSE)
+    n_features=NULL, criterion='r-squared', verbose=FALSE)
 #> [1] 10
 ```
 ### Backward Selection using r-squared
@@ -63,8 +63,8 @@ n_features=NULL, criterion='r-squared', verbose=FALSE)
 ``` r
 
 backward(X_train, y_train, X_val, y_val,
-n_features=1, min_change=NULL, criterion='r-squared',
-verbose=FALSE)
+    n_features=1, min_change=NULL, criterion='r-squared',
+    verbose=FALSE)
 #> [1] 10
 ```
 
