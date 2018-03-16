@@ -1,4 +1,6 @@
 #' RSS Calculator
+#' @description Compute the Residual Sum of Squares (RSS)
+#'
 #' @param fit_model A fitted model
 #'
 #' @param X Feature data
