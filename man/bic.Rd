@@ -10,11 +10,11 @@ bic(model)
 \item{model}{A base R model object (e.g., \code{lm()})}
 }
 \value{
-BIC value gets returned as a flaot.
+BIC value gets returned as a float.
 }
 \description{
 The Bayesian Information Criterion's objective is to prevent model
- overfitting by adding a penalty term which penalizes more compelx models.
+ overfitting by adding a penalty term which penalizes more complex models.
  Its formal definition is:
  \deqn{ -2*ln(L)+ln(n)*k}
  where L is the maximized value of the likelihood function.

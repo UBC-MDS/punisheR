@@ -13,8 +13,8 @@ source("R/criterion.R")
 #' @param total Total features in the data
 #'
 #' @return Number of features to select. If initial \code{n_features} lies on (0, total_features),
-#' it will be returned 'as is'. If \code{n_feature} is passed in as a proporition with range (0,1), it will
-#' be converted to an integer representing proprition with respect to the total number of features.
+#' it will be returned 'as is'. If \code{n_feature} is passed in as a proportion with range (0,1), it will
+#' be converted to an integer representing proportion with respect to the total number of features.
 #'
 #' @keywords internal
 parse_n_features <- function(n_features, total){
@@ -37,7 +37,7 @@ parse_n_features <- function(n_features, total){
 #'
 #' @param X_input A 2D matrix of features
 #'
-#' @param y_input A 1D vector representing the resposne variable
+#' @param y_input A 1D vector representing the response variable
 #'
 #' @return A fitted \code{lm()} model
 #' @keywords internal
@@ -67,7 +67,7 @@ fitter <- function(X_input, y_input){
 #'
 #' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
+#' @param y_val Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 #'
 #' @param criterion Model selection criterion to measure relative model quality. Can be one of:
 #' \itemize{

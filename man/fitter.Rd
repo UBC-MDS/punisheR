@@ -9,7 +9,7 @@ fitter(X_input, y_input)
 \arguments{
 \item{X_input}{A 2D matrix of features}
 
-\item{y_input}{A 1D vector representing the resposne variable}
+\item{y_input}{A 1D vector representing the response variable}
 }
 \value{
 A fitted \code{lm()} model

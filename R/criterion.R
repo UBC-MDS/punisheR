@@ -42,7 +42,7 @@ r_squared <- function(fit_model, X, y){
 #' Akaike Information Criterion (AIC)
 #'
 #' @description The Akaike Information Criterion's objective is to prevent model
-#'  overfitting by adding a penalty term which penalizes more compelx models.
+#'  overfitting by adding a penalty term which penalizes more complex models.
 #'  Its formal definition is:
 #'  \deqn{-2*ln(L)+2*k}
 #'  where L is the maximized value of the likelihood function.
@@ -73,7 +73,7 @@ aic <- function(model){
 #' Bayesian Information Criterion
 #'
 #' @description The Bayesian Information Criterion's objective is to prevent model
-#'  overfitting by adding a penalty term which penalizes more compelx models.
+#'  overfitting by adding a penalty term which penalizes more complex models.
 #'  Its formal definition is:
 #'  \deqn{ -2*ln(L)+ln(n)*k}
 #'  where L is the maximized value of the likelihood function.
@@ -81,7 +81,7 @@ aic <- function(model){
 #'
 #' @param  model A base R model object (e.g., \code{lm()})
 #'
-#' @return BIC value gets returned as a flaot.
+#' @return BIC value gets returned as a float.
 #'
 #' @references https://en.wikipedia.org/wiki/Bayesian_information_criterion
 #' @export

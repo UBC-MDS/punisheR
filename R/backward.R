@@ -17,7 +17,7 @@ source("R/utils.R")
 #'
 #' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
 #'
-#' @param y_val Target classe for validation data. Represented as a 1D vector of target classes for \code{X_val}.
+#' @param y_val Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
 #'
 #' @param criterion Model selection criterion to measure relative model quality. Can be one of:
 #' \itemize{
@@ -28,7 +28,7 @@ source("R/utils.R")
 #'
 #' @param min_change Smallest change in criterion score to be considered significant, as a numeric.
 #'
-#' @param n_features The number of features to select, expressed either as a proporition (0,1)
+#' @param n_features The number of features to select, expressed either as a proportion (0,1)
 #' or whole number with range (0,total_features)
 #'
 #' @param verbose
