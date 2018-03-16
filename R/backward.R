@@ -11,13 +11,15 @@ source("R/utils.R")
 #' of backward selection in linear regression models.
 #'
 #'
-#' @param X_train Training data. Represented as a 2D matrix of (observations, features).
+#' @param X_train Training data. Represented as a 2D matrix or dataframe of (observations, features).
 #'
 #' @param y_train Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
+#'                If y_train is a character string AND X is a dataframe, it will be extracted from X.
 #'
-#' @param X_val Validation data. Represented as a 2D matrix of (observations, features).
+#' @param X_val Validation data. Represented as a 2D matrix or dataframe of (observations, features).
 #'
 #' @param y_val Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
+#'              If y_val is a character string AND X is a dataframe, it will be extracted from X.
 #'
 #' @param criterion Model selection criterion to measure relative model quality. Can be one of:
 #' \itemize{
@@ -40,6 +42,12 @@ source("R/utils.R")
 backward <- function(X_train, y_train, X_val, y_val,
                      n_features=0.5, min_change=NULL,
                      criterion="r-squared", verbose=TRUE){
+    # Check data is of the correct form (a matrix)
+    # If not, `input_data_checks` will coerce it to be.
+    train <- input_data_checks(X_train, y_train)
+    X_train <- train[[1]]; y_train <- train[[2]]
+    test <- input_data_checks(X_val, y_val)
+    X_val <- test[[1]]; y_val <- test[[2]]
 
     input_data_checks(X_train, y_train)
     input_data_checks(X_val, y_val)
