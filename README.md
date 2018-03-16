@@ -48,6 +48,26 @@ The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/l
 which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an
 information criterion (AIC), as we intend ours to be.
 
+## Usage examples
+
+### Forward Selection using r-squared
+
+``` r
+
+forward(X_train, y_train, X_val, y_val, min_change=0.5,
+n_features=NULL, criterion='r-squared', verbose=FALSE)
+#> [1] 10
+```
+### Backward Selection using r-squared
+
+``` r
+
+backward(X_train, y_train, X_val, y_val,
+n_features=1, min_change=NULL, criterion='r-squared',
+verbose=FALSE)
+#> [1] 10
+```
+
 ## How to run unit tests
 
 We are using `testthat` for unit testing in punisheR. To run all tests in **RStudio**, use `Cmd/Ctrl` + `Shift` + `T` or `devtools::test()` in your console. 
