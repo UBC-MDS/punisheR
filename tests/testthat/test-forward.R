@@ -78,10 +78,10 @@ test_that("n_features must be a positive numeric", {
   # will raise a TypeError when passed something other
   # than a 2D matrix (data) or 1D vector (response variable)
   expect_error(forward(X_train, y_train, X_val, y_val,
-                        n_features="abc", criterion='r-squared',
+                        n_features="abc", min_change=NULL, criterion='r-squared',
                         verbose=TRUE), "`n_features` must be numeric")
   expect_error(forward(X_train, y_train, X_val, y_val,
-                        n_features=-2, criterion='r-squared',
+                        n_features=-2, min_change=NULL, criterion='r-squared',
                         verbose=TRUE), "`n_features` must be greater than zero.")
 })
 
@@ -96,7 +96,7 @@ test_that("n_features and min_change cannot be active at the same time", {
 # Output format and value
 # -----------------------------------------------------------------------------
 
-test_that("forward() selects the best features", {
+test_that("forward() selects the best features using min_change", {
   # Test that `forward()` will output a vector with the 'best' features
   output <- forward(X_train, y_train, X_val, y_val, min_change=0.5,
                     n_features=NULL, criterion='r-squared', verbose=TRUE)

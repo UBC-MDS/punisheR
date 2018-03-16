@@ -17,7 +17,7 @@ source("R/criterion.R")
 #' be converted to an integer representing proprition with respect to the total number of features.
 #'
 #' @keywords internal
-parse_n_features <- function(n_features, total){
+parse_n_features <- function(n_features, total) {
     if (n_features <= 0){
         stop("`n_features` must be greater than zero.")
     }

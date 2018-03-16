@@ -7,6 +7,8 @@
 #'
 #' @param y True labels of the response variable
 #'
+#' @return The coefficient of determination
+#'
 #' @references http://scikit-learn.org/stable/modules/model_evaluation.html#r2-score-the-coefficient-of-determination
 #' @export
 r_squared <- function(fit_model, X, y){

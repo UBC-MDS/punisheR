@@ -79,14 +79,9 @@ forward <- function(X_train, y_train, X_val, y_val,
 
     input_data_checks(X_train, y_train)
     input_data_checks(X_val, y_val)
-
-    # before input_checks: set min_change to null if n_features is active
-    if(!is.null(n_features) & missing(min_change)) {
-        min_change <- NULL
-    }
     input_checks(n_features, min_change = min_change, criterion = criterion)
     total_number_of_features <- ncol(X_train)
-    S <- c()
+    S <- c() # start with no features
     best_score <- -Inf
     itera <- 1:total_number_of_features
 

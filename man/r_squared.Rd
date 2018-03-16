@@ -13,6 +13,9 @@ r_squared(fit_model, X, y)
 
 \item{y}{True labels of the response variable}
 }
+\value{
+The coefficient of determination
+}
 \description{
 Calculates the coefficient of determination.
 }
