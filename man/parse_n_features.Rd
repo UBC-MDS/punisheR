@@ -7,9 +7,10 @@
 parse_n_features(n_features, total)
 }
 \arguments{
-\item{n_features}{Numeric value passed to forward or backward selection.}
+\item{n_features}{A numeric value passed to forward or backward selection.
+Can be a float or integer.}
 
-\item{total}{Total features in the data}
+\item{total}{Total features in the data (equivalent to number of columns in X)}
 }
 \value{
 Number of features to select. If initial \code{n_features} lies on (0, total_features),
@@ -23,5 +24,10 @@ Handles two cases:
 \item if \code{n_features} is an integer, ensure it lies on (0, total).
 \item if \code{n_features} is a float, ensure it lies on (0, 1).
 }
+}
+\examples{
+parse_n_features(0.5, 10)
+parse_n_features(7, 10)
+
 }
 \keyword{internal}

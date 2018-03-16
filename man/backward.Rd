@@ -19,9 +19,10 @@ If y_train is a character string AND X is a dataframe, it will be extracted from
 If y_val is a character string AND X is a dataframe, it will be extracted from X.}
 
 \item{n_features}{The number of features to select, expressed either as a proportion (0,1)
-or whole number with range (0,total_features)}
+or whole number with range (0,total_features). Note: `min_change` must be NULL if this is numeric.}
 
-\item{min_change}{Smallest change in criterion score to be considered significant, as a numeric.}
+\item{min_change}{The smallest change in criterion score to be considered significant.
+Note: `n_features` must be NULL if this is numeric.}
 
 \item{criterion}{Model selection criterion to measure relative model quality. Can be one of:
 \itemize{
@@ -40,4 +41,14 @@ This is an implementation of the backward selection algorithm
 in which you start with a full model and iteratively remove the
 least useful feature at each step. This function is built for the specific case
 of backward selection in linear regression models.
+}
+\examples{
+X_train <- matrix(runif(50,0,50), ncol=5)
+y_train <- runif(10,0,50)
+X_val <- matrix(runif(20,0,20), ncol=5)
+y_val <- runif(4,0,20)
+backward(X_train, y_train, X_val, y_train, min_change=0.1, criterion="r-squared")
+backward(X_train, y_train, X_val, y_train, n_features=0.1, criterion="aic")
+
+
 }

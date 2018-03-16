@@ -78,6 +78,14 @@ source("R/utils.R")
 #' @param verbose
 #'  if \code{TRUE}, print additional information as selection occurs
 #'
+#' @examples
+#' X_train <- matrix(runif(50,0,50), ncol=5)
+#' y_train <- runif(10,0,50)
+#' X_val <- matrix(runif(20,0,20), ncol=5)
+#' y_val <- runif(4,0,20)
+#' forward(X_train, y_train, X_val, y_train, min_change=0.1, criterion="r-squared")
+#' forward(X_train, y_train, X_val, y_train, n_features=0.1, criterion="aic")
+#'
 #' @return A vector of indices that represent the best features of the model.
 #'
 #' @export
@@ -98,7 +106,7 @@ forward <- function(X_train,
     X_val <- test[[1]]
     y_val <- test[[2]]
 
-    # set min_change to null if n_features arg is passed into function
+    # Set min_change to null if n_features arg is passed into function
     if (!is.null(n_features) & missing(min_change)) {
         min_change <- NULL
     }
