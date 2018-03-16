@@ -25,23 +25,39 @@ test_that("training data is in the correct format", {
     # have the same number of observations
     expect_error(backward(X_train=1234, y_train, X_val, y_val,
                           criterion='r-squared',
-                          verbose=TRUE), "X must be a 2D matrix")
+                          verbose=TRUE), "X must be a 2D numeric matrix")
+    expect_error(backward(X_train=matrix(c('a', 'b', 'c', 'd', 'e', 'f'), nrow=2),
+                          y_train, X_val, y_val,
+                          criterion='r-squared',
+                          verbose=TRUE), "X must be a 2D numeric matrix")
     expect_error(backward(X_train, y_train='1234', X_val, y_val,
                           n_features=0.5, criterion='r-squared',
-                          verbose=TRUE), "y must be a 1D vector")
+                          verbose=TRUE), "y must be a 1D numeric vector")
     expect_error(backward(X_train, y_train=1234, X_val, y_val,
                           n_features=0.5, criterion='r-squared',
                           verbose=TRUE), "X and y must have the same number of observations")
 })
 
 test_that("validation data is in the correct format", {
-    # Identical tests as above but for validation data.
+    # test that x_val is a 2D matrix
     expect_error(backward(X_train, y_train, X_val=1234, y_val,
                           n_features=0.5, criterion='r-squared',
-                          verbose=TRUE), "X must be a 2D matrix")
-    expect_error(backward(X_train, y_train, X_val, y_val='1234',
+                          verbose=TRUE), "X must be a 2D numeric matrix")
+    expect_error(backward(X_train, y_train,
+                          X_val=matrix(c('a', 'b', 'c', 'd', 'e', 'f'), nrow=2), y_val,
                           n_features=0.5, criterion='r-squared',
-                          verbose=TRUE), "y must be a 1D vector")
+                          verbose=TRUE), "X must be a 2D numeric matrix")
+    # test that y_val is 1D vector
+    expect_error(backward(X_train, y_train, X_val,
+                          y_val=matrix(c(2, 4, 3, 1, 5, 7), nrow=2),
+                          n_features=0.5, criterion='r-squared',
+                          verbose=TRUE), "y must be a 1D numeric vector")
+    # test that y_val is numeric
+    expect_error(backward(X_train, y_train, X_val,
+                          y_val='xyz',
+                          n_features=0.5, criterion='r-squared',
+                          verbose=TRUE), "y must be a 1D numeric vector")
+    # test that x_val and y_val are the same length
     expect_error(backward(X_train, y_train, X_val, y_val=1234,
                           n_features=0.5, criterion='r-squared',
                           verbose=TRUE), "X and y must have the same number of observations")
