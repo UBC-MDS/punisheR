@@ -12,7 +12,7 @@ model <- lm(formula = Petal.Length ~ Sepal.Length, data = iris)
 
 test_that("test_metric_model_parm", {
     # Test that the `model` params in `aic()` and `bic()`
-    # will raise a TypeError when passed something other
+    # will raise an error when passed something other
     # than a Base R model.
     expect_error(aic(2), "`model` not a Base-R Model.")
     expect_error(aic("invalid input here"), "`model` not a Base-R Model.")
@@ -61,16 +61,16 @@ test_that("test aic() against manual calculation.", {
     rank <- 2
     model <- lm(formula = y ~ x, data = data)
 
-    # Manual Calculation -------------------------------
+    # Manual Calculation ----------------------------------------------
     n <- N
     k <- rank + 1
-    # Compute RSS ---
+    # Compute RSS ----------------
     extract_residuals <- residuals(model)
     rss <- sum(extract_residuals ^ 2)
     llf <- -1 * (n / 2) * log(2 * pi) - (n / 2) * log(rss / n) - n / 2
     manually_calculated_aic <- -2 * llf + 2 * k
 
-    # Ours ---------------------------------------------
+    # `aic()` Calculation --------------------------------------
     function_aic_value <- aic(model)
     expect_equal(function_aic_value, manually_calculated_aic)
 })
@@ -87,13 +87,13 @@ test_that("test bic() against manual calculation.", {
     # Manual Calculation -------------------------------
     n <- N
     k <- rank + 1
-    # Compute RSS ---
+    # Compute RSS ---------
     extract_residuals <- residuals(model)
     rss <- sum(extract_residuals ^ 2)
     llf <- -1 * (n / 2) * log(2 * pi) - (n / 2) * log(rss / n) - n / 2
     manually_calculated_bic <- -2 * llf + log(n) * k
 
-    # Ours ---------------------------------------------
+    # `bic()` Calculation ------------------------------------
     function_bic_value <- bic(model)
     expect_equal(function_bic_value, manually_calculated_bic)
 })

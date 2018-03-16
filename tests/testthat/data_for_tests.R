@@ -7,7 +7,7 @@
 #'
 #' @param seed_value seed value to randomize runif value generation
 #'
-#' @return X_train, y_train, X_val, y_val (as a list)
+#' @return X_train, y_train, X_val, y_val (as a list of matrices/vectors)
 #'
 #' @keywords internal
 test_data <- function(seed_value) {
@@ -36,6 +36,13 @@ test_data <- function(seed_value) {
     return(list(X_train, y_train, X_val, y_val))
 }
 
+#' Generating test data with mtcars
+#'
+#' @description generates test data using base R's mtcars dataset
+#'
+#' @return X_train, y_train, X_val, y_val (as a list of dataframes)
+#'
+#' @keywords internal
 mtcars_data <- function() {
     y <- mtcars$hp
     X <- mtcars

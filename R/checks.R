@@ -65,7 +65,7 @@ input_checks <- function(n_features, min_change, criterion) {
 #' @param y input for either \code{y_train} or \code{y_val}. Expected to be a 1D numeric matrix.
 #'          If `y` is a character string AND X is a dataframe, it will be extracted from X.
 #'
-#' @return list X matrix (If X is a dataframe when input, it will be convered into a matrix.
+#' @return list X matrix (If X is a dataframe when input, it will be converted into a matrix.
 #'                        Otherwise, if all of the checks pass, it will be returned 'as is'.)
 #'              y 'as is' or extracted from X (if y was a character string on input.
 #'
