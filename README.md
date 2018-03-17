@@ -4,7 +4,7 @@
 [![Coverage status](https://codecov.io/gh/UBC-MDS/punisheR/branch/master/graph/badge.svg)](https://codecov.io/github/UBC-MDS/punisheR?branch=master)
 
 
-PunisheR is a package for feature and model selection in R. Specifically, this package implements tools for
+**punisheR** is a package for feature and model selection in R. Specifically, this package implements tools for
 forward and backward model selection (see [here](https://en.wikipedia.org/wiki/Stepwise_regression)).
 In order to measure model quality during the selection procedures, we have also implemented
 the Akaike and Bayesian Information Criterion (see below), both of which *punish* complex models -- hence this package's
@@ -123,7 +123,7 @@ The value returned by the function `r_squared()` will be between 0 and 1.
 
 ## Vignette
 
-For a more comprehensive guide of PunisheR, you can read the vignette [here](vignettes/punisheR.md) or the html version [here](https://s3-us-west-2.amazonaws.com/punisherpkg/punisheR.html).
+For a more comprehensive guide of PunisheR, you can read the vignette [here](vignettes/punisheR.md).
 
 
 
