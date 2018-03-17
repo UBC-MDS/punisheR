@@ -169,9 +169,10 @@ y_val &lt;-<span class="st"> </span>data[[<span class="dv">4</span>]]</code></pr
 <span class="co">#&gt; [1] 252.6288</span></code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bic</span>(model)
 <span class="co">#&gt; [1] 258.5191</span></code></pre></div>
+<p>When scoring the two the model using AIC and BIC, we can see that the penalty when using <code>bic</code> is greater than the penalty obtained using <code>aic</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">r_squared</span>(model, X_val, y_val)
 <span class="co">#&gt; [1] 0.7838625</span></code></pre></div>
-<p>When scoring the two the model using AIC and BIC, we can see that the penalty when using <code>bic</code> is greater than the penalty obtained using <code>aic</code>.</p>
+<p>The value returned by the function <code>r_squared()</code> will be between 0 and 1.</p>
 </div>
 </div>
 </div>
