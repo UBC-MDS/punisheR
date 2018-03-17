@@ -1,4 +1,4 @@
-#' Generating test data with mtcars.
+#' Generating example data with mtcars.
 #'
 #' @description generates test data using base R's mtcars dataset
 #'
