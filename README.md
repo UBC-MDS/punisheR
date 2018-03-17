@@ -5,9 +5,9 @@
 [![Coverage status](https://codecov.io/gh/UBC-MDS/punisheR/branch/master/graph/badge.svg)](https://codecov.io/github/UBC-MDS/punisheR?branch=master)
 
 
-PunisheR is a package for feature and model selection in R. Specifically, this package will implement tools for
+PunisheR is a package for feature and model selection in R. Specifically, this package implements tools for
 forward and backward model selection (see [here](https://en.wikipedia.org/wiki/Stepwise_regression)).
-In order to measure model quality during the selection procedures, we will also be implement
+In order to measure model quality during the selection procedures, we have also implemented
 the Akaike and Bayesian Information Criterion (see below), both of which *punish* complex models -- hence this package's
 name.
 
@@ -23,31 +23,57 @@ devtools::install_github("UBC-MDS/punisheR")
 
 ## Functions included:
 
-We will be implementing two stepwise feature selection techniques:
+punisheR has two stepwise feature selection techniques:
 
 - `forward()`: a feature selection method in which you start with a null model and iteratively add useful features
-- `backward()`: a feature selection method in which you start with a full model and iteratively remove the least useful feature at each step
+- `backward()`: a feature selection method in which you start with a full model and iteratively remove the least
+useful feature at each step
 
-We will also be implementing metrics that evaluate model performance: 
+This package also has three metrics to evaluate model performance: 
 
 - `aic()`: computes the [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion)
 - `bic()`: computes the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion)
 - `r_squared()`: computes the [coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination)
 
-These three criteria will be used to measure the relative quality of models within `forward()` and `backward()`. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The penalty term is larger in BIC than in AIC. The lower the AIC and BIC score, the better the model.
+These three criteria can be used to measure the relative quality of models within `forward()` and `backward()`. In general,
+having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC
+add a penalty for the number of features in a model. The penalty term is larger in BIC than in AIC. The lower the AIC and
+BIC score, the better the model.
 
 ## How does the package fit into the existing R ecosystem?
 
-In the R ecosystem, the forward and backward selection is implemented in both the [olsrr](https://cran.r-project.org/web/packages/olsrr/) and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides [`ols_step_forward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward) and [`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward) for forward and backward stepwise selection, respectively. Both of these use p-value as a metric for feature selection. The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html), which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an information criterion (AIC), as we intend ours to be. Other packages that provide subset selection for regression models are [leaps](https://cran.r-project.org/web/packages/leaps/leaps.pdf) and [bestglm](https://cran.r-project.org/web/packages/bestglm/bestglm.pdf).
+In the R ecosystem, the forward and backward selection is implemented in both the [olsrr](https://cran.r-project.org/web/packages/olsrr/)
+and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides
+[`ols_step_forward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward)
+and [`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward)
+for forward and backward stepwise selection, respectively. Both of these use p-value as a metric for feature selection.
+The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html), which is
+complete with three modes: forward, backward or both. The selection procedure it uses is based on an information criterion
+(AIC), as we intend ours to be. Other packages that provide subset selection for regression models are
+[leaps](https://cran.r-project.org/web/packages/leaps/leaps.pdf) and [bestglm](https://cran.r-project.org/web/packages/bestglm/bestglm.pdf).
 
-In `punisheR`, users can select between criterions such as `aic`, `bic` and `r-squared` for forward and backward selections. Also, the number of features returned by these selection algorithms can be specified by using `n_features` or by using `min_change`; users can specify the minimum change in the criterion score for an additional feature to be selected.
+In `punisheR`, users can select between metrics such as `aic`, `bic` and `r-squared` for forward and backward selections.
+Also, the number of features returned by these selection algorithms can be specified by using `n_features` or by using `min_change`;
+users can specify the minimum change in the criterion score for an additional feature to be selected.
 
 
 ## Usage examples
 
+### Load data
+
+```r
+library(punisheR)
+
+data <- mtcars_data()
+X_train <- data[[1]]
+y_train <- data[[2]]
+X_val <- data[[3]]
+y_val <- data[[4]]
+```
+
 ### Forward Selection using r-squared
 
-``` r
+```r
 
 forward(X_train, y_train, X_val, y_val, min_change=0.5,
     n_features=NULL, criterion='r-squared', verbose=FALSE)
@@ -55,11 +81,12 @@ forward(X_train, y_train, X_val, y_val, min_change=0.5,
 #> [1] 10
 
 ```
-When implementing forward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
+When implementing forward selection on the demo data, it returns a list of features for the best model. Here it
+can be seen that the function correctly returns only 1 feature.
 
 ### Backward Selection using r-squared
 
-``` r
+```r
 
 backward(X_train, y_train, X_val, y_val,
     n_features=1, min_change=NULL, criterion='r-squared',
@@ -69,26 +96,26 @@ backward(X_train, y_train, X_val, y_val,
 
 ```
 
-When implementing backward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
+When implementing backward selection on the demo data, it returns a list of features for the best model.
+Here it can be seen that the function correctly returns only 1 feature.
 
 ### Criterions
 
-``` r
+```r
 model <- lm(y_train ~ mpg + cyl + disp, data = X_train)
 
 aic(model)
-
 #> [1] 252.6288
 
 bic(model)
-
 #> [1] 258.5191
 
 ```
 
-When scoring the two the model using AIC and BIC, we can see that the penalty when using `bic` is greater than the penalty obtained using `aic`.
+When scoring the two the model using AIC and BIC, we can see that the penalty when using `bic` is greater
+than the penalty obtained using `aic`.
 
-``` r
+```r
 r_squared(model, X_val, y_val)
 #> [1] 0.7838625
 ```
