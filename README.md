@@ -123,7 +123,7 @@ The value returned by the function `r_squared()` will be between 0 and 1.
 
 ## Vignette
 
-For a more comprehensive guide of PunisheR, you can read the vignette [here](vignettes/punisheR.md).
+For a more comprehensive guide of PunisheR, you can read the vignette [here](vignettes/punisheR.md) or html version [here](https://s3-us-west-2.amazonaws.com/punisherpkg/punisheR.html).
 
 
 
