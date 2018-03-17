@@ -19,39 +19,43 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction
+## Introduction
 
-PunisheR is a package for feature and model selection in R. Specifically, this package will implement tools for forward and backward model selection. In order to measure model quality during the selection procedures, we have also implemented the Akaike Information Criterion(AIC) and Bayesian Information Criterion(BIC).
+[punisheR](https://github.com/UBC-MDS/punisheR) is a package for feature and model selection in R. Specifically, this package implements tools for forward and backward model selection. In order to measure model quality during the selection procedures, we have also implemented the Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC).
 
 ## Functions included
 
 The package contains two stepwise feature selection techniques:
 
-- `forward()`: [Forward selection](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches) is starting with one variable and scoring each additional variable using a model fit criterion. The process of adding variables are repeated untill there is no statistically significant improvement in the model.
+- `forward()`: [Forward selection](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches) starts with one feature and iteratively adds the features with the best scores using a model fit criterion. The process of adding features is repeated until either the maximum number of features (`n_features`) is reached or the change in score is less than the `min_change` threshold.
 
-- `backward()`: [Backward selection/elimination](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches) is starting with all the variables and scoring deletion of each variable using a model fit criterion. The process of deleting variables are repeated untill there is no statistically significant improvement in the model.
+
+- `backward()`: [Backward selection/elimination](https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches) starts with all features and iteratively deletes features with the worst scores using model fit criterion. The process of deleting features is repeated until either the maximum number of features (`n_features`) is reached or the change in score is less than the `min_change` threshold.
 
 Sources: https://en.wikipedia.org/wiki/Stepwise_regression
 
 The package contains three metrics that evaluate model performance: 
 
-- `aic()`: The [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) is an estimator of the relative quality of statistical models.
+- `aic()`: The [Akaike information criterion](https://en.wikipedia.org/wiki/Akaike_information_criterion) (AIC) adds a penalty term which penalizes more complex models. Its formal definition is:
+$$-2\ln(L)+2*k $$
+where $k$ is the number of features and $L$ is the maximized value of the likelihood function.
 
-- `bic()`: The [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) (BIC) is a criterion for model and the penalties associated with BIC is larger than AIC.
 
-- `r_squared()`: The [Coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination) is the proportion of the variance in the response variable that can be predicted from the explanatory variable.
+- `bic()`: The [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion) adds a penality term which penalizes complex models to a greater extent than AIC. Its formal definition is:
+$$-2*\ln(L)+\ln(n)*k$$
+where $k$ is the number of features, $n$ is the number of observations, and $L$ is the maximized value of the likelihood function.
 
-These three criteria will be used to measure the relative quality of models within `forward()` and `backward()`. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The lower the AIC and BIC score, the better the model.
+- `r_squared()`: The [coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination) is the proportion of the variance in the response variable that can be predicted from the explanatory variable.
+
+These three criteria measure the relative quality of models within `forward()` and `backward()` and can be configured using the `criterion` parameter. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The lower the AIC and BIC score, the better the model.
 
 ## How does punisheR fit into the existing R ecosystem?
 
 In the R ecosystem, forward and backward selection are implemented in both the [olsrr](https://cran.r-project.org/web/packages/olsrr/)
 and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides
 [`ols_step_forward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward) and
-[`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward) for forward and backward stepwise selection, respectively. Both of these use p-value as a metric for feature selection. Other packages that provide subset selection for regression models are [leaps](https://cran.r-project.org/web/packages/leaps/leaps.pdf) and [bestglm](https://cran.r-project.org/web/packages/bestglm/bestglm.pdf).
+[`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward) for forward and backward stepwise selection, respectively. Both of these use p-value as a metric for feature selection. The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html), which is complete with three modes: forward, backward or both. Other packages that provide subset selection for regression models are [leaps](https://cran.r-project.org/web/packages/leaps/leaps.pdf) and [bestglm](https://cran.r-project.org/web/packages/bestglm/bestglm.pdf).
 
-
-The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html), which is complete with three modes: forward, backward or both. The selection procedure it uses is based on aninformation criterion (AIC), as we intend ours to be.
 
 
 ```{r}
@@ -96,7 +100,7 @@ y_val <- data[[4]]
 ```
 
 
-#### Forward Selection by specifying the number of features
+## Forward Selection by specifying the number of features
 
 ###### Usage example with `aic` as criterion
 

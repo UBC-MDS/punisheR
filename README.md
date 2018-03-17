@@ -21,6 +21,8 @@ improve our understanding of model selection techniques and collaborative softwa
 devtools::install_github("UBC-MDS/punisheR")
 ```
 
+If you would like to read a comprehensive documentation of `punisheR`, we recommend that you set `build_vignettes = TRUE` when you install the package.
+
 ## Functions included:
 
 We will be implementing two stepwise feature selection techniques:
