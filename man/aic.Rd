@@ -9,9 +9,10 @@ aic(model, X = NULL, y = NULL)
 \arguments{
 \item{model}{A base R model object (e.g., \code{lm()})}
 
-\item{X}{Feature data. If NULL, extract `X` from `model`.}
+\item{X}{Validation data as a 2D matrix of (observations, features).
+If NULL, extract `X` from `model`.}
 
-\item{y}{True labels of the response variable
+\item{y}{True labels as a 1D vector.
 If NULL, extract `y` from `model`.}
 }
 \value{
@@ -24,6 +25,11 @@ The Akaike Information Criterion's objective is to prevent model
  \deqn{-2*ln(L)+2*k}
  where L is the maximized value of the likelihood function.
  A smaller AIC value suggests that the model is a better fit for the data.
+}
+\examples{
+model <- lm(hp~., data=mtcars)
+aic(model)
+
 }
 \references{
 https://en.wikipedia.org/wiki/Akaike_information_criterion

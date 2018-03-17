@@ -29,7 +29,7 @@ fit_and_score(S, feature, algorithm, X_train, y_train, X_val, y_val, criterion)
 }}
 }
 \value{
-Score of the model as a float.
+Score of the model (as a float).
 }
 \description{
 Fits a linear regression model to the data and

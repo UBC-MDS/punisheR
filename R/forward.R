@@ -80,6 +80,14 @@ source("R/utils.R")
 #' @param verbose
 #'  if \code{TRUE}, print additional information as selection occurs
 #'
+#' @examples
+#' X_train <- matrix(runif(50, 0, 50), ncol=5)
+#' y_train <- runif(10, 0, 50)
+#' X_val <- matrix(runif(50, 0, 20), ncol=5)
+#' y_val <- runif(10, 0, 20)
+#' forward(X_train, y_train, X_val, y_train, min_change=0.1, criterion="r-squared")
+#' forward(X_train, y_train, X_val, y_train, n_features=0.1, criterion="aic")
+#'
 #' @return A vector of indices that represent the best features of the model.
 #'
 #' @export
@@ -134,7 +142,7 @@ forward <- function(X_train,
                 y_val = y_val,
                 criterion = criterion
             )
-            if (score > best_score) {
+            if (score > best_score | !is.null(n_features)) {
                 if (is.null(current_best_j)) {
                     current_best_j <- c(j, score)
                 } else if (score > current_best_j[2]) {
@@ -149,8 +157,8 @@ forward <- function(X_train,
             # Update S, the best score and score history ---
             best_score <- best_j_score   # update the score to beat
             S <- c(S, best_j)   # add feature
-            itera <-
-                itera[itera != best_j]  # no longer search over feature
+            # no longer search over feature
+            itera <- itera[itera != best_j]
         }
         # 3. Check if the algorithm should halt.
         do_halt <- .forward_break_criteria(
