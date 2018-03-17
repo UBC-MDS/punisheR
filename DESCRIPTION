@@ -1,7 +1,7 @@
 Package: punisheR
 Type: Package
 Title: Feature Selection Using AIC and BIC
-Version: 0.1.0
+Version: 4.0.0
 Authors@R: c(
     person("Tariq", "Hassan", , email="tariq.hassan@alumni.ubc.ca", role=c("aut")),
     person("Jill", "Cates", , email="jill.cates@alumni.ubc.ca", role=c("aut")),
