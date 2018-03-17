@@ -3,8 +3,8 @@ title: "punisheR"
 author: "Jill Cates, Tariq Hassan, Avinash Prabhakaran"
 date: "`r Sys.Date()`"
 output: 
-    rmarkdown::html_vignette : default
     github_document : default
+    rmarkdown::html_vignette : default
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEncoding{UTF-8}
@@ -64,35 +64,9 @@ library(punisheR)
 ```
 
 
-```{r, echo=FALSE}
-#' Generating test data with mtcars
-#'
-#' @description generates test data using base R's mtcars dataset
-#'
-#' @return X_train, y_train, X_val, y_val (as a list of dataframes)
-#'
-#' @keywords internal
-mtcars_data <- function(seed) {
-    y <- mtcars$hp
-    X <- mtcars
-    X$hp <- NULL
-    set.seed(seed)
-    training <- sample(rep(c(TRUE, TRUE, TRUE, FALSE), nrow(mtcars) / 4))
-    # Training Data ---
-    X_train <- X[training,]
-    y_train <- y[training]
-
-    # Validation Data ---
-    X_val <- X[!training,]
-    y_val <- y[!training]
-    return(list(X_train, y_train, X_val, y_val))
-}
-
-```
-
 ```{r}
 #Loading the demo mtcars data
-data <- mtcars_data(99)
+data <- mtcars_data()
 X_train <- data[[1]]
 y_train <- data[[2]]
 X_val <- data[[3]]
