@@ -33,28 +33,5 @@ test_data <- function(seed_value) {
 
     TRUE_BEST_FEATURE <- middle_feature
 
-    return(list(X_train, y_train, X_val, y_val))
-}
-
-#' Generating test data with mtcars
-#'
-#' @description generates test data using base R's mtcars dataset
-#'
-#' @return X_train, y_train, X_val, y_val (as a list of dataframes)
-#'
-#' @keywords internal
-mtcars_data <- function() {
-    y <- mtcars$hp
-    X <- mtcars
-    X$hp <- NULL
-    training <-
-        sample(rep(c(TRUE, TRUE, TRUE, FALSE), nrow(mtcars) / 4))
-    # Training Data ---
-    X_train <- X[training,]
-    y_train <- y[training]
-
-    # Validation Data ---
-    X_val <- X[!training,]
-    y_val <- y[!training]
-    return(list(X_train, y_train, X_val, y_val))
+    return(list(X_train, y_train, X_val, y_val, TRUE_BEST_FEATURE))
 }
