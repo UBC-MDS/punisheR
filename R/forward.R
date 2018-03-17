@@ -142,7 +142,7 @@ forward <- function(X_train,
                 y_val = y_val,
                 criterion = criterion
             )
-            if (score > best_score) {
+            if (score > best_score | !is.null(n_features)) {
                 if (is.null(current_best_j)) {
                     current_best_j <- c(j, score)
                 } else if (score > current_best_j[2]) {
@@ -157,8 +157,8 @@ forward <- function(X_train,
             # Update S, the best score and score history ---
             best_score <- best_j_score   # update the score to beat
             S <- c(S, best_j)   # add feature
-            itera <-
-                itera[itera != best_j]  # no longer search over feature
+            # no longer search over feature
+            itera <- itera[itera != best_j]
         }
         # 3. Check if the algorithm should halt.
         do_halt <- .forward_break_criteria(

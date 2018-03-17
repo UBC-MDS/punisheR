@@ -276,7 +276,7 @@ test_that("backward() selects the best features
                       y_train = 'y_train',
                       X_val = X_val_df,
                       y_val = 'y_val',
-                      n_features = 0.05,
+                      n_features = 1,
                       criterion = 'r-squared',
                       verbose = FALSE
                   )
@@ -292,7 +292,7 @@ test_that("backward() selects the best features
                   y_train,
                   X_val,
                   y_val,
-                  n_features = 0.05,
+                  n_features = 1,
                   criterion = 'r-squared',
                   verbose = FALSE
               )
@@ -313,7 +313,7 @@ test_that("backward() selects the best features
                       y_train,
                       X_val,
                       y_val,
-                      n_features = 0.5,
+                      n_features = 1,
                       min_change = NULL,
                       criterion = metric,
                       verbose = FALSE
@@ -358,7 +358,7 @@ test_that("backward() selects the best features when
                   y_train,
                   X_val,
                   y_val,
-                  n_features = 0.5,
+                  n_features = 1,
                   criterion = 'r-squared',
                   verbose = TRUE
               )
@@ -367,7 +367,7 @@ test_that("backward() selects the best features when
                   y_train,
                   X_val,
                   y_val,
-                  n_features = 0.5,
+                  n_features = 1,
                   criterion = 'r-squared',
                   verbose = FALSE
               )
@@ -388,7 +388,7 @@ y_val <- data[[4]]
 test_that("backward() selects the best features
           from mtcars dataset using `n_features`", {
     # Testing `n_features`
-    n_features <- 0.5
+    n_features <- 1
     output <- backward(
         X_train,
         y_train,
@@ -398,7 +398,7 @@ test_that("backward() selects the best features
         criterion = 'r-squared',
         verbose = FALSE
     )
-    expect_length(output, ncol(X_train) * n_features)
+    expect_length(output, 1)
 })
 
 

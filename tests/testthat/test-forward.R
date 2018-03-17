@@ -278,7 +278,7 @@ test_that("forward() selects the best features
                       y_train = 'y_train',
                       X_val = X_val_df,
                       y_val = 'y_val',
-                      n_features = 0.5,
+                      n_features = 1,
                       min_change = NULL,
                       criterion = 'r-squared',
                       verbose = FALSE
@@ -297,7 +297,7 @@ test_that("forward() selects the best features when
                   y_train,
                   X_val,
                   y_val,
-                  n_features = 0.5,
+                  n_features = 1,
                   criterion = 'r-squared',
                   verbose = FALSE
               )
