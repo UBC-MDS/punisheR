@@ -59,7 +59,7 @@ forward(X_train, y_train, X_val, y_val, min_change=0.5,
     n_features=NULL, criterion='r-squared', verbose=FALSE)
 #> [1] 10
 ```
-When implementing forward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature; i.e. the feature at position 10.
+When implementing forward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
 
 ### Backward Selection using r-squared
 
@@ -71,7 +71,29 @@ backward(X_train, y_train, X_val, y_val,
 #> [1] 10
 ```
 
-When implementing backward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature; i.e. the feature at position 10.
+When implementing backward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
+
+### Criterions
+
+``` r
+model <- lm(y_train ~ mpg + cyl + disp, data = X_train)
+
+aic(model)
+#> [1] 252.6288
+
+bic(model)
+#> [1] 258.5191
+
+```
+
+When scoring the two the model using AIC and BIC, we can see that the penalty when using `bic` is greater than the penalty obtained using `aic`.
+
+``` r
+r_squared(model, X_val, y_val)
+#> [1] 0.7838625
+```
+
+The value returned by the function `r_squared()` will be between 0 and 1.
 
 ## How to run unit tests
 
