@@ -124,6 +124,13 @@ r_squared(model, X_val, y_val)
 
 The value returned by the function `r_squared()` will be between 0 and 1.
 
+## Vignette
+
+For more information, you can see our [here](vignettes/punisheR.md).
+
+---
+
+
 ## How to run unit tests
 
 We are using `testthat` for unit testing in punisheR. To run all tests in **RStudio**, use `Cmd/Ctrl` + `Shift` + `T` or `devtools::test()` in your console. 
