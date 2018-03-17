@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Jill Cates, Tariq Hassan, Avinash Prabhakaran" />
+
+<meta name="date" content="2018-03-16" />
+
+<title>punisheR</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">punisheR</h1>
+<h4 class="author"><em>Jill Cates, Tariq Hassan, Avinash Prabhakaran</em></h4>
+<h4 class="date"><em>2018-03-16</em></h4>
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>PunisheR is a package for feature and model selection in R. Specifically, this package will implement tools for forward and backward model selection. In order to measure model quality during the selection procedures, we have also implemented the Akaike Information Criterion(AIC) and Bayesian Information Criterion(BIC).</p>
+<div id="functions-included" class="section level2">
+<h2>Functions included</h2>
+<p>The package contains two stepwise feature selection techniques:</p>
+<ul>
+<li><p><code>forward()</code>: <a href="https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches">Forward selection</a> is starting with one variable and scoring each additional variable using a model fit criterion. The process of adding variables are repeated untill there is no statistically significant improvement in the model.</p></li>
+<li><p><code>backward()</code>: <a href="https://en.wikipedia.org/wiki/Stepwise_regression#Main_approaches">Backward selection/elimination</a> is starting with all the variables and scoring deletion of each variable using a model fit criterion. The process of deleting variables are repeated untill there is no statistically significant improvement in the model.</p></li>
+</ul>
+<p>Sources: <a href="https://en.wikipedia.org/wiki/Stepwise_regression" class="uri">https://en.wikipedia.org/wiki/Stepwise_regression</a></p>
+<p>The package contains three metrics that evaluate model performance:</p>
+<ul>
+<li><p><code>aic()</code>: The <a href="https://en.wikipedia.org/wiki/Akaike_information_criterion">Akaike information criterion</a> (AIC) is an estimator of the relative quality of statistical models.</p></li>
+<li><p><code>bic()</code>: The <a href="https://en.wikipedia.org/wiki/Bayesian_information_criterion">Bayesian information criterion</a> (BIC) is a criterion for model and the penalties associated with BIC is larger than AIC.</p></li>
+<li><p><code>r_squared()</code>: The <a href="https://en.wikipedia.org/wiki/Coefficient_of_determination">Coefficient of determination</a> is the proportion of the variance in the response variable that can be predicted from the explanatory variable.</p></li>
+</ul>
+<p>These three criteria will be used to measure the relative quality of models within <code>forward()</code> and <code>backward()</code>. In general, having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC add a penalty for the number of features in a model. The lower the AIC and BIC score, the better the model.</p>
+</div>
+<div id="how-does-punisher-fit-into-the-existing-r-ecosystem" class="section level2">
+<h2>How does punisheR fit into the existing R ecosystem?</h2>
+<p>In the R ecosystem, forward and backward selection are implemented in both the <a href="https://cran.r-project.org/web/packages/olsrr/">olsrr</a> and <a href="https://cran.r-project.org/web/packages/MASS/MASS.pdf">MASS</a> packages. The former provides <a href="https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward"><code>ols_step_forward()</code></a> and <a href="https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward"><code>ols_step_backward()</code></a> for forward and backward stepwise selection, respectively. Both of these use p-value as a metric for feature selection. Other packages that provide subset selection for regression models are <a href="https://cran.r-project.org/web/packages/leaps/leaps.pdf">leaps</a> and <a href="https://cran.r-project.org/web/packages/bestglm/bestglm.pdf">bestglm</a>.</p>
+<p>The latter, MASS, contains <a href="https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html"><code>StepAIC()</code></a>, which is complete with three modes: forward, backward or both. The selection procedure it uses is based on aninformation criterion (AIC), as we intend ours to be.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(knitr)
+<span class="kw">library</span>(punisheR)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#Loading the demo mtcars data</span>
+data &lt;-<span class="st"> </span><span class="kw">mtcars_data</span>(<span class="dv">99</span>)
+X_train &lt;-<span class="st"> </span>data[[<span class="dv">1</span>]]
+y_train &lt;-<span class="st"> </span>data[[<span class="dv">2</span>]]
+X_val &lt;-<span class="st"> </span>data[[<span class="dv">3</span>]]
+y_val &lt;-<span class="st"> </span>data[[<span class="dv">4</span>]]</code></pre></div>
+<div id="forward-selection-by-specifying-the-number-of-features" class="section level4">
+<h4>Forward Selection by specifying the number of features</h4>
+<div id="usage-example-with-aic-as-criterion" class="section level6">
+<h6>Usage example with <code>aic</code> as criterion</h6>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">forward</span>(X_train, y_train, X_val, y_val, <span class="dt">min_change=</span><span class="ot">NULL</span>,
+                    <span class="dt">n_features=</span><span class="dv">2</span>, <span class="dt">criterion=</span><span class="st">'aic'</span>, <span class="dt">verbose=</span><span class="ot">FALSE</span>)
+<span class="co">#&gt; [1] 9 4</span></code></pre></div>
+<p>When implementing forward selection on the mtcars dataset with <code>hp</code> as the explanatory variable , it returns a list of features that form the best model. In the above example, the desired number of features has been specified as 2 and the criterion being used is <code>aic</code>. The function returns a list of 2 features.</p>
+</div>
+<div id="usage-example-with-bic-as-criterion" class="section level6">
+<h6>Usage example with <code>bic</code> as criterion</h6>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">forward</span>(X_train, y_train, X_val, y_val, <span class="dt">min_change=</span><span class="ot">NULL</span>,
+                    <span class="dt">n_features=</span><span class="dv">3</span>, <span class="dt">criterion=</span><span class="st">'bic'</span>, <span class="dt">verbose=</span><span class="ot">FALSE</span>)
+<span class="co">#&gt; [1] 9 4 8</span></code></pre></div>
+<p>In the above example, the desired number of features has been specified as 3 and the criterion being used is <code>bic</code>. The function returns a list of 3 features.</p>
+</div>
+<div id="usage-example-with-r-squared-as-criterion" class="section level6">
+<h6>Usage example with <code>r-squared</code> as criterion</h6>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">forward</span>(X_train, y_train, X_val, y_val, <span class="dt">min_change=</span><span class="ot">NULL</span>,
+                    <span class="dt">n_features=</span><span class="dv">4</span>, <span class="dt">criterion=</span><span class="st">'r-squared'</span>, <span class="dt">verbose=</span><span class="ot">FALSE</span>)
+<span class="co">#&gt; [1] 2 1 6 3</span></code></pre></div>
+<p>In the above example, the desired number of features has been specified as 4 and the criterion being used is <code>r-squared</code>. The function returns a list of 4 features.</p>
+</div>
+</div>
+<div id="forward-selection-by-specifying-the-smallest-change-in-criterion" class="section level4">
+<h4>Forward Selection by specifying the smallest change in criterion</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">forward</span>(X_train, y_train, X_val, y_val, <span class="dt">min_change=</span><span class="fl">0.5</span>,
+                    <span class="dt">n_features=</span><span class="ot">NULL</span>, <span class="dt">criterion=</span><span class="st">'r-squared'</span>, <span class="dt">verbose=</span><span class="ot">FALSE</span>)
+<span class="co">#&gt; [1] 2 1 6 3 7 5</span></code></pre></div>
+<p>In the example above, <code>forward</code> selction returns a list of 6 features when a minimum change of 0.5 is required in <code>r-squared</code> score for an additional feature to be selected.</p>
+<p><strong>Note</strong>: When using the criterion as <code>aic</code> or <code>bic</code>, the value for <code>min_change</code> should be carefully selected as <code>aic</code> and <code>bic</code> tends to have much larger values.</p>
+</div>
+<div id="backward-selection-by-specifying-the-number-of-features" class="section level4">
+<h4>Backward Selection by specifying the number of features</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">backward</span>(X_train, y_train, X_val, y_val,
+                     <span class="dt">n_features=</span><span class="dv">7</span>, <span class="dt">min_change=</span><span class="ot">NULL</span>, <span class="dt">criterion=</span><span class="st">'aic'</span>,
+                     <span class="dt">verbose=</span><span class="ot">FALSE</span>)
+<span class="co">#&gt; [1]  1  4  5  7  8  9 10</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">backward</span>(X_train, y_train, X_val, y_val,
+                     <span class="dt">n_features=</span><span class="dv">7</span>, <span class="dt">min_change=</span><span class="ot">NULL</span>, <span class="dt">criterion=</span><span class="st">'bic'</span>,
+                     <span class="dt">verbose=</span><span class="ot">FALSE</span>)
+<span class="co">#&gt; [1]  1  4  5  7  8  9 10</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">backward</span>(X_train, y_train, X_val, y_val,
+                     <span class="dt">n_features=</span><span class="dv">7</span>, <span class="dt">min_change=</span><span class="ot">NULL</span>, <span class="dt">criterion=</span><span class="st">'r-squared'</span>,
+                     <span class="dt">verbose=</span><span class="ot">FALSE</span>)
+<span class="co">#&gt; [1] 1 2 3 5 6 7 9</span></code></pre></div>
+<p>Similarly, for backward selection, the number of features are specified as 7 and the examples using all the three criterion are provided above.</p>
+</div>
+<div id="backward-selection-by-specifying-the-smallest-change-in-criterion" class="section level4">
+<h4>Backward Selection by specifying the smallest change in criterion</h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">backward</span>(X_train, y_train, X_val, y_val,
+                     <span class="dt">n_features=</span><span class="ot">NULL</span>, <span class="dt">min_change=</span><span class="fl">0.5</span>, <span class="dt">criterion=</span><span class="st">'r-squared'</span>,
+                     <span class="dt">verbose=</span><span class="ot">FALSE</span>)
+<span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></code></pre></div>
+<p>In the example above, <code>backward</code> selection returns a list of 10 features when the minimum change in the <code>r-squared</code> criterion is specified as 0.5.</p>
+</div>
+<div id="aic-bic-r2" class="section level4">
+<h4>AIC, BIC &amp; <span class="math inline">\(R^2\)</span></h4>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">model &lt;-<span class="st"> </span><span class="kw">lm</span>(y_train <span class="op">~</span><span class="st"> </span>mpg <span class="op">+</span><span class="st"> </span>cyl <span class="op">+</span><span class="st"> </span>disp, <span class="dt">data =</span> X_train)
+
+<span class="kw">aic</span>(model)
+<span class="co">#&gt; [1] 252.6288</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bic</span>(model)
+<span class="co">#&gt; [1] 258.5191</span></code></pre></div>
+<p>When scoring the two the model using AIC and BIC, we can see that the penalty when using <code>bic</code> is greater than the penalty obtained using <code>aic</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">r_squared</span>(model, X_val, y_val)
+<span class="co">#&gt; [1] 0.7838625</span></code></pre></div>
+<p>The value returned by the function <code>r_squared()</code> will be between 0 and 1.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
