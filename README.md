@@ -1,7 +1,6 @@
-# PunisheR
+## PunisheR <img src="man/figures/logo.png" align="right"/>
 
 [![Build Status](https://travis-ci.org/UBC-MDS/punisheR.svg?branch=master)](https://travis-ci.org/UBC-MDS/punisheR)
-
 [![Coverage status](https://codecov.io/gh/UBC-MDS/punisheR/branch/master/graph/badge.svg)](https://codecov.io/github/UBC-MDS/punisheR?branch=master)
 
 
@@ -37,7 +36,7 @@ This package also has three metrics to evaluate model performance:
 - `bic()`: computes the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion)
 - `r_squared()`: computes the [coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination)
 
-These three criteria can be used to measure the relative quality of models within `forward()` and `backward()`. In general,
+These three criteria are used to measure the relative quality of models within `forward()` and `backward()`. In general,
 having more parameters in your model increases prediction accuracy but is highly susceptible to overfitting. AIC and BIC
 add a penalty for the number of features in a model. The penalty term is larger in BIC than in AIC. The lower the AIC and
 BIC score, the better the model.
@@ -126,14 +125,9 @@ The value returned by the function `r_squared()` will be between 0 and 1.
 
 ## Vignette
 
-For more information, you can see our [here](vignettes/punisheR.md).
-
----
+For a more comprehensive guide of PunisheR, you can read the vignette [here](vignettes/punisheR.md).
 
 
-## How to run unit tests
-
-We are using `testthat` for unit testing in punisheR. To run all tests in **RStudio**, use `Cmd/Ctrl` + `Shift` + `T` or `devtools::test()` in your console. 
 
 ## Contributors: 
 
