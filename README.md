@@ -42,12 +42,12 @@ In the R ecosystem, forward and backward selection are implemented in both the [
 and [MASS](https://cran.r-project.org/web/packages/MASS/MASS.pdf) packages. The former provides
 [`ols_step_forward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_forward) and
 [`ols_step_backward()`](https://www.rdocumentation.org/packages/olsrr/versions/0.4.0/topics/ols_step_backward) for
-forward and backward stepwise selection, respectively. Both of these use p-value as a metric for feature selection. Other packages that provide subset selection for regression models are [leaps](https://cran.r-project.org/web/packages/leaps/leaps.pdf) and [bestglm](https://cran.r-project.org/web/packages/bestglm/bestglm.pdf).
-
-
-The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html),
+forward and backward stepwise selection, respectively. Both of these use p-value as a metric for feature selection. The latter, MASS, contains [`StepAIC()`](https://stat.ethz.ch/R-manual/R-devel/library/MASS/html/stepAIC.html),
 which is complete with three modes: forward, backward or both. The selection procedure it uses is based on an
-information criterion (AIC), as we intend ours to be.
+information criterion (AIC), as we intend ours to be. Other packages that provide subset selection for regression models are [leaps](https://cran.r-project.org/web/packages/leaps/leaps.pdf) and [bestglm](https://cran.r-project.org/web/packages/bestglm/bestglm.pdf).
+
+In `punisheR`, users can select between criterions such as `aic`, `bic` and `r-squared` for forward and backward selections. Also, the number of features returned by these selection algorithms can be specified by using `n_features` or they can specify the threshold for the minimum change in a criterion score for an additional feature to be selected by using `min_change`.
+
 
 ## Usage examples
 
@@ -57,7 +57,9 @@ information criterion (AIC), as we intend ours to be.
 
 forward(X_train, y_train, X_val, y_val, min_change=0.5,
     n_features=NULL, criterion='r-squared', verbose=FALSE)
+    
 #> [1] 10
+
 ```
 When implementing forward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
 
@@ -68,7 +70,9 @@ When implementing forward selection on the demo data, it returns a list of featu
 backward(X_train, y_train, X_val, y_val,
     n_features=1, min_change=NULL, criterion='r-squared',
     verbose=FALSE)
+    
 #> [1] 10
+
 ```
 
 When implementing backward selection on the demo data, it returns a list of features for the best model. Here it can be seen that the function correctly returns only 1 feature.
@@ -79,9 +83,11 @@ When implementing backward selection on the demo data, it returns a list of feat
 model <- lm(y_train ~ mpg + cyl + disp, data = X_train)
 
 aic(model)
+
 #> [1] 252.6288
 
 bic(model)
+
 #> [1] 258.5191
 
 ```
