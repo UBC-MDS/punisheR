@@ -8,9 +8,10 @@ source("R/criterion.R")
 #' \item if \code{n_features} is an integer, ensure it lies on (0, total).
 #' \item if \code{n_features} is a float, ensure it lies on (0, 1).
 #' }
-#' @param n_features Numeric value passed to forward or backward selection.
+#' @param n_features A numeric value passed to forward or backward selection.
+#' Can be a float or integer.
 #'
-#' @param total Total features in the data
+#' @param total Total features in the data (equivalent to number of columns in X)
 #'
 #' @return Number of features to select. If initial \code{n_features} lies on (0, total_features),
 #' it will be returned 'as is'. If \code{n_feature} is passed in as a proportion with range (0,1), it will
@@ -72,7 +73,7 @@ fitter <- function(X_input, y_input) {
 #'  \item 'r-squared': use coefficient of determination
 #' }
 #'
-#' @return Score of the model as a float.
+#' @return Score of the model (as a float).
 #' @keywords internal
 
 fit_and_score <- function(S,
