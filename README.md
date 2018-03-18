@@ -17,7 +17,7 @@ improve our understanding of model selection techniques and collaborative softwa
 ## Installation
 
 ```
-devtools::install_github("UBC-MDS/punisheR")
+devtools::install_github("UBC-MDS/punisheR", build_vignettes = TRUE)
 ```
 
 If you would like to read a comprehensive documentation of `punisheR`, we recommend that you set `build_vignettes = TRUE` when you install the package.
