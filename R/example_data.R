@@ -1,8 +1,11 @@
-#' Generating test data with mtcars.
+#' Generating example data with mtcars.
 #'
-#' @description generates test data using base R's mtcars dataset
+#' @description Generates test data using base R's mtcars dataset.
+#' The response variable `y` is horsepower (`hp`), while the remaining variables
+#' represent the predictive features `X`.
 #'
-#' @param seed random seed to use. Defaults to 99.
+#' @param seed random seed to use.
+#' Defaults to 99.
 #'
 #' @return X_train, y_train, X_val, y_val (as a list of dataframes)
 #'

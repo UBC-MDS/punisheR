@@ -4,7 +4,7 @@
 [![Coverage status](https://codecov.io/gh/UBC-MDS/punisheR/branch/master/graph/badge.svg)](https://codecov.io/github/UBC-MDS/punisheR?branch=master)
 
 
-PunisheR is a package for feature and model selection in R. Specifically, this package implements tools for
+**punisheR** is a package for feature and model selection in R. Specifically, this package implements tools for
 forward and backward model selection (see [here](https://en.wikipedia.org/wiki/Stepwise_regression)).
 In order to measure model quality during the selection procedures, we have also implemented
 the Akaike and Bayesian Information Criterion (see below), both of which *punish* complex models -- hence this package's
@@ -72,23 +72,21 @@ X_val <- data[[3]]
 y_val <- data[[4]]
 ```
 
-### Forward Selection using r-squared
+### Forward selection
 
 ```r
-
 forward(X_train, y_train, X_val, y_val, min_change=0.5,
     n_features=NULL, criterion='r-squared', verbose=FALSE)
     
 #> [1] 10
 
 ```
-When implementing forward selection on the demo data, it returns a list of features for the best model. Here it
-can be seen that the function correctly returns only 1 feature.
+When implementing forward selection on the demo data, it returns a list of features for the best model. In this example, we use r-squared to determine the "best" model. Here it
+can be seen that the function correctly returns only 1 feature. 
 
-### Backward Selection using r-squared
+### Backward selection
 
 ```r
-
 backward(X_train, y_train, X_val, y_val,
     n_features=1, min_change=NULL, criterion='r-squared',
     verbose=FALSE)
@@ -100,7 +98,7 @@ backward(X_train, y_train, X_val, y_val,
 When implementing backward selection on the demo data, it returns a list of features for the best model.
 Here it can be seen that the function correctly returns only 1 feature.
 
-### Criterions
+### Scoring a model with AIC, BIC, and r-squared
 
 ```r
 model <- lm(y_train ~ mpg + cyl + disp, data = X_train)
@@ -113,7 +111,7 @@ bic(model)
 
 ```
 
-When scoring the two the model using AIC and BIC, we can see that the penalty when using `bic` is greater
+When scoring the model using AIC and BIC, we can see that the penalty when using `bic` is greater
 than the penalty obtained using `aic`.
 
 ```r
@@ -125,7 +123,7 @@ The value returned by the function `r_squared()` will be between 0 and 1.
 
 ## Vignette
 
-For a more comprehensive guide of PunisheR, you can read the vignette [here](vignettes/punisheR.md).
+For a more comprehensive guide of PunisheR, you can read the vignette [here](vignettes/punisheR.md) or html version [here](https://s3-us-west-2.amazonaws.com/punisherpkg/punisheR.html).
 
 
 
