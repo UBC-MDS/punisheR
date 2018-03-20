@@ -475,7 +475,6 @@ test_that("backward() selects at least
                   y_train,
                   X_val,
                   y_val,
-                  n_features = NULL,
                   min_change = 100,
                   criterion = 'bic',
                   verbose = FALSE

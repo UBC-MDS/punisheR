@@ -66,6 +66,10 @@ backward <- function(X_train,
     X_val <- test[[1]]
     y_val <- test[[2]]
 
+    # Set n_features to NULL if min_features arg is passed into function
+    if (!is.null(min_change) & missing(n_features)) {
+        n_features <- NULL
+    }
     input_checks(n_features = n_features,
                  min_change = min_change,
                  criterion = criterion)
