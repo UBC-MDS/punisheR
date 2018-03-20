@@ -2,7 +2,7 @@ source("R/checks.R")
 source("R/utils.R")
 
 
-#' Backward Selection Algorithm.
+#' Backward Selection Algorithm
 #'
 #' @description
 #' This is an implementation of the backward selection algorithm
@@ -14,12 +14,12 @@ source("R/utils.R")
 #' @param X_train Training data. Represented as a 2D matrix or dataframe of (observations, features).
 #'
 #' @param y_train Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
-#'                If y_train is a character string AND X is a dataframe, it will be extracted from X.
+#'                If \code{y_train} is a character string AND \code{X} is a dataframe, it will be extracted from \code{X}.
 #'
 #' @param X_val Validation data. Represented as a 2D matrix or dataframe of (observations, features).
 #'
 #' @param y_val Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
-#'              If y_val is a character string AND X is a dataframe, it will be extracted from X.
+#'              If \code{y_val} is a character string AND \code{X} is a dataframe, it will be extracted from \code{X}.
 #'
 #' @param criterion Model selection criterion to measure relative model quality. Can be one of:
 #' \itemize{
@@ -29,10 +29,10 @@ source("R/utils.R")
 #' }
 #'
 #' @param min_change The smallest change in criterion score to be considered significant.
-#'                   Note: `n_features` must be NULL if this is numeric.
+#'                   Note: \code{n_features} must be NULL if this is numeric.
 #'
 #' @param n_features The number of features to select, expressed either as a proportion (0,1)
-#' or whole number with range (0,total_features). Note: `min_change` must be NULL if this is numeric.
+#' or whole number with range (0,total_features). Note: \code{min_change} must be NULL if this is numeric.
 #'
 #' @param verbose
 #'  if \code{TRUE}, print additional information as selection occurs
@@ -66,6 +66,10 @@ backward <- function(X_train,
     X_val <- test[[1]]
     y_val <- test[[2]]
 
+    # Set n_features to NULL if min_features arg is passed into function
+    if (!is.null(min_change) & missing(n_features)) {
+        n_features <- NULL
+    }
     input_checks(n_features = n_features,
                  min_change = min_change,
                  criterion = criterion)

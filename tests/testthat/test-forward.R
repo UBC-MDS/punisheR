@@ -404,7 +404,7 @@ test_that("forward() selects the best features
 })
 
 test_that("forward() selects the best features
-          from mtcars dataset using `min_change`", {
+          from mtcars dataset using `min_change` and r-squared criterion", {
     # Test that a small `min_change` will result in the
     # length of output being greater than or equal to 1
     output <- forward(
@@ -418,3 +418,36 @@ test_that("forward() selects the best features
     )
     expect_gt(length(output), 1)
 })
+
+test_that("forward() selects the best features
+          from mtcars dataset using `min_change` and AIC criterion", {
+              # Test that a small `min_change` will result in the
+              # length of output being greater than or equal to 1
+              output <- forward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  min_change = 100,
+                  criterion = 'aic',
+                  verbose = FALSE
+              )
+              expect_gt(length(output), 1)
+          })
+
+test_that("forward() selects the best features
+          from mtcars dataset using `min_change` and BIC criterion", {
+              # Test that a small `min_change` will result in the
+              # length of output being greater than or equal to 1
+              output <- forward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  min_change = 100,
+                  criterion = 'bic',
+                  verbose = FALSE
+              )
+              expect_gt(length(output), 1)
+          })
+

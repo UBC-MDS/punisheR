@@ -11,18 +11,18 @@ forward(X_train, y_train, X_val, y_val, min_change = 0.5, n_features = NULL,
 \item{X_train}{Training data. Represented as a 2D matrix or dataframe of (observations, features).}
 
 \item{y_train}{Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
-If y_train is a character string AND X is a dataframe, it will be extracted from X.}
+If \code{y_train} is a character string AND \code{X} is a dataframe, it will be extracted from \code{X}.}
 
 \item{X_val}{Validation data. Represented as a 2D matrix or dataframe of (observations, features).}
 
 \item{y_val}{Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
-If y_val is a character string AND X is a dataframe, it will be extracted from X.}
+If \code{y_val} is a character string AND \code{X} is a dataframe, it will be extracted from \code{X}.}
 
 \item{min_change}{The smallest change in criterion score to be considered significant.
-Note: `n_features` must be NULL if this is numeric.}
+Note: \code{n_features} must be NULL if this is numeric.}
 
 \item{n_features}{The number of features to select, expressed either as a proportion (0,1)
-or whole number with range (0,total_features). Note: `min_change` must be NULL if this is numeric.}
+or whole number with range (0,total_features). Note: \code{min_change} must be NULL if this is numeric.}
 
 \item{criterion}{Model selection criterion to measure relative model quality. Can be one of:
 \itemize{
@@ -31,7 +31,7 @@ or whole number with range (0,total_features). Note: `min_change` must be NULL i
  \item 'r-squared': use coefficient of determination
 }}
 
-\item{verbose}{if \code{TRUE}, print additional information as selection occurs}
+\item{verbose}{If \code{TRUE}, print additional information as selection occurs}
 }
 \value{
 A vector of indices that represent the best features of the model.
