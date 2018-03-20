@@ -11,10 +11,10 @@ mtcars_data(seed = 99)
 Defaults to 99.}
 }
 \value{
-X_train, y_train, X_val, y_val (as a list of dataframes)
+\code{X_train}, \code{y_train}, \code{X_val}, \code{y_val} (as a list of dataframes)
 }
 \description{
 Generates test data using base R's mtcars dataset.
-The response variable `y` is horsepower (`hp`), while the remaining variables
-represent the predictive features `X`.
+The response variable \code{y} is horsepower (hp), while the remaining variables
+represent the predictive features \code{X}.
 }

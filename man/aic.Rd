@@ -10,10 +10,10 @@ aic(model, X = NULL, y = NULL)
 \item{model}{A base R model object (e.g., \code{lm()})}
 
 \item{X}{Validation data as a 2D matrix of (observations, features).
-If NULL, extract `X` from `model`.}
+If \code{NULL}, extract \code{X} from \code{model}.}
 
 \item{y}{True labels as a 1D vector.
-If NULL, extract `y` from `model`.}
+If \code{NULL}, extract \code{y} from \code{model}.}
 }
 \value{
 AIC value gets returned as a float.

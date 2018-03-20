@@ -39,7 +39,7 @@ r_squared <- function(fit_model, X, y) {
 #' @description A helper function that gets the coefficients required for
 #' AIC and BIC calculations.
 #'
-#' @param model base R model object
+#' @param model Base R model object
 #'
 #' @return A vector of \code{n} (number of samples), \code{k} (number of features),
 #' \code{llf} (maximized value of log-likelihood function)
@@ -74,10 +74,10 @@ r_squared <- function(fit_model, X, y) {
 #' @param model A base R model object (e.g., \code{lm()})
 #'
 #' @param X Validation data as a 2D matrix of (observations, features).
-#' If NULL, extract `X` from `model`.
+#' If \code{NULL}, extract \code{X} from \code{model}.
 #'
 #' @param y True labels as a 1D vector.
-#'          If NULL, extract `y` from `model`.
+#'          If \code{NULL}, extract \code{y} from \code{model}.
 #'
 #' @return  AIC value gets returned as a float.
 #'
@@ -109,10 +109,10 @@ aic <- function(model, X = NULL, y = NULL) {
 #' @param  model A base R model object (e.g., \code{lm()})
 #'
 #' @param X Validation data as a 2D matrix of (observations, features).
-#' If NULL, extract `X` from `model`.
+#' If \code{NULL}, extract \code{X} from \code{model}.
 #'
 #' @param y True labels as a 1D vector.
-#'          If NULL, extract `y` from `model`.
+#'          If \code{NULL}, extract \code{y} from \code{model}.
 #'
 #' @return BIC value gets returned as a float.
 #'

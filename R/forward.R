@@ -5,19 +5,19 @@ source("R/utils.R")
 #'
 #' @description Checks if \code{forward()} should break.
 #'
-#' @param S A vector of selected features in \code{forward()} and \code{backward()}
+#' @param S A vector of selected features in \code{forward()} and \code{backward()}.
 #'
-#' @param current_best_j A vector representing the best feature currently in \code{forward()}
+#' @param current_best_j A vector representing the best feature currently in \code{forward()}.
 #'
-#' @param j_score_dict A dictionary of scores in step 1 of \code{forward()}
+#' @param j_score_dict A dictionary of scores in step 1 of \code{forward()}.
 #'
-#' @param n_features A numeric `n_features` object as developed inside \code{forward()}
+#' @param n_features A numeric \code{n_features} object as developed inside \code{forward()}.
 #'
 #' @param min_change The smallest change in criterion score to be considered significant.
 #'
-#' @param total_number_of_features The total number of features in \code{X_train}/\code{X_train}
+#' @param total_number_of_features The total number of features in \code{X_train}/\code{X_train}.
 #'
-#' @return A logical that represents whether or not \code{forward()} should halt
+#' @return A logical that represents whether or not \code{forward()} should halt.
 #'
 #' @keywords internal
 .forward_break_criteria <-
@@ -57,12 +57,12 @@ source("R/utils.R")
 #' @param X_train Training data. Represented as a 2D matrix or dataframe of (observations, features).
 #'
 #' @param y_train Target class for training data. Represented as a 1D vector of target classes for \code{X_train}.
-#'                If y_train is a character string AND X is a dataframe, it will be extracted from X.
+#'                If \code{y_train} is a character string AND \code{X} is a dataframe, it will be extracted from \code{X}.
 #'
 #' @param X_val Validation data. Represented as a 2D matrix or dataframe of (observations, features).
 #'
 #' @param y_val Target class for validation data. Represented as a 1D vector of target classes for \code{X_val}.
-#'              If y_val is a character string AND X is a dataframe, it will be extracted from X.
+#'              If \code{y_val} is a character string AND \code{X} is a dataframe, it will be extracted from \code{X}.
 #'
 #' @param criterion Model selection criterion to measure relative model quality. Can be one of:
 #' \itemize{
@@ -72,13 +72,13 @@ source("R/utils.R")
 #' }
 #'
 #' @param min_change The smallest change in criterion score to be considered significant.
-#'                   Note: `n_features` must be NULL if this is numeric.
+#'                   Note: \code{n_features} must be NULL if this is numeric.
 #'
 #' @param n_features The number of features to select, expressed either as a proportion (0,1)
-#' or whole number with range (0,total_features). Note: `min_change` must be NULL if this is numeric.
+#' or whole number with range (0,total_features). Note: \code{min_change} must be NULL if this is numeric.
 #'
 #' @param verbose
-#'  if \code{TRUE}, print additional information as selection occurs
+#'  If \code{TRUE}, print additional information as selection occurs
 #'
 #' @examples
 #' X_train <- matrix(runif(50, 0, 50), ncol=5)
