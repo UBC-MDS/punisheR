@@ -403,7 +403,7 @@ test_that("backward() selects the best features
 
 
 test_that("backward() selects at least
-          some features with `min_change` (small)", {
+          some features using r-squared with `min_change` (small)", {
     # Testing `min_change`
     output <- backward(
         X_train,
@@ -447,5 +447,40 @@ test_that("backward() selects more best features when
               # Test that large_min_change output is greater than
               # or equal to small_min_change output
               expect_gte(length(large_min_change), length(small_min_change))
+          })
+
+
+test_that("backward() selects at least
+          some features using `min_change` and criterion 'aic'", {
+              # Testing `min_change` and criterion = 'aic'
+              output <- backward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  n_features = NULL,
+                  min_change = 100,
+                  criterion = 'aic',
+                  verbose = FALSE
+              )
+              # Test for output greater than or equal to 1 (i.e., some features)
+              expect_gte(length(output), 1)
+          })
+
+test_that("backward() selects at least
+          some features using `min_change` and criterion 'bic'", {
+              # Testing `min_change` and criterion = 'bic'
+              output <- backward(
+                  X_train,
+                  y_train,
+                  X_val,
+                  y_val,
+                  n_features = NULL,
+                  min_change = 100,
+                  criterion = 'bic',
+                  verbose = FALSE
+              )
+              # Test for output greater than or equal to 1 (i.e., some features)
+              expect_gte(length(output), 1)
           })
 
